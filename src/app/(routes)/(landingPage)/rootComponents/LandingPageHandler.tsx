@@ -32,7 +32,9 @@ export default function LandingPageHandler() {
   return (
     <>
       <div className="bg-[#fc9] min-h-screen py-2">
+        {/* <Header />  first three box */}
         <Header />
+        {/* Today Lucky Number */}
         <TodayLuckyNumber />
         <Download />
         <LiveResult />
