@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 
 import Link from "next/link";
-import { copywrite, gameConfigurtion } from "../constant/constant";
+import { copywrite, gameConfigurtion } from "@/app/constant/constant";
 
 // Define a type for the days
 type Day = 'Mon' | 'Tue' | 'Wed' | 'Thu' | 'Fri' | 'Sat' | 'Sun';

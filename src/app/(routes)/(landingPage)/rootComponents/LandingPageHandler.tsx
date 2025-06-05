@@ -35,6 +35,7 @@ interface MarketResult {
   result: string;
   openTime: string;
   closeTime: string;
+  yellowEnable: number;
 }
 
 interface MarketResults {
@@ -74,10 +75,12 @@ export default function LandingPageHandler({
         {/* Today Lucky Number */}
         <TodayLuckyNumber />
         <Download />
+        {/* live result */}
         <LiveResult resultLiveForDate={marketResults?.inTimeRange || []} />
         <Notice />
         <Gameoptions />
-        <Bazaar />
+        {/* All result market */}
+        <Bazaar marketResults={marketResults?.rest || []} />
         <MainStarline />
         <Wheel />
         <MrStarlineResult />
