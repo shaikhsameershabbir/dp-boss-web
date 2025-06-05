@@ -1,11 +1,12 @@
+import { getMarketResult } from "@/app/api/api";
 import LandingPageHandler from "./rootComponents/LandingPageHandler";
 
-function page() {
+export default async function Page() {
+  const initialData = await getMarketResult();
+
   return (
     <>
-      <LandingPageHandler />
+      <LandingPageHandler initialData={initialData} />
     </>
   );
 }
-
-export default page;

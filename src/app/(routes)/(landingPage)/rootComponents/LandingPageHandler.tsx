@@ -1,3 +1,5 @@
+"use client";
+import { useEffect, useState } from "react";
 import Bazaar from "../../../Compontes/DynamicPages/Bazaar";
 import { KalyanNight } from "../../../Compontes/DynamicPages/KalyanNight";
 import { KalyanTable } from "../../../Compontes/DynamicPages/KalyanTable";
@@ -28,7 +30,21 @@ import { Wheel } from "../../../Compontes/StaticPage/wheel";
 import { Wheel2 } from "../../../Compontes/StaticPage/wheel2";
 
 /* eslint-disable @next/next/no-img-element */
-export default function LandingPageHandler() {
+interface LandingPageHandlerProps {
+  initialData: any;
+}
+
+export default function LandingPageHandler({
+  initialData,
+}: LandingPageHandlerProps) {
+  const [result, setResult] = useState<any>(initialData);
+
+  useEffect(() => {
+    console.log(initialData);
+    // Update state when initialData changes
+    setResult(initialData);
+  }, [initialData]);
+
   return (
     <>
       <div className="bg-[#fc9] min-h-screen py-2">
