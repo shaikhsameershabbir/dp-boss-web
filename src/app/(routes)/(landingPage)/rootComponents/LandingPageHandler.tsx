@@ -30,20 +30,41 @@ import { Wheel } from "../../../Compontes/StaticPage/wheel";
 import { Wheel2 } from "../../../Compontes/StaticPage/wheel2";
 
 /* eslint-disable @next/next/no-img-element */
+interface MarketResult {
+  marketName: string;
+  result: string;
+  openTime: string;
+  closeTime: string;
+}
+
+interface MarketResults {
+  inTimeRange: MarketResult[];
+  rest: MarketResult[];
+}
+
+interface ApiResponse {
+  success: boolean;
+  message: string;
+  data: MarketResults;
+}
+
 interface LandingPageHandlerProps {
-  initialData: any;
+  initialData: ApiResponse;
 }
 
 export default function LandingPageHandler({
   initialData,
 }: LandingPageHandlerProps) {
-  const [result, setResult] = useState<any>(initialData);
+  const [marketResults, setMarketResults] = useState<MarketResults | null>(
+    null
+  );
 
   useEffect(() => {
-    console.log(initialData);
-    // Update state when initialData changes
-    setResult(initialData);
+    if (initialData?.success && initialData?.data) {
+      setMarketResults(initialData.data);
+    }
   }, [initialData]);
+  console.log(marketResults);
 
   return (
     <>
@@ -53,7 +74,7 @@ export default function LandingPageHandler({
         {/* Today Lucky Number */}
         <TodayLuckyNumber />
         <Download />
-        <LiveResult />
+        <LiveResult resultLiveForDate={marketResults?.inTimeRange || []} />
         <Notice />
         <Gameoptions />
         <Bazaar />
