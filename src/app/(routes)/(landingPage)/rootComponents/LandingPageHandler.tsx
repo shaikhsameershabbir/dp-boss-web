@@ -83,8 +83,7 @@ export default function LandingPageHandler({
         <Bazaar marketResults={marketResults?.rest || []} />
         <MainStarline />
         <Wheel />
-        <MrStarlineResult />
-        <Wheel2 />
+
         <SpicalGameZone />
         <MatkajodiList />
         <WeeklyPatti />
