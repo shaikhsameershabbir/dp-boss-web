@@ -141,7 +141,7 @@ export default function Panel({
         <div className="w-full overflow-x-auto mt-2 px-2">
           <div className="max-w-[95%] md:max-w-[70%] mx-auto">
             <div className="text-center font-bold text-white bg-[#414eb0] text-[14px] sm:text-[16px] p-2">
-              MATKA PANEL RECORD 2019 - 2025
+              {marketName} PANEL RECORD 2019 - 2025
             </div>
             <div className="overflow-x-auto">
               <table
