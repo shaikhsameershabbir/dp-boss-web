@@ -4,7 +4,7 @@
 
 import Link from "next/link";
 import { getJodiResult } from "@/app/api/api";
-import { panel } from "@/app/constant/constant";
+// import { panel } from "@/app/constant/constant";
 import { gameConfigurtion } from "@/app/constant/constant";
 import { useEffect, use, useState } from "react";
 
@@ -110,26 +110,12 @@ export default function Panel({
       <div className="bg-[#fc9] min-h-screen py-1">
         <div className="border-3 border-[#ff0016] flex justify-center items-center rounded-lg shadow-md bg-[#fc9]">
           <Link href="/">
-            <img src={gameConfigurtion.gameLogo} height={250} width={300} />
+            <img
+              src={`/${gameConfigurtion.gameLogo}`}
+              height={250}
+              width={300}
+            />
           </Link>
-        </div>
-
-        <div className="text-lg font-bold border-3 border-[#ffff] bg-[#ff00a2] mt-1 p-1">
-          <h3
-            className="text-white italic font-bold text-center"
-            style={{ textShadow: "2px 2px 4px black" }}
-          >
-            {panel.paneltitle}
-          </h3>
-        </div>
-
-        <div className="text-lg font-bold border-3 border-[#ff0016] mt-1 p-1">
-          <p className="text-sm text-center text-[#00094d]">
-            {panel.panelheading}
-          </p>
-          <p className="text-xs text-center text-[#00094d]">
-            {panel.panelsubtitle}
-          </p>
         </div>
 
         <div className="text-lg font-bold border-1 border-black mt-1 p-1">
@@ -155,7 +141,7 @@ export default function Panel({
         <div className="w-full overflow-x-auto mt-2 px-2">
           <div className="max-w-[95%] md:max-w-[70%] mx-auto">
             <div className="text-center font-bold text-white bg-[#414eb0] text-[14px] sm:text-[16px] p-2">
-              MILAN MORNING MATKA PANEL RECORD 2019 - 2025
+              MATKA PANEL RECORD 2019 - 2025
             </div>
             <div className="overflow-x-auto">
               <table
@@ -166,7 +152,7 @@ export default function Panel({
                   <tr className="bg-[#ffc338] text-black">
                     <th
                       className="border-2 border-[#414eb0] bg-[#ffc338] text-black text-sm"
-                      style={{  padding: 0 }}
+                      style={{ padding: 0 }}
                     >
                       Date
                     </th>
@@ -174,7 +160,7 @@ export default function Panel({
                       <th
                         key={day}
                         className="border-2 border-[#414eb0] bg-[#ffc338] text-black text-sm"
-                        style={{  padding: 0 }}
+                        style={{ padding: 0 }}
                       >
                         {day}
                       </th>
