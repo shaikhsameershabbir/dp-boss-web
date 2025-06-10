@@ -32,3 +32,9 @@ export const getMarketResult = async () => {
   const response = await serverApiClient.get("/getMarketResult");
   return response;
 };
+
+// get starline result
+export const getStarlineResult = async () => {
+  const response = await serverApiClient.get("/getStarlineResult");
+  return response;
+};

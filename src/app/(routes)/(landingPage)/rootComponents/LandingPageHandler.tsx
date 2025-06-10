@@ -51,22 +51,31 @@ interface ApiResponse {
 
 interface LandingPageHandlerProps {
   initialData: ApiResponse;
+  starlineResult: ApiResponse;
 }
 
 export default function LandingPageHandler({
   initialData,
+  starlineResult,
 }: LandingPageHandlerProps) {
   const [marketResults, setMarketResults] = useState<MarketResults | null>(
     null
   );
+  const [starlineResults, setStarlineResults] = useState<MarketResults | null>(
+    null
+  );
+  console.log("------------------", starlineResults);
 
   useEffect(() => {
     if (initialData?.success && initialData?.data) {
       setMarketResults(initialData.data);
     }
-  }, [initialData]);
-  console.log(marketResults);
-
+    if (starlineResult?.success && starlineResult?.data) {
+      setStarlineResults(starlineResult.data);
+    }
+  }, [initialData, starlineResult]);
+  // console.log(marketResults);
+  console.log(starlineResults);
   return (
     <>
       <div className="bg-[#fc9] min-h-screen py-2">
