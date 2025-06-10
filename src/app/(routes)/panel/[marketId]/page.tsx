@@ -128,13 +128,17 @@ export default function Panel({
               <table className="w-full border-2 border-[#414eb0] text-center">
                 <thead>
                   <tr className="bg-[#ffc338] text-black font-bold">
-                    <th className="border-2 border-[#03a9f4a8] text-xs sm:text-sm px-1 sm:px-2 py-1 whitespace-nowrap">
+                    <th
+                      className="border-2 border-[#414eb0] text-xs sm:text-sm px-1 py-1 whitespace-nowrap"
+                      style={{ minWidth: "60px" }}
+                    >
                       Date
                     </th>
                     {dayLabels.map((day) => (
                       <th
                         key={day}
-                        className="border-2 border-[#03a9f4a8] text-xs sm:text-sm px-1 sm:px-2 py-1 whitespace-nowrap"
+                        className="border-2 border-[#414eb0] text-xs sm:text-sm px-1 py-1 whitespace-nowrap"
+                        style={{ minWidth: "45px" }}
                       >
                         {day}
                       </th>
@@ -144,7 +148,10 @@ export default function Panel({
                 <tbody className="text-black">
                   {panelData.map((week, i) => (
                     <tr key={i}>
-                      <td className="border-2 border-[#03a9f4a8] text-xs sm:text-sm font-bold whitespace-pre-line px-1 sm:px-2 py-1">
+                      <td
+                        className="border-2 border-[#414eb0] text-xs sm:text-sm font-bold whitespace-pre-line px-1 py-1 align-middle"
+                        style={{ minWidth: "60px" }}
+                      >
                         {new Date(week.startDate).toLocaleDateString()}
                         <br />
                         to
@@ -153,49 +160,201 @@ export default function Panel({
                       </td>
                       {days.map((day, idx) => {
                         const value = week[day];
+                        const isStarPattern =
+                          !value ||
+                          (!value.open &&
+                            (!value.main || value.main === "**") &&
+                            !value.close)
+                            ? true
+                            : false;
                         if (!value) {
+                          // If value is null, show star pattern
                           return (
                             <td
                               key={day}
-                              className="border-2 border-[#03a9f4a8]  sm:px-2  text-xs sm:text-sm"
-                            ></td>
+                              className="border-2 border-[#414eb0] p-0 text-xs sm:text-sm align-middle"
+                              style={{
+                                width: "60px",
+                                height: "60px",
+                                padding: 0,
+                              }}
+                            >
+                              <div className="flex flex-col items-center justify-center h-full w-full">
+                                <div className="flex flex-row justify-between w-full">
+                                  <span
+                                    className="text-red-600 font-extrabold"
+                                    style={{
+                                      width: "16px",
+                                      textAlign: "center",
+                                    }}
+                                  >
+                                    *
+                                  </span>
+                                  <span style={{ width: "28px" }}></span>
+                                  <span
+                                    className="text-red-600 font-extrabold"
+                                    style={{
+                                      width: "16px",
+                                      textAlign: "center",
+                                    }}
+                                  >
+                                    *
+                                  </span>
+                                </div>
+                                <div className="flex flex-row justify-center w-full">
+                                  <span
+                                    className="text-red-600 font-extrabold"
+                                    style={{
+                                      width: "60px",
+                                      textAlign: "center",
+                                    }}
+                                  >
+                                    ***
+                                  </span>
+                                </div>
+                                <div className="flex flex-row justify-between w-full">
+                                  <span
+                                    className="text-red-600 font-extrabold"
+                                    style={{
+                                      width: "16px",
+                                      textAlign: "center",
+                                    }}
+                                  >
+                                    *
+                                  </span>
+                                  <span style={{ width: "28px" }}></span>
+                                  <span
+                                    className="text-red-600 font-extrabold"
+                                    style={{
+                                      width: "16px",
+                                      textAlign: "center",
+                                    }}
+                                  >
+                                    *
+                                  </span>
+                                </div>
+                              </div>
+                            </td>
+                          );
+                        }
+                        if (isStarPattern) {
+                          return (
+                            <td
+                              key={day}
+                              className="border-2 border-[#414eb0] p-0 text-xs sm:text-sm align-middle"
+                              style={{
+                                width: "60px",
+                                height: "60px",
+                                padding: 0,
+                              }}
+                            >
+                              <div className="flex flex-col items-center justify-center h-full w-full">
+                                <div className="flex flex-row justify-between w-full">
+                                  <span
+                                    className="text-red-600 font-extrabold"
+                                    style={{
+                                      width: "16px",
+                                      textAlign: "center",
+                                    }}
+                                  >
+                                    *
+                                  </span>
+                                  <span style={{ width: "28px" }}></span>
+                                  <span
+                                    className="text-red-600 font-extrabold"
+                                    style={{
+                                      width: "16px",
+                                      textAlign: "center",
+                                    }}
+                                  >
+                                    *
+                                  </span>
+                                </div>
+                                <div className="flex flex-row justify-center w-full">
+                                  <span
+                                    className="text-red-600 font-extrabold"
+                                    style={{
+                                      width: "60px",
+                                      textAlign: "center",
+                                    }}
+                                  >
+                                    ***
+                                  </span>
+                                </div>
+                                <div className="flex flex-row justify-between w-full">
+                                  <span
+                                    className="text-red-600 font-extrabold"
+                                    style={{
+                                      width: "16px",
+                                      textAlign: "center",
+                                    }}
+                                  >
+                                    *
+                                  </span>
+                                  <span style={{ width: "28px" }}></span>
+                                  <span
+                                    className="text-red-600 font-extrabold"
+                                    style={{
+                                      width: "16px",
+                                      textAlign: "center",
+                                    }}
+                                  >
+                                    *
+                                  </span>
+                                </div>
+                              </div>
+                            </td>
                           );
                         }
                         return (
                           <td
                             key={day}
-                            className="border-2 border-[#03a9f4a8] px-1 sm:px-2 py-1 text-xs sm:text-sm"
+                            className="border-2 border-[#414eb0] px-0 py-0 text-xs sm:text-sm align-middle"
+                            style={{
+                              minWidth: "45px",
+                              height: "60px",
+                              padding: 0,
+                            }}
                           >
-                            <div className="flex flex-row items-center justify-center h-full  xs:gap-2 sm:gap-3">
+                            <div className="flex flex-row items-stretch justify-center h-full w-full">
                               {/* Open vertical */}
-                              <div className="flex flex-col items-center ">
+                              <div className="flex flex-col items-center justify-center flex-1 leading-none">
                                 {(value.open || "").split("").map((ch, idx) => (
                                   <span
                                     key={idx}
-                                    className="text-[10px] sm:text-[13px] font-extrabold"
+                                    className="text-[11px] sm:text-[13px] font-extrabold leading-none"
+                                    style={{ lineHeight: "1.1" }}
                                   >
                                     {ch}
                                   </span>
                                 ))}
                               </div>
                               {/* Main */}
-                              <span
-                                className={`mx-1 text-[14px] xs:text-[16px] sm:text-[23px] font-bold ${
-                                  redHighlightedNumbers.includes(value.main)
-                                    ? "text-red-600"
-                                    : "text-black"
-                                }`}
-                              >
-                                {value.main}
-                              </span>
+                              <div className="flex flex-col items-center justify-center flex-1">
+                                <span
+                                  className={`text-[18px] sm:text-[21px] font-bold`}
+                                  style={{
+                                    lineHeight: "1",
+                                    textAlign: "center",
+                                    color: redHighlightedNumbers.includes(
+                                      value.main
+                                    )
+                                      ? "#d32f2f"
+                                      : "#222",
+                                  }}
+                                >
+                                  {value.main}
+                                </span>
+                              </div>
                               {/* Close vertical */}
-                              <div className="flex flex-col items-center ml-1">
+                              <div className="flex flex-col items-center justify-center flex-1 leading-none">
                                 {(value.close || "")
                                   .split("")
                                   .map((ch, idx) => (
                                     <span
                                       key={idx}
-                                      className="text-[10px] sm:text-[13px] font-extrabold"
+                                      className="text-[11px] sm:text-[13px] font-extrabold leading-none"
+                                      style={{ lineHeight: "1.1" }}
                                     >
                                       {ch}
                                     </span>
