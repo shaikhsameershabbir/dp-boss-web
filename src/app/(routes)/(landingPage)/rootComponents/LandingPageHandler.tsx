@@ -43,15 +43,26 @@ interface MarketResults {
   rest: MarketResult[];
 }
 
+interface StarlineData {
+  starLineName: string;
+  [key: string]: string | null;
+}
+
 interface ApiResponse {
   success: boolean;
   message: string;
   data: MarketResults;
 }
 
+interface StarlineResponse {
+  success: boolean;
+  message: string;
+  data: StarlineData[];
+}
+
 interface LandingPageHandlerProps {
   initialData: ApiResponse;
-  starlineResult: ApiResponse;
+  starlineResult: StarlineResponse;
 }
 
 export default function LandingPageHandler({
@@ -61,10 +72,7 @@ export default function LandingPageHandler({
   const [marketResults, setMarketResults] = useState<MarketResults | null>(
     null
   );
-  const [starlineResults, setStarlineResults] = useState<MarketResults | null>(
-    null
-  );
-  console.log("------------------", starlineResults);
+  const [starlineResults, setStarlineResults] = useState<StarlineData[]>([]);
 
   useEffect(() => {
     if (initialData?.success && initialData?.data) {
@@ -74,8 +82,7 @@ export default function LandingPageHandler({
       setStarlineResults(starlineResult.data);
     }
   }, [initialData, starlineResult]);
-  // console.log(marketResults);
-  console.log(starlineResults);
+
   return (
     <>
       <div className="bg-[#fc9] min-h-screen py-2">
@@ -90,9 +97,13 @@ export default function LandingPageHandler({
         <Gameoptions />
         {/* All result market */}
         <Bazaar marketResults={marketResults?.rest || []} />
-        <MainStarline />
+        {/* Starline Results */}
+        {starlineResults.map((starline, index) => (
+          <MainStarline key={starline.starLineName} data={starline} />
+        ))}
         <Wheel />
-
+        <MrStarlineResult />
+        <Wheel2 />
         <SpicalGameZone />
         <MatkajodiList />
         <WeeklyPatti />
