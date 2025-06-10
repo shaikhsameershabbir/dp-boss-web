@@ -1,8 +1,38 @@
+"use client";
+
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable jsx-a11y/alt-text */
 
 import Link from "next/link";
 import { copywrite, gameConfigurtion } from "@/app/constant/constant";
+import { useEffect, useState, use } from "react";
+import { getJodiResult } from "@/app/api/api";
+
+// Define a type for the API response
+interface JodiResult {
+  id: number;
+  userId: number;
+  marketId: number;
+  startDate: string;
+  endDate: string;
+  monday: { main: string; open?: string; close?: string } | null;
+  tuesday: { main: string; open?: string; close?: string } | null;
+  wednesday: { main: string; open?: string; close?: string } | null;
+  thursday: { main: string; open?: string; close?: string } | null;
+  friday: { main: string; open?: string; close?: string } | null;
+  saturday: { main: string; open?: string; close?: string } | null;
+  sunday: { main: string; open?: string; close?: string } | null;
+  createdAt: string;
+}
+
+interface ApiResponse {
+  success: boolean;
+  message: string;
+  data: {
+    marketName: string;
+    results: JodiResult[];
+  };
+}
 
 // Define a type for the days
 type Day = "Mon" | "Tue" | "Wed" | "Thu" | "Fri" | "Sat" | "Sun";
@@ -12,128 +42,72 @@ type DayData = {
   [key in Day]: string;
 };
 
-export default function Jodi({ params }: { params: { marketId: string } }) {
-  const { marketId } = params;
-  console.log("---------->>", marketId);
-  const tempData: DayData[] = [
-    {
-      Mon: "84",
-      Tue: "12",
-      Wed: "30",
-      Thu: "44",
-      Fri: "35",
-      Sat: "64",
-      Sun: "95",
-    },
-    {
-      Mon: "12",
-      Tue: "50",
-      Wed: "63",
-      Thu: "38",
-      Fri: "47",
-      Sat: "99",
-      Sun: "65",
-    },
-    {
-      Mon: "39",
-      Tue: "15",
-      Wed: "84",
-      Thu: "02",
-      Fri: "04",
-      Sat: "61",
-      Sun: "87",
-    },
-    {
-      Mon: "51",
-      Tue: "36",
-      Wed: "47",
-      Thu: "30",
-      Fri: "05",
-      Sat: "28",
-      Sun: "93",
-    },
-    {
-      Mon: "10",
-      Tue: "54",
-      Wed: "29",
-      Thu: "86",
-      Fri: "37",
-      Sat: "91",
-      Sun: "77",
-    },
-    {
-      Mon: "37",
-      Tue: "80",
-      Wed: "43",
-      Thu: "60",
-      Fri: "44",
-      Sat: "05",
-      Sun: "88",
-    },
-    {
-      Mon: "20",
-      Tue: "84",
-      Wed: "19",
-      Thu: "30",
-      Fri: "66",
-      Sat: "15",
-      Sun: "71",
-    },
-    {
-      Mon: "55",
-      Tue: "91",
-      Wed: "40",
-      Thu: "00",
-      Fri: "02",
-      Sat: "80",
-      Sun: "88",
-    },
-    {
-      Mon: "76",
-      Tue: "55",
-      Wed: "85",
-      Thu: "27",
-      Fri: "12",
-      Sat: "42",
-      Sun: "32",
-    },
-    {
-      Mon: "89",
-      Tue: "02",
-      Wed: "47",
-      Thu: "63",
-      Fri: "30",
-      Sat: "93",
-      Sun: "19",
-    },
-    {
-      Mon: "25",
-      Tue: "08",
-      Wed: "67",
-      Thu: "44",
-      Fri: "35",
-      Sat: "14",
-      Sun: "79",
-    },
-    {
-      Mon: "13",
-      Tue: "61",
-      Wed: "13",
-      Thu: "02",
-      Fri: "98",
-      Sat: "77",
-      Sun: "98",
-    },
-    {
-      Mon: "44",
-      Tue: "78",
-      Wed: "99",
-      Thu: "61",
-      Fri: "04",
-      Sat: "98",
-      Sun: "25",
-    },
-  ];
+export default function Jodi({
+  params,
+}: {
+  params: Promise<{ marketId: string }>;
+}) {
+  const resolvedParams = use(params);
+  const { marketId } = resolvedParams;
+  const [jodiData, setJodiData] = useState<DayData[]>([]);
+  const [marketName, setMarketName] = useState<string>("");
+  const [lastResult, setLastResult] = useState<{
+    open?: string;
+    main: string;
+    close?: string;
+  } | null>(null);
+
+  useEffect(() => {
+    const fetchJodiResult = async () => {
+      const response = await getJodiResult(marketId);
+      if (response.success && response.data) {
+        setMarketName(response.data.marketName);
+        // Transform the API data into our display format
+        const transformedData = response.data.results.map(
+          (week: JodiResult) => ({
+            Mon: week.monday?.main || "",
+            Tue: week.tuesday?.main || "",
+            Wed: week.wednesday?.main || "",
+            Thu: week.thursday?.main || "",
+            Fri: week.friday?.main || "",
+            Sat: week.saturday?.main || "",
+            Sun: week.sunday?.main || "",
+          })
+        );
+        setJodiData(transformedData);
+
+        // Find the last existing result
+        const allResults = response.data.results
+          .flatMap((week: JodiResult) => [
+            { day: "monday", data: week.monday },
+            { day: "tuesday", data: week.tuesday },
+            { day: "wednesday", data: week.wednesday },
+            { day: "thursday", data: week.thursday },
+            { day: "friday", data: week.friday },
+            { day: "saturday", data: week.saturday },
+            { day: "sunday", data: week.sunday },
+          ])
+          .filter(
+            (result: {
+              day: string;
+              data: { main: string; open?: string; close?: string } | null;
+            }) => result.data !== null
+          );
+
+        if (allResults.length > 0) {
+          const last = allResults[allResults.length - 1].data;
+          if (last) {
+            setLastResult({
+              open: last.open,
+              main: last.main,
+              close: last.close,
+            });
+          }
+        }
+      }
+    };
+    fetchJodiResult();
+  }, [marketId]);
 
   const days: Day[] = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
   const HighlightedNumbers = [
@@ -153,7 +127,12 @@ export default function Jodi({ params }: { params: { marketId: string } }) {
       <div className="bg-[#fc9] min-h-screen py-1">
         <div className="border-3 border-[#ff0016] flex justify-center items-center rounded-lg shadow-md bg-[#fc9]">
           <Link href="/">
-            <img src={gameConfigurtion.gameLogo} height={250} width={300} />
+            <img
+              src={`/${gameConfigurtion.gameLogo}`}
+              height={250}
+              width={300}
+              alt="game logo"
+            />
           </Link>
         </div>
 
@@ -162,26 +141,42 @@ export default function Jodi({ params }: { params: { marketId: string } }) {
             className="text-white italic font-bold text-center"
             style={{ textShadow: "2px 2px 4px black" }}
           >
-            MILAN MORNING JODI CHART
+            {marketName.toUpperCase()} JODI CHART
           </h3>
         </div>
 
         <div className="text-lg font-bold border-3 border-[#ff0016] mt-1 p-1">
           <p className="text-sm text-center text-[#00094d]">
-            MILAN MORNING JODI RESULT CHART RECORDS
+            {marketName.toUpperCase()} JODI RESULT CHART RECORDS
           </p>
           <p className="text-xs text-center text-[#00094d]">
-            Dpboss MILAN MORNING jodi chart, MILAN MORNING jodi chart, old MILAN
-            MORNING jodi chart, dpboss MILAN MORNING chart...
+            Dpboss {marketName.toUpperCase()} jodi chart,{" "}
+            {marketName.toUpperCase()} jodi chart, old{" "}
+            {marketName.toUpperCase()}
+            jodi chart, dpboss {marketName.toUpperCase()} chart...
           </p>
         </div>
 
         <div className="text-lg font-bold border-1 border-black mt-1 p-1">
           <p className="text-[22px] text-center text-[#00094d]">
-            MILAN MORNING
+            {marketName.toUpperCase()}
           </p>
-          <p className="text-[21px] text-center text-[#880e4f]">580-37-557</p>
-          <button className="bg-[#522f92] px-4 py-1 mx-auto block text-[12px] text-white">
+          {lastResult && (
+            <div className="flex justify-center items-center gap-2 mt-2">
+              <span className="text-[18px] text-[#880e4f]">
+                {lastResult.open || "**"}
+              </span>
+              <span className="text-[21px] text-[#880e4f] font-bold">-</span>
+              <span className="text-[21px] text-[#880e4f] font-bold">
+                {lastResult.main}
+              </span>
+              <span className="text-[21px] text-[#880e4f] font-bold">-</span>
+              <span className="text-[18px] text-[#880e4f]">
+                {lastResult.close || "**"}
+              </span>
+            </div>
+          )}
+          <button className="bg-[#522f92] px-4 py-1 mx-auto block text-[12px] text-white mt-2">
             Refresh Result
           </button>
         </div>
@@ -215,7 +210,7 @@ export default function Jodi({ params }: { params: { marketId: string } }) {
                   </tr>
                 </thead>
                 <tbody className="text-black bg-orange-200">
-                  {tempData.map((row, i) => (
+                  {jodiData.map((row, i) => (
                     <tr key={i}>
                       {days.map((day) => (
                         <td
@@ -226,7 +221,11 @@ export default function Jodi({ params }: { params: { marketId: string } }) {
                               : ""
                           }`}
                         >
-                          {row[day]}
+                          {row[day] ? (
+                            row[day]
+                          ) : (
+                            <span className="text-red-600">**</span>
+                          )}
                         </td>
                       ))}
                     </tr>
@@ -239,9 +238,23 @@ export default function Jodi({ params }: { params: { marketId: string } }) {
         {/* ⬆️ Matka Table Ends Here ⬆️ */}
         <div className="text-lg font-bold border-1 border-black mt-5 p-1">
           <p className="text-[22px] text-center text-[#00094d]">
-            MILAN MORNING
+            {marketName.toUpperCase()}
           </p>
-          <p className="text-[21px] text-center text-[#880e4f]">580-37-557</p>
+   {lastResult && (
+            <div className="flex justify-center items-center gap-2 mt-2">
+              <span className="text-[18px] text-[#880e4f]">
+                {lastResult.open || "**"}
+              </span>
+              <span className="text-[21px] text-[#880e4f] font-bold">-</span>
+              <span className="text-[21px] text-[#880e4f] font-bold">
+                {lastResult.main}
+              </span>
+              <span className="text-[21px] text-[#880e4f] font-bold">-</span>
+              <span className="text-[18px] text-[#880e4f]">
+                {lastResult.close || "**"}
+              </span>
+            </div>
+          )}
           <button className="bg-[#522f92] px-4 py-1 mx-auto block text-[12px] text-white">
             Refresh Result
           </button>

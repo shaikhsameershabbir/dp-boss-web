@@ -38,3 +38,9 @@ export const getStarlineResult = async () => {
   const response = await serverApiClient.get("/getStarlineResult");
   return response;
 };
+
+// get jodi result
+export const getJodiResult = async (marketId: string) => {
+  const response = await serverApiClient.get(`/getJodiResult/${marketId}`);
+  return response;
+};

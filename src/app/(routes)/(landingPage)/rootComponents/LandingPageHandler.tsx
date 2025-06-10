@@ -36,6 +36,7 @@ interface MarketResult {
   openTime: string;
   closeTime: string;
   yellowEnable: number;
+  marketId: string;
 }
 
 interface MarketResults {
@@ -73,6 +74,9 @@ export default function LandingPageHandler({
     null
   );
   const [starlineResults, setStarlineResults] = useState<StarlineData[]>([]);
+  const [lastStarlineResult, setLastStarlineResult] = useState<string | null>(
+    null
+  );
 
   useEffect(() => {
     if (initialData?.success && initialData?.data) {
@@ -80,6 +84,15 @@ export default function LandingPageHandler({
     }
     if (starlineResult?.success && starlineResult?.data) {
       setStarlineResults(starlineResult.data);
+      const allResults = starlineResult.data.flatMap((starline) =>
+        Object.entries(starline)
+          .filter(([key]) => key !== "starLineName")
+          .map(([_, value]) => value)
+          .filter((value): value is string => value !== null)
+      );
+      if (allResults.length > 0) {
+        setLastStarlineResult(allResults[allResults.length - 1]);
+      }
     }
   }, [initialData, starlineResult]);
 
@@ -102,8 +115,8 @@ export default function LandingPageHandler({
           <MainStarline key={starline.starLineName} data={starline} />
         ))}
 
-        {/* <MrStarlineResult />
-        <Wheel2 /> */}
+        <MrStarlineResult />
+        {lastStarlineResult && <Wheel2 lastNumber={lastStarlineResult} />}
         <SpicalGameZone />
         <MatkajodiList />
         <WeeklyPatti />
