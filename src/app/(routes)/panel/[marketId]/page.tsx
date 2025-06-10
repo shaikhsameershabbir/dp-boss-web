@@ -34,16 +34,53 @@ export default function Panel({
   const resolvedParams = use(params);
   const { marketId } = resolvedParams;
   const [panelData, setPanelData] = useState<PanelWeek[]>([]);
+  const [marketName, setMarketName] = useState<string>("");
+  const [lastResult, setLastResult] = useState<string>("");
 
   useEffect(() => {
     const fetchPanelResult = async () => {
       const response = await getJodiResult(marketId);
+      console.log(response);
+      setMarketName(response.data.marketName);
+
       if (response.success && response.data && response.data.results) {
         setPanelData(response.data.results);
       }
     };
     fetchPanelResult();
   }, [marketId]);
+
+  useEffect(() => {
+    if (panelData.length === 0) {
+      setLastResult("");
+      return;
+    }
+    // Flatten all days into a single array with their values
+    const allResults = panelData
+      .flatMap((week) => [
+        week.monday,
+        week.tuesday,
+        week.wednesday,
+        week.thursday,
+        week.friday,
+        week.saturday,
+        week.sunday,
+      ])
+      .filter((res) => res && res.main);
+
+    if (allResults.length > 0) {
+      const last = allResults[allResults.length - 1];
+      if (last) {
+        setLastResult(
+          [last.open, last.main, last.close].filter(Boolean).join("-")
+        );
+      } else {
+        setLastResult("");
+      }
+    } else {
+      setLastResult("");
+    }
+  }, [panelData]);
 
   const redHighlightedNumbers: string[] = [
     "00",
@@ -96,12 +133,8 @@ export default function Panel({
         </div>
 
         <div className="text-lg font-bold border-1 border-black mt-1 p-1">
-          <p className="text-[22px] text-center text-[#00094d]">
-            {panel.matkaName}
-          </p>
-          <p className="text-[21px] text-center text-[#880e4f]">
-            {panel.winningNumber}
-          </p>
+          <p className="text-[22px] text-center text-[#00094d]">{marketName}</p>
+          <p className="text-[21px] text-center text-[#880e4f]">{lastResult}</p>
           <button className="bg-[#522f92] px-4 py-1 mx-auto block text-[12px] text-white">
             Refresh Result
           </button>
@@ -133,7 +166,7 @@ export default function Panel({
                   <tr className="bg-[#ffc338] text-black">
                     <th
                       className="border-2 border-[#414eb0] bg-[#ffc338] text-black text-sm"
-                      style={{ width: "80px", height: "60px", padding: 0 }}
+                      style={{  padding: 0 }}
                     >
                       Date
                     </th>
@@ -141,7 +174,7 @@ export default function Panel({
                       <th
                         key={day}
                         className="border-2 border-[#414eb0] bg-[#ffc338] text-black text-sm"
-                        style={{ width: "80px", height: "60px", padding: 0 }}
+                        style={{  padding: 0 }}
                       >
                         {day}
                       </th>
@@ -329,65 +362,11 @@ export default function Panel({
         </div>
         {/* ⬆️ Matka Table Ends Here ⬆️ */}
         <div className="text-lg font-bold border-1 border-black mt-5 p-1">
-          <p className="text-[22px] text-center text-[#00094d]">
-            {panel.matkaName}
-          </p>
-          <p className="text-[21px] text-center text-[#880e4f]">
-            {panel.winningNumber}
-          </p>
+          <p className="text-[22px] text-center text-[#00094d]">{marketName}</p>
+          <p className="text-[21px] text-center text-[#880e4f]">{lastResult}</p>
           <button className="bg-[#522f92] px-4 py-1 mx-auto block text-[12px] text-white">
             Refresh Result
           </button>
-        </div>
-        <div className="bg-[#fff] text-lg font-bold border-2 border-[#800080] mt-2 p-1 text-black">
-          <p className="text-[12px] text-center">
-            When you choose DPBoss Services to play your Milan Morning, you will
-            get the game support of professionally trained gamblers. They can
-            help you understand the game rules as well as its payouts
-            thoroughly. They are not only skilled mentors but also very friendly
-            and prepared to always engage with gamblers. Players can make use of
-            the website&apos;s chat function each game to communicate with them,
-            thus they can add a personal touch to their gambling experience.
-          </p>
-          <p className="text-[12px] text-center">
-            On this Satta Matka website, you will be capable of finding and
-            playing an enormous variety of online betting games. The wide range
-            of these games is another reason for the fame of the DPBoss Services
-            betting platform. Whether it is the excitement of Milan Morning or
-            any other Satta Matka game, there is something to outfit the taste
-            of every gambler.
-          </p>
-          <h5 className="text-[15px] text-center text-[#ff0000]">
-            Get Milan Morning Jodi Chart Records Online
-          </h5>
-          <p className="text-[12px] text-center">
-            On DPBoss Services, you will be capable of experiencing the
-            strategic profundity of the unique attraction of every Satta Matka
-            game. This Satta Matka website also features trending betting games,
-            guaranteeing there is something for every novice as well as a
-            veteran gambler. Moreover, all types of Satta Matka games on DPBoss
-            Services will take you to an exciting new level.
-          </p>
-          <h5 className="text-[15px] text-center text-[#ff0000]">
-            Frequently Asked Questions (FAQs):
-          </h5>
-          <p className="text-[12px] text-center">
-            Q1. How the Milan Morning on DPBoss Services is designed?
-          </p>
-          <p className="text-[12px] text-center">
-            The Milan Morning on this Satta Matka betting platform has been
-            designed to offer a show-style gaming experience to all players with
-            a whirlwind of entertainment and excitement.
-          </p>
-          <p className="text-[12px] text-center">
-            Q2. What is the attractive feature of DPBoss Services&apos;s Milan
-            Morning?
-          </p>
-          <p className="text-[12px] text-center">
-            The Milan Morning features colourful graphics and engaging gameplay
-            with a mixture of interactive entertainment and the odds to win
-            hefty money, making every instant thrilling for players.
-          </p>
         </div>
 
         <button
