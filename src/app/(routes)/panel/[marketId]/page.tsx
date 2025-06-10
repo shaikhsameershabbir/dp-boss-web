@@ -130,9 +130,9 @@ export default function Panel({
                 style={{ tableLayout: "fixed", width: "100%" }}
               >
                 <thead>
-                  <tr className="bg-[#ffc338] text-black font-bold">
+                  <tr className="bg-[#ffc338] text-black">
                     <th
-                      className="border-2 border-[#414eb0] bg-[#ffc338] text-black font-bold text-xs"
+                      className="border-2 border-[#414eb0] bg-[#ffc338] text-black text-sm"
                       style={{ width: "80px", height: "60px", padding: 0 }}
                     >
                       Date
@@ -140,7 +140,7 @@ export default function Panel({
                     {dayLabels.map((day) => (
                       <th
                         key={day}
-                        className="border-2 border-[#414eb0] bg-[#ffc338] text-black font-bold text-xs"
+                        className="border-2 border-[#414eb0] bg-[#ffc338] text-black text-sm"
                         style={{ width: "80px", height: "60px", padding: 0 }}
                       >
                         {day}
@@ -176,10 +176,9 @@ export default function Panel({
                           !value ||
                           (!value.open &&
                             (!value.main || value.main === "**") &&
-                            !value.close)
-                            ? true
-                            : false;
-                        if (!value || isStarPattern) {
+                            !value.close);
+
+                        if (isStarPattern) {
                           // Star pattern cell
                           return (
                             <td
@@ -207,18 +206,35 @@ export default function Panel({
                                     }}
                                   >
                                     *
-                                    
                                   </span>
                                 </div>
-                                <div className="flex flex-row justify-center w-full">
+                                <div className="flex flex-row justify-between w-full">
                                   <span
                                     className="text-red-600 font-extrabold"
                                     style={{
-                                      width: "80px",
+                                      width: "16px",
                                       textAlign: "center",
                                     }}
                                   >
-                                    ***
+                                    *
+                                  </span>
+                                  <span
+                                    className="text-red-600 font-extrabold"
+                                    style={{
+                                      width: "28px",
+                                      textAlign: "center",
+                                    }}
+                                  >
+                                    **
+                                  </span>
+                                  <span
+                                    className="text-red-600 font-extrabold"
+                                    style={{
+                                      width: "16px",
+                                      textAlign: "center",
+                                    }}
+                                  >
+                                    *
                                   </span>
                                 </div>
                                 <div className="flex flex-row justify-between w-full">
@@ -246,6 +262,7 @@ export default function Panel({
                             </td>
                           );
                         }
+
                         // Normal open/main/close cell
                         return (
                           <td
