@@ -113,12 +113,6 @@ export default function LandingPageHandler({
         {starlineResults.map((starline, index) => (
           <MainStarline key={starline.starLineName} data={starline} />
         ))}
-        {/* <SpicalGameZone /> */}
-        {/* <MatkajodiList /> */}
-        {/* <WeeklyPatti /> */}
-        {/* <WeeklyLine /> */}
-        {/* <WeeklyJodi /> */}
-        {/* <GameZoneOpenClose /> */}
         <KalyanTable />
         <KalyanNight />
         <SattaMatkaJpdiChart />
