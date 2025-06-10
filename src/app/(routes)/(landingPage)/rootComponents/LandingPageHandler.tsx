@@ -101,9 +101,9 @@ export default function LandingPageHandler({
         {starlineResults.map((starline, index) => (
           <MainStarline key={starline.starLineName} data={starline} />
         ))}
-        <Wheel />
-        <MrStarlineResult />
-        <Wheel2 />
+
+        {/* <MrStarlineResult />
+        <Wheel2 /> */}
         <SpicalGameZone />
         <MatkajodiList />
         <WeeklyPatti />

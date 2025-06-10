@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Wheel } from "../StaticPage/wheel";
 
 interface StarlineData {
   starLineName: string;
@@ -14,11 +15,21 @@ interface MainStarlineProps {
 export default function MainStarline({ data }: MainStarlineProps) {
   // Get all time slots from the data
   const timeSlots = Object.keys(data).filter((key) => key !== "starLineName");
-
+  const [lastNumber, setLastNumber] = useState<string | null>(null);
   // Split time slots into two columns
   const middle = Math.ceil(timeSlots.length / 2);
   const leftColumn = timeSlots.slice(0, middle);
   const rightColumn = timeSlots.slice(middle);
+
+  useEffect(() => {
+    // Find the last non-null result
+    for (let i = timeSlots.length - 1; i >= 0; i--) {
+      if (data[timeSlots[i]] !== null) {
+        setLastNumber(data[timeSlots[i]]);
+        break;
+      }
+    }
+  }, [data, timeSlots]);
 
   return (
     <>
@@ -52,22 +63,22 @@ export default function MainStarline({ data }: MainStarlineProps) {
                   {leftColumn[index] || ""}
                 </td>
                 <td className="border border-red-500">
-                  {leftColumn[index] ? data[leftColumn[index]] || "XXX-X" : ""}
+                  {leftColumn[index] ? data[leftColumn[index]] || "" : ""}
                 </td>
                 {/* Right Column */}
                 <td className="border border-red-500">
                   {rightColumn[index] || ""}
                 </td>
                 <td className="border border-red-500">
-                  {rightColumn[index]
-                    ? data[rightColumn[index]] || "XXX-X"
-                    : ""}
+                  {rightColumn[index] ? data[rightColumn[index]] || "" : ""}
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+      {/* pass the last existing number to the wheel */}
+      {lastNumber && <Wheel lastNumber={lastNumber} />}
     </>
   );
 }
