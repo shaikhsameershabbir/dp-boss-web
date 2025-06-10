@@ -39,6 +39,14 @@ export const getStarlineResult = async () => {
   return response;
 };
 
+// get starline result by id
+export const getStarlineResultById = async (starlineId: string) => {
+  const response = await serverApiClient.get(
+    `/getStarlineResultById/${starlineId}`
+  );
+  return response;
+};
+
 // get jodi result
 export const getJodiResult = async (marketId: string) => {
   const response = await serverApiClient.get(`/getJodiResult/${marketId}`);
