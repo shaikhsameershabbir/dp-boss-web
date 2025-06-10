@@ -12,23 +12,7 @@ export default function MrStarlineResult() {
     const [data, setData] = useState<StarlineResult[]>([]);
 
     // Dummy data (replace with API call later)
-    useEffect(() => {
-        const dummyData: StarlineResult[] = [
-            { time: "09:05 AM", result: "589-2" },
-            { time: "10:05 AM", result: "389-0" },
-            { time: "11:05 AM", result: "550-0" },
-            { time: "12:05 PM", result: "370-0" },
-            { time: "01:05 PM", result: "489-1" },
-            { time: "02:05 PM", result: "779-3" },
-            { time: "03:05 PM", result: "223-7" },
-            { time: "04:05 PM", result: "349-6" },
-            { time: "05:05 PM", result: "XXX-X" },
-            { time: "06:05 PM", result: "XXX-X" },
-            { time: "07:05 PM", result: "XXX-X" },
-            { time: "08:05 PM", result: "XXX-X" },
-        ];
-        setData(dummyData);
-    }, []);
+
 
     // Split the data into two columns
     const middle = Math.ceil(data.length / 2);

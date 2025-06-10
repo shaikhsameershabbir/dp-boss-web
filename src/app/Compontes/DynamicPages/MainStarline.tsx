@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Wheel } from "../StaticPage/wheel";
+import Link from "next/link";
 
 interface StarlineData {
   starLineName: string;
@@ -34,13 +35,25 @@ export default function MainStarline({ data }: MainStarlineProps) {
   return (
     <>
       <div className="text-xl font-bold border-2 border-[#000] rounded-[10px] bg-[#ffd902] m-2 p-1">
-        <h3
-          className="text-black italic font-bold text-center"
-          style={{ textShadow: "2px 2px 4px white" }}
-        >
-          {data.starLineName.toUpperCase()}
-        </h3>
+        <div className="flex">
+          <div className="w-3/2">
+            <h3
+              className="text-black italic font-bold text-center"
+              style={{ textShadow: "2px 2px 4px white" }}
+            >
+              {data.starLineName.toUpperCase()}
+            </h3>
+          </div>
+          <div>
+            <Link href={`/starlinePanel/${data.starLineId}`}>
+              <button className=" bg-[#522f92] text-white text-[12px] font-bold px-3 py-[2px] rounded-[7px] italic cursor-pointer">
+                Panel
+              </button>
+            </Link>
+          </div>
+        </div>
       </div>
+
       <div className="border-1 border-red-500 overflow-x-auto m-2">
         {/* Table */}
         <table className="w-full border-collapse text-lg font-bold italic text-center">

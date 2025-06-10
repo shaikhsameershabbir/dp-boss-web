@@ -26,8 +26,6 @@ import SpicalGameZone from "../../../Compontes/StaticPage/SpicalGameZone";
 import { WeeklyJodi } from "../../../Compontes/StaticPage/WeeklyJodi";
 import { WeeklyLine } from "../../../Compontes/StaticPage/WeeklyLine";
 import { WeeklyPatti } from "../../../Compontes/StaticPage/WeeklyPatti";
-import { Wheel } from "../../../Compontes/StaticPage/wheel";
-import { Wheel2 } from "../../../Compontes/StaticPage/wheel2";
 
 /* eslint-disable @next/next/no-img-element */
 interface MarketResult {
@@ -95,6 +93,7 @@ export default function LandingPageHandler({
       }
     }
   }, [initialData, starlineResult]);
+  console.log(starlineResults);
 
   return (
     <>
@@ -114,9 +113,6 @@ export default function LandingPageHandler({
         {starlineResults.map((starline, index) => (
           <MainStarline key={starline.starLineName} data={starline} />
         ))}
-
-        <MrStarlineResult />
-        {lastStarlineResult && <Wheel2 lastNumber={lastStarlineResult} />}
         <SpicalGameZone />
         <MatkajodiList />
         <WeeklyPatti />
