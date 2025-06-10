@@ -125,20 +125,23 @@ export default function Panel({
               MILAN MORNING MATKA PANEL RECORD 2019 - 2025
             </div>
             <div className="overflow-x-auto">
-              <table className="w-full border-2 border-[#414eb0] text-center">
+              <table
+                className="w-full border-2 border-[#414eb0] text-center"
+                style={{ tableLayout: "fixed", width: "100%" }}
+              >
                 <thead>
                   <tr className="bg-[#ffc338] text-black font-bold">
                     <th
-                      className="border-2 border-[#414eb0] text-xs sm:text-sm px-1 py-1 whitespace-nowrap"
-                      style={{ minWidth: "60px" }}
+                      className="border-2 border-[#414eb0] bg-[#ffc338] text-black font-bold text-xs"
+                      style={{ width: "80px", height: "60px", padding: 0 }}
                     >
                       Date
                     </th>
                     {dayLabels.map((day) => (
                       <th
                         key={day}
-                        className="border-2 border-[#414eb0] text-xs sm:text-sm px-1 py-1 whitespace-nowrap"
-                        style={{ minWidth: "45px" }}
+                        className="border-2 border-[#414eb0] bg-[#ffc338] text-black font-bold text-xs"
+                        style={{ width: "80px", height: "60px", padding: 0 }}
                       >
                         {day}
                       </th>
@@ -149,16 +152,25 @@ export default function Panel({
                   {panelData.map((week, i) => (
                     <tr key={i}>
                       <td
-                        className="border-2 border-[#414eb0] text-xs sm:text-sm font-bold whitespace-pre-line px-1 py-1 align-middle"
-                        style={{ minWidth: "60px" }}
+                        className="border-2 border-[#414eb0] text-xs sm:text-sm font-bold whitespace-pre-line align-middle p-0"
+                        style={{ width: "80px", height: "60px" }}
                       >
-                        {new Date(week.startDate).toLocaleDateString()}
-                        <br />
-                        to
-                        <br />
-                        {new Date(week.endDate).toLocaleDateString()}
+                        <div className="w-full h-full flex items-center justify-center flex-col">
+                          {new Date(week.startDate).toLocaleDateString()}
+                          <br />
+                          to
+                          <br />
+                          {new Date(week.endDate).toLocaleDateString()}
+                        </div>
                       </td>
                       {days.map((day, idx) => {
+                        // Calculate the date for this cell
+                        const cellDate = new Date(week.startDate);
+                        cellDate.setDate(cellDate.getDate() + idx);
+                        const today = new Date();
+                        today.setHours(0, 0, 0, 0);
+                        if (cellDate > today) return null; // Do not render future cells
+
                         const value = week[day];
                         const isStarPattern =
                           !value ||
@@ -167,19 +179,15 @@ export default function Panel({
                             !value.close)
                             ? true
                             : false;
-                        if (!value) {
-                          // If value is null, show star pattern
+                        if (!value || isStarPattern) {
+                          // Star pattern cell
                           return (
                             <td
                               key={day}
                               className="border-2 border-[#414eb0] p-0 text-xs sm:text-sm align-middle"
-                              style={{
-                                width: "60px",
-                                height: "60px",
-                                padding: 0,
-                              }}
+                              style={{ width: "80px", height: "60px" }}
                             >
-                              <div className="flex flex-col items-center justify-center h-full w-full">
+                              <div className="w-full h-full flex flex-col items-center justify-center">
                                 <div className="flex flex-row justify-between w-full">
                                   <span
                                     className="text-red-600 font-extrabold"
@@ -199,13 +207,14 @@ export default function Panel({
                                     }}
                                   >
                                     *
+                                    
                                   </span>
                                 </div>
                                 <div className="flex flex-row justify-center w-full">
                                   <span
                                     className="text-red-600 font-extrabold"
                                     style={{
-                                      width: "60px",
+                                      width: "80px",
                                       textAlign: "center",
                                     }}
                                   >
@@ -237,86 +246,14 @@ export default function Panel({
                             </td>
                           );
                         }
-                        if (isStarPattern) {
-                          return (
-                            <td
-                              key={day}
-                              className="border-2 border-[#414eb0] p-0 text-xs sm:text-sm align-middle"
-                              style={{
-                                width: "60px",
-                                height: "60px",
-                                padding: 0,
-                              }}
-                            >
-                              <div className="flex flex-col items-center justify-center h-full w-full">
-                                <div className="flex flex-row justify-between w-full">
-                                  <span
-                                    className="text-red-600 font-extrabold"
-                                    style={{
-                                      width: "16px",
-                                      textAlign: "center",
-                                    }}
-                                  >
-                                    *
-                                  </span>
-                                  <span style={{ width: "28px" }}></span>
-                                  <span
-                                    className="text-red-600 font-extrabold"
-                                    style={{
-                                      width: "16px",
-                                      textAlign: "center",
-                                    }}
-                                  >
-                                    *
-                                  </span>
-                                </div>
-                                <div className="flex flex-row justify-center w-full">
-                                  <span
-                                    className="text-red-600 font-extrabold"
-                                    style={{
-                                      width: "60px",
-                                      textAlign: "center",
-                                    }}
-                                  >
-                                    ***
-                                  </span>
-                                </div>
-                                <div className="flex flex-row justify-between w-full">
-                                  <span
-                                    className="text-red-600 font-extrabold"
-                                    style={{
-                                      width: "16px",
-                                      textAlign: "center",
-                                    }}
-                                  >
-                                    *
-                                  </span>
-                                  <span style={{ width: "28px" }}></span>
-                                  <span
-                                    className="text-red-600 font-extrabold"
-                                    style={{
-                                      width: "16px",
-                                      textAlign: "center",
-                                    }}
-                                  >
-                                    *
-                                  </span>
-                                </div>
-                              </div>
-                            </td>
-                          );
-                        }
+                        // Normal open/main/close cell
                         return (
                           <td
                             key={day}
-                            className="border-2 border-[#414eb0] px-0 py-0 text-xs sm:text-sm align-middle"
-                            style={{
-                              minWidth: "45px",
-                              height: "60px",
-                              padding: 0,
-                            }}
+                            className="border-2 border-[#414eb0] p-0 text-xs sm:text-sm align-middle"
+                            style={{ width: "80px", height: "60px" }}
                           >
-                            <div className="flex flex-row items-stretch justify-center h-full w-full">
+                            <div className="w-full h-full flex flex-row items-center justify-center">
                               {/* Open vertical */}
                               <div className="flex flex-col items-center justify-center flex-1 leading-none">
                                 {(value.open || "").split("").map((ch, idx) => (
