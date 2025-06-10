@@ -240,7 +240,7 @@ export default function Jodi({
           <p className="text-[22px] text-center text-[#00094d]">
             {marketName.toUpperCase()}
           </p>
-   {lastResult && (
+          {lastResult && (
             <div className="flex justify-center items-center gap-2 mt-2">
               <span className="text-[18px] text-[#880e4f]">
                 {lastResult.open || "**"}
