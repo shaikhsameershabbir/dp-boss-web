@@ -264,13 +264,20 @@ export default function Panel({
                         }
 
                         // Normal open/main/close cell
+                        const isRed = redHighlightedNumbers.includes(
+                          value.main
+                        );
                         return (
                           <td
                             key={day}
                             className="border-2 border-[#414eb0] p-0 text-xs sm:text-sm align-middle"
                             style={{ width: "80px", height: "60px" }}
                           >
-                            <div className="w-full h-full flex flex-row items-center justify-center">
+                            <div
+                              className={`w-full h-full flex flex-row items-center justify-center ${
+                                isRed ? "text-red-600" : ""
+                              }`}
+                            >
                               {/* Open vertical */}
                               <div className="flex flex-col items-center justify-center flex-1 leading-none">
                                 {(value.open || "").split("").map((ch, idx) => (
@@ -290,11 +297,6 @@ export default function Panel({
                                   style={{
                                     lineHeight: "1",
                                     textAlign: "center",
-                                    color: redHighlightedNumbers.includes(
-                                      value.main
-                                    )
-                                      ? "#d32f2f"
-                                      : "#222",
                                   }}
                                 >
                                   {value.main}
