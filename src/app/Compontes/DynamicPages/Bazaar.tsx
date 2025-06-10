@@ -60,7 +60,7 @@ export default function Bazaar({ marketResults }: BazaarProps) {
           </Link>
 
           {/* Right Button */}
-          <Link href="/panel">
+          <Link href={`/panel/${item.marketId}`}>
             <button className="absolute right-1 top-1/2 -translate-y-1/2 bg-[#522f92] text-white text-[12px] font-bold px-3 py-[2px] rounded-[7px] italic cursor-pointer">
               Panel
             </button>

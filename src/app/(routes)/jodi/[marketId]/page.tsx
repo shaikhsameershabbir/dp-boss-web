@@ -67,6 +67,7 @@ export default function Jodi({
   };
 
   useEffect(() => {
+    
     const fetchJodiResult = async () => {
       const response = await getJodiResult(marketId);
       if (response.success && response.data) {
