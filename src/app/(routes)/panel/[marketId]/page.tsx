@@ -157,7 +157,7 @@ export default function Panel({
                           return (
                             <td
                               key={day}
-                              className="border-2 border-[#03a9f4a8] px-1 sm:px-2 py-1 text-xs sm:text-sm"
+                              className="border-2 border-[#03a9f4a8]  sm:px-2  text-xs sm:text-sm"
                             ></td>
                           );
                         }
@@ -166,9 +166,9 @@ export default function Panel({
                             key={day}
                             className="border-2 border-[#03a9f4a8] px-1 sm:px-2 py-1 text-xs sm:text-sm"
                           >
-                            <div className="flex flex-row items-center justify-center h-full gap-1 xs:gap-2 sm:gap-3">
+                            <div className="flex flex-row items-center justify-center h-full  xs:gap-2 sm:gap-3">
                               {/* Open vertical */}
-                              <div className="flex flex-col items-center mr-1">
+                              <div className="flex flex-col items-center ">
                                 {(value.open || "").split("").map((ch, idx) => (
                                   <span
                                     key={idx}
