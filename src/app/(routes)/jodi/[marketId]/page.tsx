@@ -56,42 +56,126 @@ export default function Jodi({
     main: string;
     close?: string;
   } | null>(null);
+  const [rawResults, setRawResults] = useState<JodiResult[]>([]);
+
+  const isFutureDay = (weekStartDate: string, dayIndex: number) => {
+    const today = new Date();
+    const weekDate = new Date(weekStartDate);
+    const dayDate = new Date(weekDate);
+    dayDate.setDate(weekDate.getDate() + dayIndex);
+    return dayDate > today;
+  };
 
   useEffect(() => {
     const fetchJodiResult = async () => {
       const response = await getJodiResult(marketId);
       if (response.success && response.data) {
         setMarketName(response.data.marketName);
+        setRawResults(response.data.results);
+
         // Transform the API data into our display format
         const transformedData = response.data.results.map(
-          (week: JodiResult) => ({
-            Mon: week.monday?.main || "",
-            Tue: week.tuesday?.main || "",
-            Wed: week.wednesday?.main || "",
-            Thu: week.thursday?.main || "",
-            Fri: week.friday?.main || "",
-            Sat: week.saturday?.main || "",
-            Sun: week.sunday?.main || "",
-          })
+          (week: JodiResult) => {
+            const weekStartDate = new Date(week.startDate);
+            return {
+              Mon: isFutureDay(week.startDate, 0)
+                ? ""
+                : week.monday?.main || "**",
+              Tue: isFutureDay(week.startDate, 1)
+                ? ""
+                : week.tuesday?.main || "**",
+              Wed: isFutureDay(week.startDate, 2)
+                ? ""
+                : week.wednesday?.main || "**",
+              Thu: isFutureDay(week.startDate, 3)
+                ? ""
+                : week.thursday?.main || "**",
+              Fri: isFutureDay(week.startDate, 4)
+                ? ""
+                : week.friday?.main || "**",
+              Sat: isFutureDay(week.startDate, 5)
+                ? ""
+                : week.saturday?.main || "**",
+              Sun: isFutureDay(week.startDate, 6)
+                ? ""
+                : week.sunday?.main || "**",
+            };
+          }
         );
         setJodiData(transformedData);
 
         // Find the last existing result
         const allResults = response.data.results
           .flatMap((week: JodiResult) => [
-            { day: "monday", data: week.monday },
-            { day: "tuesday", data: week.tuesday },
-            { day: "wednesday", data: week.wednesday },
-            { day: "thursday", data: week.thursday },
-            { day: "friday", data: week.friday },
-            { day: "saturday", data: week.saturday },
-            { day: "sunday", data: week.sunday },
+            {
+              day: "monday",
+              data: week.monday,
+              date: new Date(week.startDate),
+            },
+            {
+              day: "tuesday",
+              data: week.tuesday,
+              date: new Date(
+                new Date(week.startDate).setDate(
+                  new Date(week.startDate).getDate() + 1
+                )
+              ),
+            },
+            {
+              day: "wednesday",
+              data: week.wednesday,
+              date: new Date(
+                new Date(week.startDate).setDate(
+                  new Date(week.startDate).getDate() + 2
+                )
+              ),
+            },
+            {
+              day: "thursday",
+              data: week.thursday,
+              date: new Date(
+                new Date(week.startDate).setDate(
+                  new Date(week.startDate).getDate() + 3
+                )
+              ),
+            },
+            {
+              day: "friday",
+              data: week.friday,
+              date: new Date(
+                new Date(week.startDate).setDate(
+                  new Date(week.startDate).getDate() + 4
+                )
+              ),
+            },
+            {
+              day: "saturday",
+              data: week.saturday,
+              date: new Date(
+                new Date(week.startDate).setDate(
+                  new Date(week.startDate).getDate() + 5
+                )
+              ),
+            },
+            {
+              day: "sunday",
+              data: week.sunday,
+              date: new Date(
+                new Date(week.startDate).setDate(
+                  new Date(week.startDate).getDate() + 6
+                )
+              ),
+            },
           ])
           .filter(
             (result: {
               day: string;
               data: { main: string; open?: string; close?: string } | null;
-            }) => result.data !== null
+              date: Date;
+            }) => {
+              const today = new Date();
+              return result.data !== null && result.date <= today;
+            }
           );
 
         if (allResults.length > 0) {
@@ -212,22 +296,46 @@ export default function Jodi({
                 <tbody className="text-black bg-orange-200">
                   {jodiData.map((row, i) => (
                     <tr key={i}>
-                      {days.map((day) => (
-                        <td
-                          key={day}
-                          className={`border-2 border-blue-800 px-2 text-[24px] font-bold py-1 ${
-                            HighlightedNumbers.includes(row[day])
-                              ? "text-red-600 font-semibold"
-                              : ""
-                          }`}
-                        >
-                          {row[day] ? (
-                            row[day]
-                          ) : (
-                            <span className="text-red-600">**</span>
-                          )}
-                        </td>
-                      ))}
+                      {days.map((day, dayIdx) => {
+                        // Calculate the date for this cell
+                        const week = rawResults[i] || null;
+                        let cellDate: Date | null = null;
+                        if (week) {
+                          const weekStart = new Date(week.startDate);
+                          cellDate = new Date(weekStart);
+                          cellDate.setDate(weekStart.getDate() + dayIdx);
+                        }
+                        const today = new Date();
+                        today.setHours(0, 0, 0, 0);
+                        const isFuture = cellDate && cellDate > today;
+                        const isToday =
+                          cellDate && cellDate.getTime() === today.getTime();
+                        const value = row[day];
+                        return (
+                          <td
+                            key={day}
+                            className={`border-2 border-blue-800 px-2 text-[24px] font-bold py-1 ${
+                              HighlightedNumbers.includes(value)
+                                ? "text-red-600 font-semibold"
+                                : ""
+                            }`}
+                          >
+                            {isFuture ? (
+                              ""
+                            ) : isToday ? (
+                              value && value !== "**" ? (
+                                value
+                              ) : (
+                                ""
+                              )
+                            ) : value && value !== "**" ? (
+                              value
+                            ) : (
+                              <span className="text-red-600">**</span>
+                            )}
+                          </td>
+                        );
+                      })}
                     </tr>
                   ))}
                 </tbody>
