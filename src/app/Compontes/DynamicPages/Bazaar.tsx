@@ -5,6 +5,7 @@ import { Bazzar } from "@/app/constant/constant";
 import Link from "next/link";
 
 interface ResultItem {
+  marketId: string;
   marketName: string;
   result: string;
   openTime: string;
@@ -52,7 +53,7 @@ export default function Bazaar({ marketResults }: BazaarProps) {
           }}
         >
           {/* Left Button */}
-          <Link href="/jodi">
+          <Link href={`/jodi/${item.marketId}`}>
             <button className="absolute left-1 top-1/2 -translate-y-1/2 bg-[#522f92] text-white text-[12px] font-bold px-3 py-[2px] rounded-[7px] italic cursor-pointer">
               Jodi
             </button>
