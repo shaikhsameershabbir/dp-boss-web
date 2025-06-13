@@ -1,12 +1,10 @@
 "use client";
 
-/* eslint-disable @next/next/no-img-element */
-/* eslint-disable jsx-a11y/alt-text */
-
 import Link from "next/link";
 import { copywrite, gameConfigurtion } from "@/app/constant/constant";
 import { useEffect, useState, use } from "react";
 import { getJodiResult } from "@/app/api/api";
+import Image from "next/image";
 
 // Define a type for the API response
 interface JodiResult {
@@ -23,15 +21,6 @@ interface JodiResult {
   saturday: { main: string; open?: string; close?: string } | null;
   sunday: { main: string; open?: string; close?: string } | null;
   createdAt: string;
-}
-
-interface ApiResponse {
-  success: boolean;
-  message: string;
-  data: {
-    marketName: string;
-    results: JodiResult[];
-  };
 }
 
 // Define a type for the days
@@ -67,7 +56,6 @@ export default function Jodi({
   };
 
   useEffect(() => {
-    
     const fetchJodiResult = async () => {
       const response = await getJodiResult(marketId);
       if (response.success && response.data) {
@@ -77,7 +65,6 @@ export default function Jodi({
         // Transform the API data into our display format
         const transformedData = response.data.results.map(
           (week: JodiResult) => {
-            const weekStartDate = new Date(week.startDate);
             return {
               Mon: isFutureDay(week.startDate, 0)
                 ? ""
@@ -193,7 +180,8 @@ export default function Jodi({
     };
     fetchJodiResult();
   }, [marketId]);
-
+  
+  
   const days: Day[] = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
   const HighlightedNumbers = [
     "44",
@@ -208,245 +196,240 @@ export default function Jodi({
   ];
 
   return (
-    <>
-      <div className="bg-[#fc9] min-h-screen py-1">
-        <div className="border-3 border-[#ff0016] flex justify-center items-center rounded-lg shadow-md bg-[#fc9]">
-          <Link href="/">
-            <img
-              src={`/${gameConfigurtion.gameLogo}`}
-              height={250}
-              width={300}
-              alt="game logo"
-            />
-          </Link>
-        </div>
+    <div className="bg-[#fc9] min-h-screen py-1">
+      <div className="border-3 border-[#ff0016] flex justify-center items-center rounded-lg shadow-md bg-[#fc9]">
+        <Link href="/">
+          <Image
+            src={`/${gameConfigurtion.gameLogo}`}
+            height={250}
+            width={300}
+            alt="game logo"
+          />
+        </Link>
+      </div>
 
-        <div className="text-lg font-bold border-3 border-[#ffff] bg-[#ff00a2] mt-1 p-1">
-          <h3
-            className="text-white italic font-bold text-center"
-            style={{ textShadow: "2px 2px 4px black" }}
-          >
-            {marketName.toUpperCase()} JODI CHART
-          </h3>
-        </div>
-
-        <div className="text-lg font-bold border-3 border-[#ff0016] mt-1 p-1">
-          <p className="text-sm text-center text-[#00094d]">
-            {marketName.toUpperCase()} JODI RESULT CHART RECORDS
-          </p>
-          <p className="text-xs text-center text-[#00094d]">
-            Dpboss {marketName.toUpperCase()} jodi chart,{" "}
-            {marketName.toUpperCase()} jodi chart, old{" "}
-            {marketName.toUpperCase()}
-            jodi chart, dpboss {marketName.toUpperCase()} chart...
-          </p>
-        </div>
-
-        <div className="text-lg font-bold border-1 border-black mt-1 p-1">
-          <p className="text-[22px] text-center text-[#00094d]">
-            {marketName.toUpperCase()}
-          </p>
-          {lastResult && (
-            <div className="flex justify-center items-center gap-2 mt-2">
-              <span className="text-[18px] text-[#880e4f]">
-                {lastResult.open || "**"}
-              </span>
-              <span className="text-[21px] text-[#880e4f] font-bold">-</span>
-              <span className="text-[21px] text-[#880e4f] font-bold">
-                {lastResult.main}
-              </span>
-              <span className="text-[21px] text-[#880e4f] font-bold">-</span>
-              <span className="text-[18px] text-[#880e4f]">
-                {lastResult.close || "**"}
-              </span>
-            </div>
-          )}
-          <button className="bg-[#522f92] px-4 py-1 mx-auto block text-[12px] text-white mt-2">
-            Refresh Result
-          </button>
-        </div>
-
-        <button
-          className="bg-[#a0d5ff] px-12 py-3 mx-auto block text-[14px] text-[#220c82] mt-2 font-bold"
-          style={{
-            textShadow: "1px 1px #00bcd4",
-            boxShadow:
-              "0 8px 10px 0 rgba(0,0,0,.2), 0 6px 8px 0 rgba(0,0,0,.19)",
-          }}
+      <div className="text-lg font-bold border-3 border-[#ffff] bg-[#ff00a2] mt-1 p-1">
+        <h3
+          className="text-white italic font-bold text-center"
+          style={{ textShadow: "2px 2px 4px black" }}
         >
-          Go to Bottom
-        </button>
+          {marketName.toUpperCase()} JODI CHART
+        </h3>
+      </div>
 
-        {/* ⬇️ Matka Table Starts Here ⬇️ */}
-        <div className="w-full overflow-x-auto mt-2 px-2">
-          <div className="max-w-[90%] sm:max-w-[80%] md:max-w-[70%] lg:max-w-[60%] xl:max-w-[50%] mx-auto">
-            <div className="text-center font-bold text-white bg-[#414eb0] text-[16px]">
-              MILAN MORNING MATKA JODI RECORD 2019 - 2025
-            </div>
-            <div className="overflow-auto">
-              <table className="min-w-full border border-blue-800 text-center text-sm sm:text-base">
-                <thead>
-                  <tr className="bg-yellow-400 text-black font-bold">
-                    {days.map((day) => (
-                      <th key={day} className="border-2 border-blue-800 px-2">
-                        {day}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody className="text-black bg-orange-200">
-                  {jodiData.map((row, i) => (
-                    <tr key={i}>
-                      {days.map((day, dayIdx) => {
-                        // Calculate the date for this cell
-                        const week = rawResults[i] || null;
-                        let cellDate: Date | null = null;
-                        if (week) {
-                          const weekStart = new Date(week.startDate);
-                          cellDate = new Date(weekStart);
-                          cellDate.setDate(weekStart.getDate() + dayIdx);
-                        }
-                        const today = new Date();
-                        today.setHours(0, 0, 0, 0);
-                        const isFuture = cellDate && cellDate > today;
-                        const isToday =
-                          cellDate && cellDate.getTime() === today.getTime();
-                        const value = row[day];
-                        return (
-                          <td
-                            key={day}
-                            className={`border-2 border-blue-800 px-2 text-[24px] font-bold py-1 ${
-                              HighlightedNumbers.includes(value)
-                                ? "text-red-600 font-semibold"
-                                : ""
-                            }`}
-                          >
-                            {isFuture ? (
-                              ""
-                            ) : isToday ? (
-                              value && value !== "**" ? (
-                                value
-                              ) : (
-                                ""
-                              )
-                            ) : value && value !== "**" ? (
+      <div className="text-lg font-bold border-3 border-[#ff0016] mt-1 p-1">
+        <p className="text-sm text-center text-[#00094d]">
+          {marketName.toUpperCase()} JODI RESULT CHART RECORDS
+        </p>
+        <p className="text-xs text-center text-[#00094d]">
+          Dpboss {marketName.toUpperCase()} jodi chart,{" "}
+          {marketName.toUpperCase()} jodi chart, old {marketName.toUpperCase()}
+          jodi chart, dpboss {marketName.toUpperCase()} chart...
+        </p>
+      </div>
+
+      <div className="text-lg font-bold border-1 border-black mt-1 p-1">
+        <p className="text-[22px] text-center text-[#00094d]">
+          {marketName.toUpperCase()}
+        </p>
+        {lastResult && (
+          <div className="flex justify-center items-center gap-2 mt-2">
+            <span className="text-[18px] text-[#880e4f]">
+              {lastResult.open || "**"}
+            </span>
+            <span className="text-[21px] text-[#880e4f] font-bold">-</span>
+            <span className="text-[21px] text-[#880e4f] font-bold">
+              {lastResult.main}
+            </span>
+            <span className="text-[21px] text-[#880e4f] font-bold">-</span>
+            <span className="text-[18px] text-[#880e4f]">
+              {lastResult.close || "**"}
+            </span>
+          </div>
+        )}
+        <button className="bg-[#522f92] px-4 py-1 mx-auto block text-[12px] text-white mt-2">
+          Refresh Result
+        </button>
+      </div>
+
+      <button
+        className="bg-[#a0d5ff] px-12 py-3 mx-auto block text-[14px] text-[#220c82] mt-2 font-bold"
+        style={{
+          textShadow: "1px 1px #00bcd4",
+          boxShadow: "0 8px 10px 0 rgba(0,0,0,.2), 0 6px 8px 0 rgba(0,0,0,.19)",
+        }}
+      >
+        Go to Bottom
+      </button>
+
+      {/* ⬇️ Matka Table Starts Here ⬇️ */}
+      <div className="w-full overflow-x-auto mt-2 px-2">
+        <div className="max-w-[90%] sm:max-w-[80%] md:max-w-[70%] lg:max-w-[60%] xl:max-w-[50%] mx-auto">
+          <div className="text-center font-bold text-white bg-[#414eb0] text-[16px]">
+            MILAN MORNING MATKA JODI RECORD 2019 - 2025
+          </div>
+          <div className="overflow-auto">
+            <table className="min-w-full border border-blue-800 text-center text-sm sm:text-base">
+              <thead>
+                <tr className="bg-yellow-400 text-black font-bold">
+                  {days.map((day) => (
+                    <th key={day} className="border-2 border-blue-800 px-2">
+                      {day}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody className="text-black bg-orange-200">
+                {jodiData.map((row, i) => (
+                  <tr key={i}>
+                    {days.map((day, dayIdx) => {
+                      // Calculate the date for this cell
+                      const week = rawResults[i] || null;
+                      let cellDate: Date | null = null;
+                      if (week) {
+                        const weekStart = new Date(week.startDate);
+                        cellDate = new Date(weekStart);
+                        cellDate.setDate(weekStart.getDate() + dayIdx);
+                      }
+                      const today = new Date();
+                      today.setHours(0, 0, 0, 0);
+                      const isFuture = cellDate && cellDate > today;
+                      const isToday =
+                        cellDate && cellDate.getTime() === today.getTime();
+                      const value = row[day];
+                      return (
+                        <td
+                          key={day}
+                          className={`border-2 border-blue-800 px-2 text-[24px] font-bold py-1 ${
+                            HighlightedNumbers.includes(value)
+                              ? "text-red-600 font-semibold"
+                              : ""
+                          }`}
+                        >
+                          {isFuture ? (
+                            ""
+                          ) : isToday ? (
+                            value && value !== "**" ? (
                               value
                             ) : (
-                              <span className="text-red-600">**</span>
-                            )}
-                          </td>
-                        );
-                      })}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                              ""
+                            )
+                          ) : value && value !== "**" ? (
+                            value
+                          ) : (
+                            <span className="text-red-600">**</span>
+                          )}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
-        {/* ⬆️ Matka Table Ends Here ⬆️ */}
-        <div className="text-lg font-bold border-1 border-black mt-5 p-1">
-          <p className="text-[22px] text-center text-[#00094d]">
-            {marketName.toUpperCase()}
-          </p>
-          {lastResult && (
-            <div className="flex justify-center items-center gap-2 mt-2">
-              <span className="text-[18px] text-[#880e4f]">
-                {lastResult.open || "**"}
-              </span>
-              <span className="text-[21px] text-[#880e4f] font-bold">-</span>
-              <span className="text-[21px] text-[#880e4f] font-bold">
-                {lastResult.main}
-              </span>
-              <span className="text-[21px] text-[#880e4f] font-bold">-</span>
-              <span className="text-[18px] text-[#880e4f]">
-                {lastResult.close || "**"}
-              </span>
-            </div>
-          )}
-          <button className="bg-[#522f92] px-4 py-1 mx-auto block text-[12px] text-white">
-            Refresh Result
-          </button>
-        </div>
-        <div className="bg-[#fff] text-lg font-bold border-2 border-[#800080] mt-2 p-1 text-black">
-          <p className="text-[12px] text-center">
-            When you choose DPBoss Services to play your Milan Morning, you will
-            get the game support of professionally trained gamblers. They can
-            help you understand the game rules as well as its payouts
-            thoroughly. They are not only skilled mentors but also very friendly
-            and prepared to always engage with gamblers. Players can make use of
-            the website&apos;s chat function each game to communicate with them,
-            thus they can add a personal touch to their gambling experience.
-          </p>
-          <p className="text-[12px] text-center">
-            On this Satta Matka website, you will be capable of finding and
-            playing an enormous variety of online betting games. The wide range
-            of these games is another reason for the fame of the DPBoss Services
-            betting platform. Whether it is the excitement of Milan Morning or
-            any other Satta Matka game, there is something to outfit the taste
-            of every gambler.
-          </p>
-          <h5 className="text-[15px] text-center text-[#ff0000]">
-            Get Milan Morning Jodi Chart Records Online
-          </h5>
-          <p className="text-[12px] text-center">
-            On DPBoss Services, you will be capable of experiencing the
-            strategic profundity of the unique attraction of every Satta Matka
-            game. This Satta Matka website also features trending betting games,
-            guaranteeing there is something for every novice as well as a
-            veteran gambler. Moreover, all types of Satta Matka games on DPBoss
-            Services will take you to an exciting new level.
-          </p>
-          <h5 className="text-[15px] text-center text-[#ff0000]">
-            Frequently Asked Questions (FAQs):
-          </h5>
-          <p className="text-[12px] text-center">
-            Q1. How the Milan Morning on DPBoss Services is designed?
-          </p>
-          <p className="text-[12px] text-center">
-            The Milan Morning on this Satta Matka betting platform has been
-            designed to offer a show-style gaming experience to all players with
-            a whirlwind of entertainment and excitement.
-          </p>
-          <p className="text-[12px] text-center">
-            Q2. What is the attractive feature of DPBoss Services&apos;s Milan
-            Morning?
-          </p>
-          <p className="text-[12px] text-center">
-            The Milan Morning features colourful graphics and engaging gameplay
-            with a mixture of interactive entertainment and the odds to win
-            hefty money, making every instant thrilling for players.
-          </p>
-        </div>
-
-        <button
-          className="bg-[#a0d5ff] px-12 py-3 mx-auto block text-[14px] text-[#220c82] mt-2 font-bold"
-          style={{
-            textShadow: "1px 1px #00bcd4",
-            boxShadow:
-              "0 8px 10px 0 rgba(0,0,0,.2), 0 6px 8px 0 rgba(0,0,0,.19)",
-          }}
-        >
-          Go to top
-        </button>
-        <p className="text-center font-bold mt-2 text-black">108</p>
-
-        <div className="bg-[#fff] text-lg font-bold border-2 border-[#800080] mt-2 p-1">
-          <h1 className="text-[35px] text-center text-[#007bff]">
-            {copywrite.title}
-          </h1>
-          <h2 className="text-[25px] text-center text-[#ff0000]">
-            {copywrite.message}
-          </h2>
-          <h2 className="text-[25px] text-center text-[#ff0000]">
-            {copywrite.year}
-          </h2>
-          <h2 className="text-[25px] text-center text-[#ff0000]">
-            {copywrite.contact} (<span>{copywrite.sub1}</span>
-            <span className="text-[#007bff]">{copywrite.sub2}</span>)
-          </h2>
-        </div>
       </div>
-    </>
+      {/* ⬆️ Matka Table Ends Here ⬆️ */}
+      <div className="text-lg font-bold border-1 border-black mt-5 p-1">
+        <p className="text-[22px] text-center text-[#00094d]">
+          {marketName.toUpperCase()}
+        </p>
+        {lastResult && (
+          <div className="flex justify-center items-center gap-2 mt-2">
+            <span className="text-[18px] text-[#880e4f]">
+              {lastResult.open || "**"}
+            </span>
+            <span className="text-[21px] text-[#880e4f] font-bold">-</span>
+            <span className="text-[21px] text-[#880e4f] font-bold">
+              {lastResult.main}
+            </span>
+            <span className="text-[21px] text-[#880e4f] font-bold">-</span>
+            <span className="text-[18px] text-[#880e4f]">
+              {lastResult.close || "**"}
+            </span>
+          </div>
+        )}
+        <button className="bg-[#522f92] px-4 py-1 mx-auto block text-[12px] text-white">
+          Refresh Result
+        </button>
+      </div>
+      <div className="bg-[#fff] text-lg font-bold border-2 border-[#800080] mt-2 p-1 text-black">
+        <p className="text-[12px] text-center">
+          When you choose DPBoss Services to play your Milan Morning, you will
+          get the game support of professionally trained gamblers. They can help
+          you understand the game rules as well as its payouts thoroughly. They
+          are not only skilled mentors but also very friendly and prepared to
+          always engage with gamblers. Players can make use of the
+          website&apos;s chat function each game to communicate with them, thus
+          they can add a personal touch to their gambling experience.
+        </p>
+        <p className="text-[12px] text-center">
+          On this Satta Matka website, you will be capable of finding and
+          playing an enormous variety of online betting games. The wide range of
+          these games is another reason for the fame of the DPBoss Services
+          betting platform. Whether it is the excitement of Milan Morning or any
+          other Satta Matka game, there is something to outfit the taste of
+          every gambler.
+        </p>
+        <h5 className="text-[15px] text-center text-[#ff0000]">
+          Get Milan Morning Jodi Chart Records Online
+        </h5>
+        <p className="text-[12px] text-center">
+          On DPBoss Services, you will be capable of experiencing the strategic
+          profundity of the unique attraction of every Satta Matka game. This
+          Satta Matka website also features trending betting games, guaranteeing
+          there is something for every novice as well as a veteran gambler.
+          Moreover, all types of Satta Matka games on DPBoss Services will take
+          you to an exciting new level.
+        </p>
+        <h5 className="text-[15px] text-center text-[#ff0000]">
+          Frequently Asked Questions (FAQs):
+        </h5>
+        <p className="text-[12px] text-center">
+          Q1. How the Milan Morning on DPBoss Services is designed?
+        </p>
+        <p className="text-[12px] text-center">
+          The Milan Morning on this Satta Matka betting platform has been
+          designed to offer a show-style gaming experience to all players with a
+          whirlwind of entertainment and excitement.
+        </p>
+        <p className="text-[12px] text-center">
+          Q2. What is the attractive feature of DPBoss Services&apos;s Milan
+          Morning?
+        </p>
+        <p className="text-[12px] text-center">
+          The Milan Morning features colourful graphics and engaging gameplay
+          with a mixture of interactive entertainment and the odds to win hefty
+          money, making every instant thrilling for players.
+        </p>
+      </div>
+
+      <button
+        className="bg-[#a0d5ff] px-12 py-3 mx-auto block text-[14px] text-[#220c82] mt-2 font-bold"
+        style={{
+          textShadow: "1px 1px #00bcd4",
+          boxShadow: "0 8px 10px 0 rgba(0,0,0,.2), 0 6px 8px 0 rgba(0,0,0,.19)",
+        }}
+      >
+        Go to top
+      </button>
+      <p className="text-center font-bold mt-2 text-black">108</p>
+
+      <div className="bg-[#fff] text-lg font-bold border-2 border-[#800080] mt-2 p-1">
+        <h1 className="text-[35px] text-center text-[#007bff]">
+          {copywrite.title}
+        </h1>
+        <h2 className="text-[25px] text-center text-[#ff0000]">
+          {copywrite.message}
+        </h2>
+        <h2 className="text-[25px] text-center text-[#ff0000]">
+          {copywrite.year}
+        </h2>
+        <h2 className="text-[25px] text-center text-[#ff0000]">
+          {copywrite.contact} (<span>{copywrite.sub1}</span>
+          <span className="text-[#007bff]">{copywrite.sub2}</span>)
+        </h2>
+      </div>
+    </div>
   );
 }

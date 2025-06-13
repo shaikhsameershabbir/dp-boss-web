@@ -5,29 +5,21 @@ import { KalyanNight } from "../../../Compontes/DynamicPages/KalyanNight";
 import { KalyanTable } from "../../../Compontes/DynamicPages/KalyanTable";
 import LiveResult from "../../../Compontes/DynamicPages/LiveResult";
 import MainStarline from "../../../Compontes/DynamicPages/MainStarline";
-import MrStarlineResult from "../../../Compontes/DynamicPages/MrStarlineResult";
 import TodayLuckyNumber from "../../../Compontes/DynamicPages/TodayLuckyNumber";
 import { Disclamer } from "../../../Compontes/StaticPage/Disclamier";
 import Download from "../../../Compontes/StaticPage/Download";
 import Footer from "../../../Compontes/StaticPage/Footer";
 import Gameoptions from "../../../Compontes/StaticPage/Gameoptions";
-import { GameZoneOpenClose } from "../../../Compontes/StaticPage/GameZoneOpenClose";
 import Header from "../../../Compontes/StaticPage/Header";
 import { Introduction } from "../../../Compontes/StaticPage/Introduction";
 import { MatakaPanelChart } from "../../../Compontes/StaticPage/MatakaPanelChart";
 import { Matka } from "../../../Compontes/StaticPage/Matka";
-import MatkajodiList from "../../../Compontes/StaticPage/MatkaJodiList";
 import Notice from "../../../Compontes/StaticPage/Notice";
 import { PowerdBy } from "../../../Compontes/StaticPage/PowerdBy";
 import { QNA } from "../../../Compontes/StaticPage/QNA";
 import { SattaMatkaJpdiChart } from "../../../Compontes/StaticPage/SattaMatkaJpdiChart";
 import { ScrollingDiv } from "../../../Compontes/StaticPage/ScrollingDiv";
-import SpicalGameZone from "../../../Compontes/StaticPage/SpicalGameZone";
-import { WeeklyJodi } from "../../../Compontes/StaticPage/WeeklyJodi";
-import { WeeklyLine } from "../../../Compontes/StaticPage/WeeklyLine";
-import { WeeklyPatti } from "../../../Compontes/StaticPage/WeeklyPatti";
 
-/* eslint-disable @next/next/no-img-element */
 interface MarketResult {
   marketName: string;
   result: string;
@@ -72,9 +64,6 @@ export default function LandingPageHandler({
     null
   );
   const [starlineResults, setStarlineResults] = useState<StarlineData[]>([]);
-  const [lastStarlineResult, setLastStarlineResult] = useState<string | null>(
-    null
-  );
 
   useEffect(() => {
     if (initialData?.success && initialData?.data) {
@@ -82,18 +71,8 @@ export default function LandingPageHandler({
     }
     if (starlineResult?.success && starlineResult?.data) {
       setStarlineResults(starlineResult.data);
-      const allResults = starlineResult.data.flatMap((starline) =>
-        Object.entries(starline)
-          .filter(([key]) => key !== "starLineName")
-          .map(([_, value]) => value)
-          .filter((value): value is string => value !== null)
-      );
-      if (allResults.length > 0) {
-        setLastStarlineResult(allResults[allResults.length - 1]);
-      }
     }
   }, [initialData, starlineResult]);
-  console.log(starlineResults);
 
   return (
     <>
@@ -110,7 +89,7 @@ export default function LandingPageHandler({
         {/* All result market */}
         <Bazaar marketResults={marketResults?.rest || []} />
         {/* Starline Results */}
-        {starlineResults.map((starline, index) => (
+        {starlineResults.map((starline) => (
           <MainStarline key={starline.starLineName} data={starline} />
         ))}
         <KalyanTable />

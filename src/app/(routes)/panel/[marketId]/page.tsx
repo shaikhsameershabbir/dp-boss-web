@@ -29,7 +29,7 @@ interface PanelWeek {
 export default function Panel({
   params,
 }: {
-  params: Promise<{ marketId: any }>;
+  params: Promise<{ marketId: string }>;
 }) {
   const resolvedParams = use(params);
   const { marketId } = resolvedParams;

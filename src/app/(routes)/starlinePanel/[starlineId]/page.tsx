@@ -1,14 +1,26 @@
 "use client";
 
 import { getStarlineResultById } from "@/app/api/api";
-import Link from "next/link";
 import React, { useEffect, useState, use } from "react";
+
+interface StarlineResult {
+  [date: string]: {
+    [time: string]: string;
+  };
+}
+
+interface TableRow {
+  date: string;
+  results: string[];
+}
 
 function Page({ params }: { params: Promise<{ starlineId: string }> }) {
   const resolvedParams = use(params);
   const { starlineId } = resolvedParams;
-  const [starlineResult, setStarlineResult] = useState<any>(null);
-  const [tableRows, setTableRows] = useState<any[]>([]);
+  const [starlineResult, setStarlineResult] = useState<StarlineResult | null>(
+    null
+  );
+  const [tableRows, setTableRows] = useState<TableRow[]>([]);
   const [allTimes, setAllTimes] = useState<string[]>([]);
 
   useEffect(() => {

@@ -2,7 +2,7 @@ import apiClient from "@/lib/http/axios";
 
 export interface ApiError extends Error {
   status?: number;
-  data?: any;
+  data?: unknown;
 }
 export const getTodayLuckyNumber = async () => {
   const response = await apiClient.get("/today-lucky-number");

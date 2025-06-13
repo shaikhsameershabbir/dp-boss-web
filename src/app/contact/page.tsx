@@ -1,5 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-/* eslint-disable react/jsx-no-undef */
 import Link from "next/link";
 import { copywrite, gameConfigurtion } from "../constant/constant";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

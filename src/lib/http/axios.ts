@@ -19,15 +19,12 @@ const apiClient: AxiosInstance = axios.create({
 // Store for requests that should be retried after token refresh
 let isRefreshing = false;
 let failedQueue: {
-  resolve: Function;
-  reject: Function;
+  resolve: (value?: unknown) => void;
+  reject: (reason?: unknown) => void;
   config: AxiosRequestConfig;
 }[] = [];
 
-const processQueue = (
-  error: AxiosError | null,
-  token: string | null = null
-) => {
+const processQueue = (error: AxiosError | null) => {
   failedQueue.forEach((promise) => {
     if (error) {
       promise.reject(error);
