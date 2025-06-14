@@ -70,8 +70,6 @@ export default function LandingPageHandler({
     if (starlineResult && starlineResult.data) {
       setStarlineResults(starlineResult.data);
     }
-    console.log("initialData", initialData);
-    console.log("starlineResult", starlineResult);
   }, [initialData, starlineResult]);
 
   return (

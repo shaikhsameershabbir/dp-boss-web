@@ -58,42 +58,40 @@ export default function Jodi({
   useEffect(() => {
     const fetchJodiResult = async () => {
       const response = await getJodiResult(marketId);
-      if (response.success && response.data) {
-        setMarketName(response.data.marketName);
-        setRawResults(response.data.results);
+      if (response && response.marketName && response.results) {
+        setMarketName(response.marketName);
+        setRawResults(response.results);
 
         // Transform the API data into our display format
-        const transformedData = response.data.results.map(
-          (week: JodiResult) => {
-            return {
-              Mon: isFutureDay(week.startDate, 0)
-                ? ""
-                : week.monday?.main || "**",
-              Tue: isFutureDay(week.startDate, 1)
-                ? ""
-                : week.tuesday?.main || "**",
-              Wed: isFutureDay(week.startDate, 2)
-                ? ""
-                : week.wednesday?.main || "**",
-              Thu: isFutureDay(week.startDate, 3)
-                ? ""
-                : week.thursday?.main || "**",
-              Fri: isFutureDay(week.startDate, 4)
-                ? ""
-                : week.friday?.main || "**",
-              Sat: isFutureDay(week.startDate, 5)
-                ? ""
-                : week.saturday?.main || "**",
-              Sun: isFutureDay(week.startDate, 6)
-                ? ""
-                : week.sunday?.main || "**",
-            };
-          }
-        );
+        const transformedData = response.results.map((week: JodiResult) => {
+          return {
+            Mon: isFutureDay(week.startDate, 0)
+              ? ""
+              : week.monday?.main || "**",
+            Tue: isFutureDay(week.startDate, 1)
+              ? ""
+              : week.tuesday?.main || "**",
+            Wed: isFutureDay(week.startDate, 2)
+              ? ""
+              : week.wednesday?.main || "**",
+            Thu: isFutureDay(week.startDate, 3)
+              ? ""
+              : week.thursday?.main || "**",
+            Fri: isFutureDay(week.startDate, 4)
+              ? ""
+              : week.friday?.main || "**",
+            Sat: isFutureDay(week.startDate, 5)
+              ? ""
+              : week.saturday?.main || "**",
+            Sun: isFutureDay(week.startDate, 6)
+              ? ""
+              : week.sunday?.main || "**",
+          };
+        });
         setJodiData(transformedData);
 
         // Find the last existing result
-        const allResults = response.data.results
+        const allResults = response.results
           .flatMap((week: JodiResult) => [
             {
               day: "monday",
@@ -180,8 +178,7 @@ export default function Jodi({
     };
     fetchJodiResult();
   }, [marketId]);
-  
-  
+
   const days: Day[] = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
   const HighlightedNumbers = [
     "44",

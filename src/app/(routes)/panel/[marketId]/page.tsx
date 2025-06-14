@@ -40,11 +40,9 @@ export default function Panel({
   useEffect(() => {
     const fetchPanelResult = async () => {
       const response = await getJodiResult(marketId);
-      console.log(response);
-      setMarketName(response.data.marketName);
-
-      if (response.success && response.data && response.data.results) {
-        setPanelData(response.data.results);
+      if (response && response.marketName && response.results) {
+        setMarketName(response.marketName);
+        setPanelData(response.results);
       }
     };
     fetchPanelResult();
