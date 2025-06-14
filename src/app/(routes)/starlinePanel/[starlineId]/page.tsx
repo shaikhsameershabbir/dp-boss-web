@@ -14,6 +14,14 @@ interface TableRow {
   results: string[];
 }
 
+function formatDate(dateString: string) {
+  const date = new Date(dateString);
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const year = date.getFullYear();
+  return `${day}-${month}-${year}`;
+}
+
 function Page({ params }: { params: Promise<{ starlineId: string }> }) {
   const resolvedParams = use(params);
   const { starlineId } = resolvedParams;
@@ -117,7 +125,7 @@ function Page({ params }: { params: Promise<{ starlineId: string }> }) {
                   className="border-2 border-[#414eb0] font-bold text-xs sm:text-base italic text-black px-1 py-1"
                   style={{ width: "80px" }}
                 >
-                  {row.date.split(" 00:00:00")[0]}
+                  {formatDate(row.date)}
                 </td>
                 {row.results.map((result: string, i: number) => (
                   <td
