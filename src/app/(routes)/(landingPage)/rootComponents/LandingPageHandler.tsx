@@ -87,9 +87,13 @@ export default function LandingPageHandler({
         {/* All result market */}
         <Bazaar marketResults={marketResults?.rest || []} />
         {/* Starline Results */}
-        {starlineResults.map((starline) => (
-          <MainStarline key={starline.starLineName} data={starline} />
-        ))}
+        {Array.isArray(starlineResults)
+          ? starlineResults.map((starline) => (
+              <MainStarline key={starline.starLineName} data={starline} />
+            ))
+          : Object.values(starlineResults).map((starline: any) => (
+              <MainStarline key={starline.starLineName} data={starline} />
+            ))}
         <KalyanTable />
         <KalyanNight />
         <SattaMatkaJpdiChart />

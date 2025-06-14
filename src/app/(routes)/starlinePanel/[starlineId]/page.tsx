@@ -25,20 +25,32 @@ function Page({ params }: { params: Promise<{ starlineId: string }> }) {
 
   useEffect(() => {
     const fetchStarlineResult = async () => {
-      const { data } = await getStarlineResultById(starlineId);
-      setStarlineResult(data);
+      const response = await getStarlineResultById(starlineId);
+      console.log("data------------", response);
+      setStarlineResult(response);
     };
     fetchStarlineResult();
   }, [starlineId]);
 
   useEffect(() => {
     if (!starlineResult) return;
+    console.log("starlineResult in effect:", starlineResult);
     const dateKeys = Object.keys(starlineResult).sort(); // sort dates ascending
+    console.log("Date keys:", dateKeys);
     // Collect all unique times
     const timesSet = new Set<string>();
     dateKeys.forEach((date) => {
-      Object.keys(starlineResult[date]).forEach((key) => {
-        if (/\d{2}:\d{2} [AP]M/.test(key)) timesSet.add(key);
+      const keys = Object.keys(starlineResult[date]);
+      console.log("Keys for date", date, ":", keys);
+      keys.forEach((key) => {
+        // Only add keys that match time format and exclude starLineId and starLineName
+        if (
+          /\d{2}:\d{2} [AP]M/.test(key) &&
+          key !== "starLineId" &&
+          key !== "starLineName"
+        ) {
+          timesSet.add(key);
+        }
       });
     });
     const times = Array.from(timesSet).sort((a, b) => {
@@ -51,15 +63,18 @@ function Page({ params }: { params: Promise<{ starlineId: string }> }) {
       };
       return parse(a) - parse(b);
     });
+    console.log("Sorted times:", times);
     setAllTimes(times);
 
     // Build table rows
     const rows = dateKeys.map((date) => {
       const dayData = starlineResult[date];
-      return {
+      const row = {
         date,
         results: times.map((time) => dayData[time] ?? ""),
       };
+      console.log("Created row:", row);
+      return row;
     });
     setTableRows(rows);
   }, [starlineResult]);
