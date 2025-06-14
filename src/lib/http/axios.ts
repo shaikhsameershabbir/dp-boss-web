@@ -55,16 +55,12 @@ apiClient.interceptors.request.use((config) => {
   // Log the request URL for debugging
   const baseUrl = config.baseURL || apiClient.defaults.baseURL || "";
   const url = config.url || "";
-  console.log(
-    "API Request URL:",
-    `${baseUrl}${url}`,
-    "Method:",
-    config.method?.toUpperCase()
-  );
-
-  if (config.params) {
-    console.log("Request params:", config.params);
-  }
+  // console.log(
+  //   "API Request URL:",
+  //   `${baseUrl}${url}`,
+  //   "Method:",
+  //   config.method?.toUpperCase()
+  // );
 
   return config;
 });

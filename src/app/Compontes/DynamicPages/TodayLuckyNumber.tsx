@@ -37,10 +37,8 @@ export default function TodayLuckyNumber() {
 
   useEffect(() => {
     const fetchLuckyNumber = async () => {
-      console.log("[TodayLuckyNumber] Calling getTodayLuckyNumber...");
       try {
         const apiData = await getTodayLuckyNumber();
-        console.log("[TodayLuckyNumber] API response:", apiData);
         // Handle both wrapped and unwrapped responses
         let data = apiData;
         if (apiData && apiData.data) {
@@ -48,16 +46,13 @@ export default function TodayLuckyNumber() {
         }
         if (data && data.goldenNumbers && data.finalNumbers) {
           const goldenAnk = `${data.goldenNumbers.first}-${data.goldenNumbers.second}-${data.goldenNumbers.third}-${data.goldenNumbers.fourth}`;
-          console.log("[TodayLuckyNumber] goldenAnk:", goldenAnk);
           const finalAnkMessages = Object.entries(data.finalNumbers).map(
             ([market, number]) => `${market} - ${number}`
           );
-          console.log("[TodayLuckyNumber] finalAnkMessages:", finalAnkMessages);
           setLuckyData({
             goldenAnk,
             finalAnkMessages,
           });
-          console.log("[TodayLuckyNumber] State updated.");
         } else {
           console.warn(
             "[TodayLuckyNumber] API data missing expected fields:",
@@ -95,7 +90,6 @@ export default function TodayLuckyNumber() {
             "MADHUR NIGHT - 8",
           ],
         });
-        console.log("[TodayLuckyNumber] Fallback state set.");
       }
     };
     fetchLuckyNumber();
