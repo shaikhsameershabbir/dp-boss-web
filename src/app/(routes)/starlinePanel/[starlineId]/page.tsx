@@ -95,8 +95,8 @@ function Page({ params }: { params: Promise<{ starlineId: string }> }) {
       >
         MILAN STAR LINE CHART
       </div>
-      <div className="w-full max-w-full box-border">
-        <table className="w-full border-collapse text-xs sm:text-base font-bold italic text-center text-black table-fixed">
+      <div className="w-full max-w-full box-border overflow-x-auto">
+        <table className="min-w-max w-full border-collapse text-xs sm:text-base font-bold italic text-center text-black table-fixed">
           <thead className="text-black">
             <tr>
               <th
