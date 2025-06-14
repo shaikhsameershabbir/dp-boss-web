@@ -62,6 +62,7 @@ export default function LandingPageHandler({
 }: LandingPageHandlerProps) {
   const [marketResults, setMarketResults] = useState<any>(null);
   const [starlineResults, setStarlineResults] = useState<StarlineData[]>([]);
+  
 
   useEffect(() => {
     if (initialData && initialData.rest) {
