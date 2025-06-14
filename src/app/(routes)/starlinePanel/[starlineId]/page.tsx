@@ -122,7 +122,7 @@ function Page({ params }: { params: Promise<{ starlineId: string }> }) {
             {tableRows.map((row, idx) => (
               <tr key={idx} className="bg-[#ffcc99] text-black">
                 <td
-                  className="border-2 border-[#414eb0] font-bold text-xs sm:text-base italic text-black px-1 py-1"
+                  className="border-2 border-[#414eb0] font-bold text-xs sm:text-base italic text-black px-1 py-1 whitespace-nowrap"
                   style={{ width: "80px" }}
                 >
                   {formatDate(row.date)}
