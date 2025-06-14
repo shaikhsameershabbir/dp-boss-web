@@ -37,27 +37,38 @@ export default function TodayLuckyNumber() {
 
   useEffect(() => {
     const fetchLuckyNumber = async () => {
+      console.log("[TodayLuckyNumber] Calling getTodayLuckyNumber...");
       try {
-        const response = await getTodayLuckyNumber();
-        const apiData = response as ApiResponse;
-
-        if (apiData.success) {
-          // Transform golden numbers
-          const goldenAnk = `${apiData.data.goldenNumbers.first}-${apiData.data.goldenNumbers.second}-${apiData.data.goldenNumbers.third}-${apiData.data.goldenNumbers.fourth}`;
-
-          // Transform final numbers
-          const finalAnkMessages = Object.entries(
-            apiData.data.finalNumbers
-          ).map(([market, number]) => `${market} - ${number}`);
-
+        const apiData = await getTodayLuckyNumber();
+        console.log("[TodayLuckyNumber] API response:", apiData);
+        // Handle both wrapped and unwrapped responses
+        let data = apiData;
+        if (apiData && apiData.data) {
+          data = apiData.data;
+        }
+        if (data && data.goldenNumbers && data.finalNumbers) {
+          const goldenAnk = `${data.goldenNumbers.first}-${data.goldenNumbers.second}-${data.goldenNumbers.third}-${data.goldenNumbers.fourth}`;
+          console.log("[TodayLuckyNumber] goldenAnk:", goldenAnk);
+          const finalAnkMessages = Object.entries(data.finalNumbers).map(
+            ([market, number]) => `${market} - ${number}`
+          );
+          console.log("[TodayLuckyNumber] finalAnkMessages:", finalAnkMessages);
           setLuckyData({
             goldenAnk,
             finalAnkMessages,
           });
+          console.log("[TodayLuckyNumber] State updated.");
+        } else {
+          console.warn(
+            "[TodayLuckyNumber] API data missing expected fields:",
+            apiData
+          );
         }
       } catch (error) {
-        console.error("Error fetching lucky numbers:", error);
-        // Fallback to default data in case of error
+        console.error(
+          "[TodayLuckyNumber] Error fetching lucky numbers:",
+          error
+        );
         setLuckyData({
           goldenAnk: "1-6-3-8",
           finalAnkMessages: [
@@ -84,9 +95,9 @@ export default function TodayLuckyNumber() {
             "MADHUR NIGHT - 8",
           ],
         });
+        console.log("[TodayLuckyNumber] Fallback state set.");
       }
     };
-
     fetchLuckyNumber();
   }, []);
 
