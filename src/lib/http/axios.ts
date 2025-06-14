@@ -9,7 +9,7 @@ import axios, {
 
 // Create the API client instance
 const apiClient: AxiosInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:1432/api",
+  baseURL: process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:1430/api",
   headers: {
     "Content-Type": "application/json",
   },
