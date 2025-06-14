@@ -14,6 +14,7 @@ interface MainStarlineProps {
 }
 
 export default function MainStarline({ data }: MainStarlineProps) {
+
   // Get all time slots from the data
   const timeSlots = Object.keys(data).filter((key) => key !== "starLineName");
   const [lastNumber, setLastNumber] = useState<string | null>(null);
