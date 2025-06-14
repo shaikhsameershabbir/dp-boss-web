@@ -52,26 +52,26 @@ interface StarlineResponse {
 }
 
 interface LandingPageHandlerProps {
-  initialData: ApiResponse;
-  starlineResult: StarlineResponse;
+  initialData: any;
+  starlineResult: any;
 }
 
 export default function LandingPageHandler({
   initialData,
   starlineResult,
 }: LandingPageHandlerProps) {
-  const [marketResults, setMarketResults] = useState<MarketResults | null>(
-    null
-  );
+  const [marketResults, setMarketResults] = useState<any>(null);
   const [starlineResults, setStarlineResults] = useState<StarlineData[]>([]);
 
   useEffect(() => {
-    if (initialData?.success && initialData?.data) {
-      setMarketResults(initialData.data);
+    if (initialData && initialData.rest) {
+      setMarketResults(initialData);
     }
-    if (starlineResult?.success && starlineResult?.data) {
+    if (starlineResult && starlineResult.data) {
       setStarlineResults(starlineResult.data);
     }
+    console.log("initialData", initialData);
+    console.log("starlineResult", starlineResult);
   }, [initialData, starlineResult]);
 
   return (

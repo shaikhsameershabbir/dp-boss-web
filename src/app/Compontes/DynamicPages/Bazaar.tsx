@@ -20,15 +20,18 @@ interface BazaarProps {
 
 export default function Bazaar({ marketResults }: BazaarProps) {
   const [results, setResults] = useState<ResultItem[]>([]);
+  console.log("marketResults------------------>>", marketResults);
 
   useEffect(() => {
     if (marketResults && marketResults.length > 0) {
       const processedResults = marketResults.map((market) => ({
         ...market,
+        marketId: String(market.marketId),
         bgColor: market.yellowEnable === 1 ? "#ffff33" : "#fc9",
       }));
       setResults(processedResults);
     }
+    console.log("marketResults------------------>>", marketResults);
   }, [marketResults]);
 
   return (
