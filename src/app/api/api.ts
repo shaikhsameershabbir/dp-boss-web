@@ -25,29 +25,36 @@ const apiClient = {
 };
 export const getTodayLuckyNumber = async () => {
   const response = await apiClient.get("/today-lucky-number");
+  console.log(response.data);
+
   return response.data;
 };
 
 // get bajar result
 export const getMarketResult = async () => {
   const response = await apiClient.get("/getMarketResult");
+  console.log(response.data);
+
   return response.data;
 };
 
 // get starline result
 export const getStarlineResult = async () => {
   const response = await apiClient.get("/getStarlineResult");
+  console.log(response.data);
   return response.data;
 };
 
 // get starline result by id
 export const getStarlineResultById = async (starlineId: string) => {
   const response = await apiClient.get(`/getStarlineResultById/${starlineId}`);
+  console.log(response.data);
   return response.data;
 };
 
 // get jodi result
 export const getJodiResult = async (marketId: string) => {
   const response = await apiClient.get(`/getJodiResult/${marketId}`);
+  console.log(response.data);
   return response.data;
 };
