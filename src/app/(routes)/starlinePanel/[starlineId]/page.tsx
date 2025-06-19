@@ -66,8 +66,8 @@ function processStarlineData(starlineResult: StarlineResult) {
   return { times, rows };
 }
 
-async function Page({ params }: { params: { starlineId: string } }) {
-  const { starlineId } = params;
+async function Page({ params }: { params: Promise<{ starlineId: string }> }) {
+  const { starlineId } = await params;
 
   let starlineResult: StarlineResult | null = null;
   let times: string[] = [];

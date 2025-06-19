@@ -40,10 +40,20 @@ interface StarlineData {
   [key: string]: string | null;
 }
 
+interface LuckyNumberData {
+  goldenNumbers?: {
+    first: string;
+    second: string;
+    third: string;
+    fourth: string;
+  };
+  finalNumbers?: Record<string, string>;
+}
+
 interface LandingPageHandlerProps {
   initialData: MarketData | null;
   starlineResult: StarlineData[] | Record<string, StarlineData>;
-  luckyNumberData: any;
+  luckyNumberData: LuckyNumberData | null;
 }
 
 export default function LandingPageHandler({

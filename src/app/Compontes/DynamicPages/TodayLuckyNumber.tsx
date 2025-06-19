@@ -8,8 +8,18 @@ interface LuckyNumberData {
   finalAnkMessages: string[];
 }
 
+interface LuckyNumberApiData {
+  goldenNumbers?: {
+    first: string;
+    second: string;
+    third: string;
+    fourth: string;
+  };
+  finalNumbers?: Record<string, string>;
+}
+
 interface TodayLuckyNumberProps {
-  initialData?: any;
+  initialData?: LuckyNumberApiData | null;
 }
 
 export default function TodayLuckyNumber({
@@ -25,11 +35,7 @@ export default function TodayLuckyNumber({
   useEffect(() => {
     const processLuckyNumberData = () => {
       try {
-        // Handle both wrapped and unwrapped responses
-        let data = initialData;
-        if (initialData && initialData.data) {
-          data = initialData.data;
-        }
+        const data = initialData;
         if (data && data.goldenNumbers && data.finalNumbers) {
           const goldenAnk = `${data.goldenNumbers.first}-${data.goldenNumbers.second}-${data.goldenNumbers.third}-${data.goldenNumbers.fourth}`;
           const finalAnkMessages = Object.entries(data.finalNumbers).map(
