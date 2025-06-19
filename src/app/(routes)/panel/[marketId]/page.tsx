@@ -1,4 +1,3 @@
-"use client";
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable jsx-a11y/alt-text */
 
@@ -6,7 +5,10 @@ import Link from "next/link";
 import { getJodiResult } from "@/app/api/api";
 // import { panel } from "@/app/constant/constant";
 import { gameConfigurtion } from "@/app/constant/constant";
-import { useEffect, use, useState } from "react";
+
+// Force dynamic rendering to prevent caching
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 // Define a type for the API response
 interface PanelDay {
@@ -26,33 +28,34 @@ interface PanelWeek {
   sunday: PanelDay | null;
 }
 
-export default function Panel({
+interface PanelResponse {
+  marketName: string;
+  results: PanelWeek[];
+}
+
+export default async function Panel({
   params,
 }: {
   params: Promise<{ marketId: string }>;
 }) {
-  const resolvedParams = use(params);
-  const { marketId } = resolvedParams;
-  const [panelData, setPanelData] = useState<PanelWeek[]>([]);
-  const [marketName, setMarketName] = useState<string>("");
-  const [lastResult, setLastResult] = useState<string>("");
+  const { marketId } = await params;
 
-  useEffect(() => {
-    const fetchPanelResult = async () => {
-      const response = await getJodiResult(marketId);
-      if (response && response.marketName && response.results) {
-        setMarketName(response.marketName);
-        setPanelData(response.results);
-      }
-    };
-    fetchPanelResult();
-  }, [marketId]);
+  let panelData: PanelWeek[] = [];
+  let marketName = "";
+  let lastResult = "";
 
-  useEffect(() => {
-    if (panelData.length === 0) {
-      setLastResult("");
-      return;
+  try {
+    const response: PanelResponse = await getJodiResult(marketId);
+    if (response && response.marketName && response.results) {
+      marketName = response.marketName;
+      panelData = response.results;
     }
+  } catch (error) {
+    console.error("Error fetching panel result:", error);
+  }
+
+  // Calculate last result
+  if (panelData.length > 0) {
     // Flatten all days into a single array with their values
     const allResults = panelData
       .flatMap((week) => [
@@ -69,16 +72,12 @@ export default function Panel({
     if (allResults.length > 0) {
       const last = allResults[allResults.length - 1];
       if (last) {
-        setLastResult(
-          [last.open, last.main, last.close].filter(Boolean).join("-")
-        );
-      } else {
-        setLastResult("");
+        lastResult = [last.open, last.main, last.close]
+          .filter(Boolean)
+          .join("-");
       }
-    } else {
-      setLastResult("");
     }
-  }, [panelData]);
+  }
 
   const redHighlightedNumbers: string[] = [
     "00",

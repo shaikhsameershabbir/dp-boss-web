@@ -1,10 +1,11 @@
-"use client";
-
 import Link from "next/link";
 import { copywrite, gameConfigurtion } from "@/app/constant/constant";
-import { useEffect, useState, use } from "react";
 import { getJodiResult } from "@/app/api/api";
 import Image from "next/image";
+
+// Force dynamic rendering to prevent caching
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 // Define a type for the API response
 interface JodiResult {
@@ -23,6 +24,11 @@ interface JodiResult {
   createdAt: string;
 }
 
+interface JodiResponse {
+  marketName: string;
+  results: JodiResult[];
+}
+
 // Define a type for the days
 type Day = "Mon" | "Tue" | "Wed" | "Thu" | "Fri" | "Sat" | "Sun";
 
@@ -31,153 +37,144 @@ type DayData = {
   [key in Day]: string;
 };
 
-export default function Jodi({
+const isFutureDay = (weekStartDate: string, dayIndex: number) => {
+  const today = new Date();
+  const weekDate = new Date(weekStartDate);
+  const dayDate = new Date(weekDate);
+  dayDate.setDate(weekDate.getDate() + dayIndex);
+  return dayDate > today;
+};
+
+export default async function Jodi({
   params,
 }: {
   params: Promise<{ marketId: string }>;
 }) {
-  const resolvedParams = use(params);
-  const { marketId } = resolvedParams;
-  const [jodiData, setJodiData] = useState<DayData[]>([]);
-  const [marketName, setMarketName] = useState<string>("");
-  const [lastResult, setLastResult] = useState<{
+  const { marketId } = await params;
+
+  let jodiData: DayData[] = [];
+  let marketName = "";
+  let lastResult: {
     open?: string;
     main: string;
     close?: string;
-  } | null>(null);
-  const [rawResults, setRawResults] = useState<JodiResult[]>([]);
+  } | null = null;
+  let rawResults: JodiResult[] = [];
 
-  const isFutureDay = (weekStartDate: string, dayIndex: number) => {
-    const today = new Date();
-    const weekDate = new Date(weekStartDate);
-    const dayDate = new Date(weekDate);
-    dayDate.setDate(weekDate.getDate() + dayIndex);
-    return dayDate > today;
-  };
+  try {
+    const response: JodiResponse = await getJodiResult(marketId);
+    if (response && response.marketName && response.results) {
+      marketName = response.marketName;
+      rawResults = response.results;
 
-  useEffect(() => {
-    const fetchJodiResult = async () => {
-      const response = await getJodiResult(marketId);
-      if (response && response.marketName && response.results) {
-        setMarketName(response.marketName);
-        setRawResults(response.results);
+      // Transform the API data into our display format
+      const transformedData = response.results.map((week: JodiResult) => {
+        return {
+          Mon: isFutureDay(week.startDate, 0) ? "" : week.monday?.main || "**",
+          Tue: isFutureDay(week.startDate, 1) ? "" : week.tuesday?.main || "**",
+          Wed: isFutureDay(week.startDate, 2)
+            ? ""
+            : week.wednesday?.main || "**",
+          Thu: isFutureDay(week.startDate, 3)
+            ? ""
+            : week.thursday?.main || "**",
+          Fri: isFutureDay(week.startDate, 4) ? "" : week.friday?.main || "**",
+          Sat: isFutureDay(week.startDate, 5)
+            ? ""
+            : week.saturday?.main || "**",
+          Sun: isFutureDay(week.startDate, 6) ? "" : week.sunday?.main || "**",
+        };
+      });
+      jodiData = transformedData;
 
-        // Transform the API data into our display format
-        const transformedData = response.results.map((week: JodiResult) => {
-          return {
-            Mon: isFutureDay(week.startDate, 0)
-              ? ""
-              : week.monday?.main || "**",
-            Tue: isFutureDay(week.startDate, 1)
-              ? ""
-              : week.tuesday?.main || "**",
-            Wed: isFutureDay(week.startDate, 2)
-              ? ""
-              : week.wednesday?.main || "**",
-            Thu: isFutureDay(week.startDate, 3)
-              ? ""
-              : week.thursday?.main || "**",
-            Fri: isFutureDay(week.startDate, 4)
-              ? ""
-              : week.friday?.main || "**",
-            Sat: isFutureDay(week.startDate, 5)
-              ? ""
-              : week.saturday?.main || "**",
-            Sun: isFutureDay(week.startDate, 6)
-              ? ""
-              : week.sunday?.main || "**",
-          };
-        });
-        setJodiData(transformedData);
-
-        // Find the last existing result
-        const allResults = response.results
-          .flatMap((week: JodiResult) => [
-            {
-              day: "monday",
-              data: week.monday,
-              date: new Date(week.startDate),
-            },
-            {
-              day: "tuesday",
-              data: week.tuesday,
-              date: new Date(
-                new Date(week.startDate).setDate(
-                  new Date(week.startDate).getDate() + 1
-                )
-              ),
-            },
-            {
-              day: "wednesday",
-              data: week.wednesday,
-              date: new Date(
-                new Date(week.startDate).setDate(
-                  new Date(week.startDate).getDate() + 2
-                )
-              ),
-            },
-            {
-              day: "thursday",
-              data: week.thursday,
-              date: new Date(
-                new Date(week.startDate).setDate(
-                  new Date(week.startDate).getDate() + 3
-                )
-              ),
-            },
-            {
-              day: "friday",
-              data: week.friday,
-              date: new Date(
-                new Date(week.startDate).setDate(
-                  new Date(week.startDate).getDate() + 4
-                )
-              ),
-            },
-            {
-              day: "saturday",
-              data: week.saturday,
-              date: new Date(
-                new Date(week.startDate).setDate(
-                  new Date(week.startDate).getDate() + 5
-                )
-              ),
-            },
-            {
-              day: "sunday",
-              data: week.sunday,
-              date: new Date(
-                new Date(week.startDate).setDate(
-                  new Date(week.startDate).getDate() + 6
-                )
-              ),
-            },
-          ])
-          .filter(
-            (result: {
-              day: string;
-              data: { main: string; open?: string; close?: string } | null;
-              date: Date;
-            }) => {
-              const today = new Date();
-              return result.data !== null && result.date <= today;
-            }
-          );
-
-        if (allResults.length > 0) {
-          const last = allResults[allResults.length - 1].data;
-          if (last) {
-            setLastResult({
-              open: last.open,
-              main: last.main,
-              close: last.close,
-            });
+      // Find the last existing result
+      const allResults = response.results
+        .flatMap((week: JodiResult) => [
+          {
+            day: "monday",
+            data: week.monday,
+            date: new Date(week.startDate),
+          },
+          {
+            day: "tuesday",
+            data: week.tuesday,
+            date: new Date(
+              new Date(week.startDate).setDate(
+                new Date(week.startDate).getDate() + 1
+              )
+            ),
+          },
+          {
+            day: "wednesday",
+            data: week.wednesday,
+            date: new Date(
+              new Date(week.startDate).setDate(
+                new Date(week.startDate).getDate() + 2
+              )
+            ),
+          },
+          {
+            day: "thursday",
+            data: week.thursday,
+            date: new Date(
+              new Date(week.startDate).setDate(
+                new Date(week.startDate).getDate() + 3
+              )
+            ),
+          },
+          {
+            day: "friday",
+            data: week.friday,
+            date: new Date(
+              new Date(week.startDate).setDate(
+                new Date(week.startDate).getDate() + 4
+              )
+            ),
+          },
+          {
+            day: "saturday",
+            data: week.saturday,
+            date: new Date(
+              new Date(week.startDate).setDate(
+                new Date(week.startDate).getDate() + 5
+              )
+            ),
+          },
+          {
+            day: "sunday",
+            data: week.sunday,
+            date: new Date(
+              new Date(week.startDate).setDate(
+                new Date(week.startDate).getDate() + 6
+              )
+            ),
+          },
+        ])
+        .filter(
+          (result: {
+            day: string;
+            data: { main: string; open?: string; close?: string } | null;
+            date: Date;
+          }) => {
+            const today = new Date();
+            return result.data !== null && result.date <= today;
           }
+        );
+
+      if (allResults.length > 0) {
+        const last = allResults[allResults.length - 1].data;
+        if (last) {
+          lastResult = {
+            open: last.open,
+            main: last.main,
+            close: last.close,
+          };
         }
       }
-    };
-    fetchJodiResult();
-  }, [marketId]);
+    }
+  } catch (error) {
+    console.error("Error fetching jodi result:", error);
+  }
 
   const days: Day[] = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
   const HighlightedNumbers = [
