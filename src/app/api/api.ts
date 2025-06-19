@@ -17,7 +17,7 @@ const apiClient = {
           "Content-Type": "application/json",
           // "X-API-Key": process.env.NEXT_PUBLIC_API_KEY || "",
           "X-API-Key":
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsInR5cGUiOiJhcGkta2V5IiwiaWF0IjoxNzQ5ODgzNzU5fQ.zKC_6qXIf7StKNYqSeENjaIyIyWx8TNKg891EiZAq0U",
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsInR5cGUiOiJhcGkta2V5IiwiaWF0IjoxNzUwMzI3MjY3fQ.QP1aHNDq2oVYSg7-y2p9JdanMGbrU8soqEvaTLMi4gg",
         },
       }
     );
