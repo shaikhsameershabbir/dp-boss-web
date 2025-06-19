@@ -128,7 +128,7 @@ export default function TodayLuckyNumber() {
             <div
               ref={marqueeRef}
               className="absolute w-full"
-              style={{ animation: "marqueeUpward 10s linear infinite" }}
+              style={{ animation: "marqueeUpward 80s linear infinite" }}
             >
               {luckyData.finalAnkMessages.map((message, index) => (
                 <div
