@@ -39,17 +39,7 @@ interface StarlineData {
   [key: string]: string | null;
 }
 
-interface ApiResponse {
-  success: boolean;
-  message: string;
-  data: MarketResults;
-}
 
-interface StarlineResponse {
-  success: boolean;
-  message: string;
-  data: StarlineData[];
-}
 
 interface LandingPageHandlerProps {
   initialData: any;

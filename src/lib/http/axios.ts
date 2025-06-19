@@ -46,6 +46,8 @@ apiClient.interceptors.request.use((config) => {
   if (apiKey) {
     config.headers["X-API-Key"] = apiKey;
   }
+  // update
+  
 
   // No need to set these manually - they're handled by the browser and server
   // Removing these lines as they can interfere with CORS
@@ -53,8 +55,8 @@ apiClient.interceptors.request.use((config) => {
   // config.headers["Access-Control-Allow-Credentials"] = "true"
 
   // Log the request URL for debugging
-  const baseUrl = config.baseURL || apiClient.defaults.baseURL || "";
-  const url = config.url || "";
+  // const baseUrl = config.baseURL || apiClient.defaults.baseURL || "";
+  // const url = config.url || "";
   // console.log(
   //   "API Request URL:",
   //   `${baseUrl}${url}`,
