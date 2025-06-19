@@ -1,23 +1,22 @@
-// import apiClient from "@/lib/http/axios";
-
 export interface ApiError extends Error {
   status?: number;
   data?: unknown;
 }
 
 // Server-side API client
+const API_KEY = process.env.NEXT_PUBLIC_API_KEY || "";
+
 const apiClient = {
   get: async (url: string) => {
     const response = await fetch(
       `${
-        process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:1432/api"
+        process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:1430/api"
       }${url}`,
       {
         headers: {
           "Content-Type": "application/json",
           // "X-API-Key": process.env.NEXT_PUBLIC_API_KEY || "",
-          "X-API-Key":
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsInR5cGUiOiJhcGkta2V5IiwiaWF0IjoxNzUwMzI3MjY3fQ.QP1aHNDq2oVYSg7-y2p9JdanMGbrU8soqEvaTLMi4gg",
+          "X-API-Key": API_KEY,
         },
       }
     );

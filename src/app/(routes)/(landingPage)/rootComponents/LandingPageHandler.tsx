@@ -83,9 +83,13 @@ export default function LandingPageHandler({
           ? starlineResults.map((starline) => (
               <MainStarline key={starline.starLineName} data={starline} />
             ))
-          : Object.values(starlineResults as Record<string, StarlineData>).map(
-              (starline: StarlineData) => (
-                <MainStarline key={starline.starLineName} data={starline} />
+          : starlineResults &&
+            Object.values(starlineResults as Record<string, StarlineData>).map(
+              (starline) => (
+                <MainStarline
+                  key={(starline as StarlineData).starLineName}
+                  data={starline as StarlineData}
+                />
               )
             )}
         <KalyanTable />

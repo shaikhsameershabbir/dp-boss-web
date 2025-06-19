@@ -21,6 +21,7 @@ export default function TodayLuckyNumber() {
   useEffect(() => {
     const fetchLuckyNumber = async () => {
       try {
+        await new Promise(resolve => setTimeout(resolve, 1000)); // Wait 1 second
         const apiData = await getTodayLuckyNumber();
         // Handle both wrapped and unwrapped responses
         let data = apiData;
