@@ -1,0 +1,17 @@
+{
+  "routes": [
+    {
+      "src": "/(routes)/(landingPage)",
+      "headers": {
+        "Cache-Control": "no-cache, no-store, must-revalidate",
+        "Pragma": "no-cache",
+        "Expires": "0"
+      }
+    }
+  ],
+  "functions": {
+    "app/(routes)/(landingPage)/page.tsx": {
+      "maxDuration": 30
+    }
+  }
+} 

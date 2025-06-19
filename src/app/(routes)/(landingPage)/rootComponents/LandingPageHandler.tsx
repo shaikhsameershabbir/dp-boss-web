@@ -19,6 +19,7 @@ import { PowerdBy } from "../../../Compontes/StaticPage/PowerdBy";
 import { QNA } from "../../../Compontes/StaticPage/QNA";
 import { SattaMatkaJpdiChart } from "../../../Compontes/StaticPage/SattaMatkaJpdiChart";
 import { ScrollingDiv } from "../../../Compontes/StaticPage/ScrollingDiv";
+import ScrollToTop from "../../../Compontes/StaticPage/ScrollToTop";
 
 interface MarketResult {
   marketName: string;
@@ -103,6 +104,8 @@ export default function LandingPageHandler({
         <Disclamer />
         <PowerdBy />
         <Footer />
+        {/* Floating Scroll to Top Button */}
+        <ScrollToTop />
       </div>
     </>
   );

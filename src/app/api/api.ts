@@ -15,9 +15,14 @@ const apiClient = {
       {
         headers: {
           "Content-Type": "application/json",
-          // "X-API-Key": process.env.NEXT_PUBLIC_API_KEY || "",
           "X-API-Key": API_KEY,
+          // Prevent caching
+          "Cache-Control": "no-cache, no-store, must-revalidate",
+          Pragma: "no-cache",
+          Expires: "0",
         },
+        // Force fresh request
+        cache: "no-store",
       }
     );
     return response.json();
