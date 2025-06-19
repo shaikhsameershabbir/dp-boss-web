@@ -8,7 +8,7 @@ export const ScrollingDiv = () => {
     if (!scrollContainer) return;
 
     let frame: number;
-    let speed = 0.1; // Lower = slower (pixels per frame)
+    const speed = 0.1; // Lower = slower (pixels per frame)
 
     function animateScroll() {
       if (scrollContainer) {

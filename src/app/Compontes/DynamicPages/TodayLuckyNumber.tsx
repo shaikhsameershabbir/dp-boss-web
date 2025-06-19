@@ -9,23 +9,6 @@ interface LuckyNumberData {
   finalAnkMessages: string[];
 }
 
-interface ApiResponse {
-  success: boolean;
-  data: {
-    id: number;
-    userId: number;
-    date: string;
-    goldenNumbers: {
-      first: number;
-      second: number;
-      third: number;
-      fourth: number;
-    };
-    finalNumbers: {
-      [key: string]: number;
-    };
-  };
-}
 
 export default function TodayLuckyNumber() {
   const [luckyData, setLuckyData] = useState<LuckyNumberData>({

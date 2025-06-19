@@ -29,7 +29,7 @@ interface MarketResult {
   marketId: string;
 }
 
-interface MarketResults {
+interface MarketData {
   inTimeRange: MarketResult[];
   rest: MarketResult[];
 }
@@ -39,25 +39,27 @@ interface StarlineData {
   [key: string]: string | null;
 }
 
-
-
 interface LandingPageHandlerProps {
-  initialData: any;
-  starlineResult: any;
+  initialData: MarketData | null;
+  starlineResult: StarlineData[] | Record<string, StarlineData>;
 }
 
 export default function LandingPageHandler({
   initialData,
   starlineResult,
 }: LandingPageHandlerProps) {
-  const [marketResults, setMarketResults] = useState<any>(null);
-  const [starlineResults, setStarlineResults] = useState<StarlineData[]>([]);
+  const [marketResults, setMarketResults] = useState<MarketData | null>(null);
+  const [starlineResults, setStarlineResults] = useState<
+    StarlineData[] | Record<string, StarlineData>
+  >([]);
 
   useEffect(() => {
     if (initialData && initialData.rest) {
       setMarketResults(initialData);
     }
     if (Array.isArray(starlineResult)) {
+      setStarlineResults(starlineResult);
+    } else {
       setStarlineResults(starlineResult);
     }
   }, [initialData, starlineResult]);
@@ -81,9 +83,11 @@ export default function LandingPageHandler({
           ? starlineResults.map((starline) => (
               <MainStarline key={starline.starLineName} data={starline} />
             ))
-          : Object.values(starlineResults).map((starline: any) => (
-              <MainStarline key={starline.starLineName} data={starline} />
-            ))}
+          : Object.values(starlineResults as Record<string, StarlineData>).map(
+              (starline: StarlineData) => (
+                <MainStarline key={starline.starLineName} data={starline} />
+              )
+            )}
         <KalyanTable />
         <KalyanNight />
         <SattaMatkaJpdiChart />
