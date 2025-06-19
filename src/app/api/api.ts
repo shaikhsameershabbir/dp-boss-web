@@ -16,12 +16,8 @@ const apiClient = {
         headers: {
           "Content-Type": "application/json",
           "X-API-Key": API_KEY,
-          // Prevent caching
-          "Cache-Control": "no-cache, no-store, must-revalidate",
-          Pragma: "no-cache",
-          Expires: "0",
         },
-        // Force fresh request
+        // Force fresh request without triggering CORS preflight
         cache: "no-store",
       }
     );

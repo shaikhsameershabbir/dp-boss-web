@@ -1,6 +1,5 @@
 "use client";
 
-import { getTodayLuckyNumber } from "@/app/api/api";
 import { lucknumber } from "@/app/constant/constant";
 import { useEffect, useState, useRef } from "react";
 
@@ -9,8 +8,13 @@ interface LuckyNumberData {
   finalAnkMessages: string[];
 }
 
+interface TodayLuckyNumberProps {
+  initialData?: any;
+}
 
-export default function TodayLuckyNumber() {
+export default function TodayLuckyNumber({
+  initialData,
+}: TodayLuckyNumberProps) {
   const [luckyData, setLuckyData] = useState<LuckyNumberData>({
     goldenAnk: "",
     finalAnkMessages: [],
@@ -19,14 +23,12 @@ export default function TodayLuckyNumber() {
   const marqueeRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const fetchLuckyNumber = async () => {
+    const processLuckyNumberData = () => {
       try {
-        await new Promise(resolve => setTimeout(resolve, 1000)); // Wait 1 second
-        const apiData = await getTodayLuckyNumber();
         // Handle both wrapped and unwrapped responses
-        let data = apiData;
-        if (apiData && apiData.data) {
-          data = apiData.data;
+        let data = initialData;
+        if (initialData && initialData.data) {
+          data = initialData.data;
         }
         if (data && data.goldenNumbers && data.finalNumbers) {
           const goldenAnk = `${data.goldenNumbers.first}-${data.goldenNumbers.second}-${data.goldenNumbers.third}-${data.goldenNumbers.fourth}`;
@@ -40,14 +42,42 @@ export default function TodayLuckyNumber() {
         } else {
           console.warn(
             "[TodayLuckyNumber] API data missing expected fields:",
-            apiData
+            initialData
           );
+          // Set fallback data
+          setLuckyData({
+            goldenAnk: "1-6-3-8",
+            finalAnkMessages: [
+              "MILAN MORNING - 0",
+              "SRIDEVI - 0",
+              "KALYAN MORNING - 6",
+              "MADHURI - 4",
+              "SRIDEVI MORNING - 6",
+              "KARNATAKA DAY - 4",
+              "TIME BAZAR - 8",
+              "MILAN DAY - 6",
+              "KALYAN - 6",
+              "SRIDEVI NIGHT - 4",
+              "MADHURI NIGHT - 8",
+              "MILAN NIGHT - 8",
+              "RAJDHANI NIGHT - 6",
+              "MAIN BAZAR - 4",
+              "BOMBAY DAY - 6",
+              "MUMBAI MORNING - 6",
+              "KALYAN NIGHT - 4",
+              "NAMASTHE - 8",
+              "OLD MAIN MUMBAI - 0",
+              "MADHUR DAY - 0",
+              "MADHUR NIGHT - 8",
+            ],
+          });
         }
       } catch (error) {
         console.error(
-          "[TodayLuckyNumber] Error fetching lucky numbers:",
+          "[TodayLuckyNumber] Error processing lucky numbers:",
           error
         );
+        // Set fallback data on error
         setLuckyData({
           goldenAnk: "1-6-3-8",
           finalAnkMessages: [
@@ -76,8 +106,12 @@ export default function TodayLuckyNumber() {
         });
       }
     };
-    fetchLuckyNumber();
-  }, []);
+
+    // Process data when component mounts or initialData changes
+    if (initialData) {
+      processLuckyNumberData();
+    }
+  }, [initialData]);
 
   return (
     <div className="rounded-lg shadow-md mx-2 bg-[#fc9] border-4 border-[#ff0016] p-1 mt-2">

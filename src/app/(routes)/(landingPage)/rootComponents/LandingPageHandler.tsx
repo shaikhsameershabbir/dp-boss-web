@@ -43,11 +43,13 @@ interface StarlineData {
 interface LandingPageHandlerProps {
   initialData: MarketData | null;
   starlineResult: StarlineData[] | Record<string, StarlineData>;
+  luckyNumberData: any;
 }
 
 export default function LandingPageHandler({
   initialData,
   starlineResult,
+  luckyNumberData,
 }: LandingPageHandlerProps) {
   const [marketResults, setMarketResults] = useState<MarketData | null>(null);
   const [starlineResults, setStarlineResults] = useState<
@@ -71,7 +73,7 @@ export default function LandingPageHandler({
         {/* <Header />  first three box */}
         <Header />
         {/* Today Lucky Number */}
-        <TodayLuckyNumber />
+        <TodayLuckyNumber initialData={luckyNumberData} />
         <Download />
         {/* live result */}
         <LiveResult resultLiveForDate={marketResults?.inTimeRange || []} />

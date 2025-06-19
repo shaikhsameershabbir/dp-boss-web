@@ -1,4 +1,8 @@
-import { getMarketResult, getStarlineResult } from "@/app/api/api";
+import {
+  getMarketResult,
+  getStarlineResult,
+  getTodayLuckyNumber,
+} from "@/app/api/api";
 import LandingPageHandler from "./rootComponents/LandingPageHandler";
 
 // Force dynamic rendering to prevent caching
@@ -9,13 +13,18 @@ export const revalidate = 0;
 // export const revalidate = 30; // Revalidate every 30 seconds
 
 export default async function Page() {
-  const initialData = await getMarketResult();
-  const starlineResult = await getStarlineResult();
+  const [initialData, starlineResult, luckyNumberData] = await Promise.all([
+    getMarketResult(),
+    getStarlineResult(),
+    getTodayLuckyNumber(),
+  ]);
+
   return (
     <>
       <LandingPageHandler
         initialData={initialData}
         starlineResult={starlineResult}
+        luckyNumberData={luckyNumberData}
       />
     </>
   );
