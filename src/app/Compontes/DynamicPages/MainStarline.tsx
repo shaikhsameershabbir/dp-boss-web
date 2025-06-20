@@ -16,7 +16,9 @@ interface MainStarlineProps {
 export default function MainStarline({ data }: MainStarlineProps) {
 
   // Get all time slots from the data
-  const timeSlots = Object.keys(data).filter((key) => key !== "starLineName");
+  const timeSlots = Object.keys(data).filter(
+    (key) => key !== "starLineName" && key !== "starLineId"
+  );
   const [lastNumber, setLastNumber] = useState<string | null>(null);
   // Split time slots into two columns
   const middle = Math.ceil(timeSlots.length / 2);
@@ -68,6 +70,7 @@ export default function MainStarline({ data }: MainStarlineProps) {
           </thead>
           <tbody>
             {Array.from({ length: middle }).map((_, index) => (
+
               <tr
                 key={index}
                 className="bg-gradient-to-b from-[#ffe0b2] to-[#fca] text-black"

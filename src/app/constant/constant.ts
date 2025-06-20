@@ -1,6 +1,7 @@
 export const gameConfigurtion = {
   gameName: "DPBOSS",
   gameLogo: "logo.png",
+  svgLogo: "favIcon.jpeg",
   godImg: "God.jpg",
   welcomeMsg: "Welcome to dpboss international !! Satta Matka Fast Result",
   resultMsg: "Satta Matka Dpboss.net Kalyan Matka Result",
