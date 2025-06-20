@@ -14,19 +14,36 @@ interface JodiResult {
   marketId: number;
   startDate: string;
   endDate: string;
-  monday: { main: string; open?: string; close?: string } | null;
-  tuesday: { main: string; open?: string; close?: string } | null;
-  wednesday: { main: string; open?: string; close?: string } | null;
-  thursday: { main: string; open?: string; close?: string } | null;
-  friday: { main: string; open?: string; close?: string } | null;
-  saturday: { main: string; open?: string; close?: string } | null;
-  sunday: { main: string; open?: string; close?: string } | null;
+  monday: string | null;
+  tuesday: string | null;
+  wednesday: string | null;
+  thursday: string | null;
+  friday: string | null;
+  saturday: string | null;
+  sunday: string | null;
   createdAt: string;
 }
 
 interface JodiResponse {
   marketName: string;
   results: JodiResult[];
+}
+
+// Helper function to parse JSON string to JodiDay object
+function parseJodiDay(dayValue: string | null): { main: string; open?: string; close?: string } | null {
+  if (!dayValue) return null;
+
+  try {
+    const parsed = JSON.parse(dayValue);
+    return {
+      main: parsed.main || "",
+      open: parsed.open || "",
+      close: parsed.close || "",
+    };
+  } catch (error) {
+    console.error("Error parsing jodi day:", error);
+    return null;
+  }
 }
 
 // Define a type for the days
@@ -70,19 +87,19 @@ export default async function Jodi({
       // Transform the API data into our display format
       const transformedData = response.results.map((week: JodiResult) => {
         return {
-          Mon: isFutureDay(week.startDate, 0) ? "" : week.monday?.main || "**",
-          Tue: isFutureDay(week.startDate, 1) ? "" : week.tuesday?.main || "**",
+          Mon: isFutureDay(week.startDate, 0) ? "" : parseJodiDay(week.monday)?.main || "**",
+          Tue: isFutureDay(week.startDate, 1) ? "" : parseJodiDay(week.tuesday)?.main || "**",
           Wed: isFutureDay(week.startDate, 2)
             ? ""
-            : week.wednesday?.main || "**",
+            : parseJodiDay(week.wednesday)?.main || "**",
           Thu: isFutureDay(week.startDate, 3)
             ? ""
-            : week.thursday?.main || "**",
-          Fri: isFutureDay(week.startDate, 4) ? "" : week.friday?.main || "**",
+            : parseJodiDay(week.thursday)?.main || "**",
+          Fri: isFutureDay(week.startDate, 4) ? "" : parseJodiDay(week.friday)?.main || "**",
           Sat: isFutureDay(week.startDate, 5)
             ? ""
-            : week.saturday?.main || "**",
-          Sun: isFutureDay(week.startDate, 6) ? "" : week.sunday?.main || "**",
+            : parseJodiDay(week.saturday)?.main || "**",
+          Sun: isFutureDay(week.startDate, 6) ? "" : parseJodiDay(week.sunday)?.main || "**",
         };
       });
       jodiData = transformedData;
@@ -153,7 +170,7 @@ export default async function Jodi({
         .filter(
           (result: {
             day: string;
-            data: { main: string; open?: string; close?: string } | null;
+            data: string | null;
             date: Date;
           }) => {
             const today = new Date();
@@ -164,11 +181,14 @@ export default async function Jodi({
       if (allResults.length > 0) {
         const last = allResults[allResults.length - 1].data;
         if (last) {
-          lastResult = {
-            open: last.open,
-            main: last.main,
-            close: last.close,
-          };
+          const parsedLast = parseJodiDay(last);
+          if (parsedLast) {
+            lastResult = {
+              open: parsedLast.open,
+              main: parsedLast.main,
+              close: parsedLast.close,
+            };
+          }
         }
       }
     }
@@ -294,11 +314,10 @@ export default async function Jodi({
                       return (
                         <td
                           key={day}
-                          className={`border-2 border-blue-800 px-2 text-[24px] font-bold py-1 ${
-                            HighlightedNumbers.includes(value)
-                              ? "text-red-600 font-semibold"
-                              : ""
-                          }`}
+                          className={`border-2 border-blue-800 px-2 text-[24px] font-bold py-1 ${HighlightedNumbers.includes(value)
+                            ? "text-red-600 font-semibold"
+                            : ""
+                            }`}
                         >
                           {isFuture ? (
                             ""

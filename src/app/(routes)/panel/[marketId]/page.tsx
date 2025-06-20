@@ -17,20 +17,40 @@ interface PanelDay {
   close?: string;
 }
 interface PanelWeek {
+  resultId: number;
+  marketId: number;
   startDate: string;
   endDate: string;
-  monday: PanelDay | null;
-  tuesday: PanelDay | null;
-  wednesday: PanelDay | null;
-  thursday: PanelDay | null;
-  friday: PanelDay | null;
-  saturday: PanelDay | null;
-  sunday: PanelDay | null;
+  monday: string | null;
+  tuesday: string | null;
+  wednesday: string | null;
+  thursday: string | null;
+  friday: string | null;
+  saturday: string | null;
+  sunday: string | null;
+  createdAt: string;
 }
 
 interface PanelResponse {
   marketName: string;
   results: PanelWeek[];
+}
+
+// Helper function to parse JSON string to PanelDay object
+function parsePanelDay(dayValue: string | null): PanelDay | null {
+  if (!dayValue) return null;
+
+  try {
+    const parsed = JSON.parse(dayValue);
+    return {
+      main: parsed.main || "",
+      open: parsed.open || "",
+      close: parsed.close || "",
+    };
+  } catch (error) {
+    console.error("Error parsing panel day:", error);
+    return null;
+  }
 }
 
 export default async function Panel({
@@ -59,13 +79,13 @@ export default async function Panel({
     // Flatten all days into a single array with their values
     const allResults = panelData
       .flatMap((week) => [
-        week.monday,
-        week.tuesday,
-        week.wednesday,
-        week.thursday,
-        week.friday,
-        week.saturday,
-        week.sunday,
+        parsePanelDay(week.monday),
+        parsePanelDay(week.tuesday),
+        parsePanelDay(week.wednesday),
+        parsePanelDay(week.thursday),
+        parsePanelDay(week.friday),
+        parsePanelDay(week.saturday),
+        parsePanelDay(week.sunday),
       ])
       .filter((res) => res && res.main);
 
@@ -187,7 +207,7 @@ export default async function Panel({
                         today.setHours(0, 0, 0, 0);
                         if (cellDate > today) return null; // Do not render future cells
 
-                        const value = week[day];
+                        const value = parsePanelDay(week[day] as string | null);
                         const isStarPattern =
                           !value ||
                           (!value.open &&
@@ -290,9 +310,8 @@ export default async function Panel({
                             style={{ width: "80px", height: "60px" }}
                           >
                             <div
-                              className={`w-full h-full flex flex-row items-center justify-center ${
-                                isRed ? "text-red-600" : ""
-                              }`}
+                              className={`w-full h-full flex flex-row items-center justify-center ${isRed ? "text-red-600" : ""
+                                }`}
                             >
                               {/* Open vertical */}
                               <div className="flex flex-col items-center justify-center flex-1 leading-none">

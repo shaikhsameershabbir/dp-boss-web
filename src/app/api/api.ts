@@ -9,8 +9,7 @@ const API_KEY = process.env.NEXT_PUBLIC_API_KEY || "";
 const apiClient = {
   get: async (url: string) => {
     const response = await fetch(
-      `${
-        process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:1430/api"
+      `${process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:1430/api"
       }${url}`,
       {
         headers: {
@@ -56,6 +55,7 @@ export const getStarlineResultById = async (starlineId: string) => {
 // get jodi result
 export const getJodiResult = async (marketId: string) => {
   const response = await apiClient.get(`/getJodiResult/${marketId}`);
+
   console.log(response.data);
   return response.data;
 };
