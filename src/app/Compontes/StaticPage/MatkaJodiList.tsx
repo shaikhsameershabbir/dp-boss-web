@@ -7,7 +7,7 @@ export default function MatkajodiList() {
         { label: "All market free fix game", href: "#" },
         { label: "Ratan Khatri Fix Panel Chart", href: "#" },
         { label: "Matka Final Number Trick Chart", href: "#" },
-        { label: "EverGreen Trick Zone And Matka Tricks By DpBoss", href: "#" },
+        { label: "EverGreen Trick Zone And Matka Tricks ByDsBoss", href: "#" },
     ];
 
 
@@ -52,19 +52,17 @@ export default function MatkajodiList() {
                 {items.map((item, index) => (
                     <div
                         key={index}
-                        className={`py-2 px-2 border-b-2 border-red-500 ${
-                            index % 2 === 0 ? "bg-[#fed7aa]" : "bg-[#fcd9aa]"
-                        }`}
+                        className={`py-2 px-2 border-b-2 border-red-500 ${index % 2 === 0 ? "bg-[#fed7aa]" : "bg-[#fcd9aa]"
+                            }`}
                     >
                         <a
                             href={item.href}
                             style={rgbAnimationStyle}
-                            className={`${
-                                item.label.includes("By DpBoss") ||
-                                item.label.includes("Chart")
+                            className={`${item.label.includes("ByDsBoss") ||
+                                    item.label.includes("Chart")
                                     ? "text-[#2c2c54]"
                                     : "text-[#ff1731]"
-                            }`}
+                                }`}
                         >
                             {item.label}
                         </a>

@@ -8,7 +8,7 @@ export default function Header() {
         <>
             <div>
                 <div className="border-3 border-[#ff0016] flex justify-center items-center rounded-lg shadow-md mr-2 ml-2 bg-[#fc9]">
-                        <img src={gameConfigurtion.gameLogo} height={250} width={300}></img>
+                    <img src={gameConfigurtion.gameLogo} height={250} width={300}></img>
                 </div>
                 <div className="flex justify-center items-center mt-2 mb-2">
                     <div className="flex w-full justify-between items-center rounded-lg shadow-md mr-2 ml-2 bg-[#fc9] border-3 border-[#ff0016] p-1">
@@ -17,7 +17,7 @@ export default function Header() {
                         </div>
                         <div className="ml-6 text-left">
                             <p className="text-md mt-2 text-center font-[Helvetica,sans-serif] italic font-bold text-black">
-                                !! Welcome to dpboss international !! Satta Matka Fast Result
+                                !! Welcome toDsBoss international !! Satta Matka Fast Result
                             </p>
                         </div>
 

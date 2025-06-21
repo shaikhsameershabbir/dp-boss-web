@@ -385,7 +385,7 @@ export default async function Panel({
 
         <div className="bg-[#fff] text-lg font-bold border-2 border-[#800080] mt-2 p-1">
           <h1 className="text-[35px] text-center text-[#007bff]">
-            DPBOSS.BOSTON
+            www.dsboss.net
           </h1>
           <h2 className="text-[25px] text-center text-[#ff0000]">
             All Rights Reseved®

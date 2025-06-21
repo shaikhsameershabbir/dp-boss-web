@@ -94,21 +94,21 @@ export default function LandingPageHandler({
         {/* Starline Results */}
         {Array.isArray(starlineResults)
           ? starlineResults.map((starline) => (
-              <MainStarline key={starline.starLineName} data={starline} />
-            ))
+            <MainStarline key={starline.starLineName} data={starline} />
+          ))
           : starlineResults &&
-            Object.values(starlineResults as Record<string, StarlineData>).map(
-              (starline) => (
-                <MainStarline
-                  key={(starline as StarlineData).starLineName}
-                  data={starline as StarlineData}
-                />
-              )
-            )}
+          Object.values(starlineResults as Record<string, StarlineData>).map(
+            (starline) => (
+              <MainStarline
+                key={(starline as StarlineData).starLineName}
+                data={starline as StarlineData}
+              />
+            )
+          )}
         <KalyanTable />
         <KalyanNight />
-        <SattaMatkaJpdiChart />
-        <MatakaPanelChart />
+        <SattaMatkaJpdiChart marketResults={marketResults?.rest || []} />
+        <MatakaPanelChart marketResults={marketResults?.rest || []} />
         <Introduction />
         <ScrollingDiv />
         <QNA />

@@ -1,5 +1,5 @@
-export const QNA = () =>{
-    return(
+export const QNA = () => {
+    return (
         <>
             <div className="max-w-full mx-auto p-2">
                 <div className="border-[2px] border-[#003db6] rounded-[14px] overflow-hidden">
@@ -8,7 +8,7 @@ export const QNA = () =>{
                         <p>Satta Matka originated in India and is one of the popular forms of Lottery and gambling games. The game involves placing bets on different numbers and earning potential winning on the outcome.</p>
                     </div>
                     <div className="bg-[#ffcaa6] border-b border-[#c20094] text-center font-semibold text-[12px] m-1 text-black">
-                        <h4 className="text-[#0013a5] font-bold italic text-lg">WHO IS DPBOSS</h4>
+                        <h4 className="text-[#0013a5] font-bold italic text-lg">WHO ISDSBOSS</h4>
                         <p>DPBOSS is known for providing the best tips and guidance to players along with expert advice so that they can easily make informed decisions on placing bets on the numbers in their Matka Games.</p>
                     </div>
                     <div className="bg-[#ffcaa6] border-b border-[#c20094] text-center font-semibold text-[12px] m-1 text-black">
@@ -30,7 +30,7 @@ export const QNA = () =>{
                     <div className="bg-[#ffcaa6] border-b border-[#c20094] text-center font-semibold text-[12px] m-1 text-black">
                         <h4 className="text-[#0013a5] font-bold italic text-lg">WHAT IS THE DIFFERENCE BETWEEN MATKA AND SATTA?</h4>
                         <p>Satta is a broad term that refers to any type of gambling games. The matka is a specific term which refers to a game involving betting on numbers that are drawn out from the Matka.</p>
-                    </div> 
+                    </div>
                     <div className="bg-[#ffcaa6] border-b border-[#c20094] text-center font-semibold text-[12px] m-1 text-black">
                         <h4 className="text-[#0013a5] font-bold italic text-lg">WHAT ARE MATKA OPEN AND MATKA CLOSE?</h4>
                         <p>First and last numbers are referred to as the Matka Open and Matka Close, respectively which is drawn in any Matka Game. Even players can place bets on these numbers and win if they are potentially drawn out.</p>

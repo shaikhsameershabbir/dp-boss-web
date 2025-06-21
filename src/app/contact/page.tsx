@@ -19,7 +19,7 @@ export default function constant() {
                         <h3
                             className="text-white italic font-bold text-center"
                             style={{ textShadow: "2px 2px 4px black" }}>
-                            DPBOSS KALYAN RESULT TODAY
+                            DSBOSS KALYAN RESULT TODAY
                         </h3>
                     </div>
                     <div className="flex flex-col lg:flex-row justify-between gap-6 m-3">
@@ -87,7 +87,7 @@ export default function constant() {
                                 * These fields are required.
                             </p>
                             <h2 className="text-center text-2xl italic font-semibold mt-4 text-black">
-                                Dpboss Contact Number
+                                DsBoss Contact Number
                             </h2>
                         </div>
 
@@ -122,7 +122,7 @@ export default function constant() {
                 </div>
                 <div className="border-2 border-[#ff0016] m-2 p-3 rounded-[10px] italic">
                     <p className="text-[12px] text-center text-[#000b65] font-bold mb-2">
-                        Hello, all the Satta Matka Enthusiasts! Welcome to the contact details of our website Dpboss.Services If you are a customer and you have any queries, then you can fill out the below form here and then contact us.</p>
+                        Hello, all the Satta Matka Enthusiasts! Welcome to the contact details of our websiteDsBoss.Services If you are a customer and you have any queries, then you can fill out the below form here and then contact us.</p>
                     <p className="text-[12px] text-center text-[#000b65] font-bold mb-2">We will respond as soon as we check your email. So here you need to fill your name in the customer name field. Then you need to enter the game name you want to play specifically. Then you have to add your contact details here. It should be your phone number, and then you need to select the game type, and then your email, after that you can send us a message.</p>
                     <p className="text-[12px] text-center text-[#000b65] font-bold mb-2">If you want to know our address, here is our physical address written on the right side, and here is our official email where you can send us an email for any important query. Here, you can see our pinpoint location on the Google map, and you can reach out if you want to see our office.</p>
                     <p className="text-[12px] text-center text-[#000b65] font-bold mb-2">Okay, so this is our contact page, and here is our contact number, you can contact us by filling out the form and dont forget to enter all the details we asked for, otherwise your form will not be submitted.</p>

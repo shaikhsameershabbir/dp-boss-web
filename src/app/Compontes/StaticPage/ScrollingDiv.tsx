@@ -102,7 +102,7 @@ export const ScrollingDiv = () => {
         </div>
         <div className="bg-[#ffcaa6] border-t border-[#c20094] text-center font-semibold text-[14px] m-1 text-black">
           <h4 className="text-[#0013a5] font-bold italic text-lg">
-            MATKA JODI ON dpboss.boston: COMBINING NUMBERS FOR WINNING BETS
+            MATKA JODI ONDsBoss.boston: COMBINING NUMBERS FOR WINNING BETS
           </h4>
           <p>
             Matka Jodi is a term which is often used in Matka gambling to refer

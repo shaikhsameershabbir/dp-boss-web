@@ -6,7 +6,7 @@ export default function SpicalGameZone() {
         { label: "All market free fix game", href: "#" },
         { label: "Ratan Khatri Fix Panel Chart", href: "#" },
         { label: "Matka Final Number Trick Chart", href: "#" },
-        { label: "EverGreen Trick Zone And Matka Tricks By DpBoss", href: "#" },
+        { label: "EverGreen Trick Zone And Matka Tricks ByDsBoss", href: "#" },
     ];
 
     // CSS for RGB animation
@@ -42,7 +42,7 @@ export default function SpicalGameZone() {
                         fontFamily: "Helvetica, sans-serif",
                     }}
                 >
-                    Dpboss Special Game Zone
+                    DsBoss Special Game Zone
                 </h4>
             </div>
 
@@ -51,9 +51,8 @@ export default function SpicalGameZone() {
                 {items.map((item, index) => (
                     <div
                         key={index}
-                        className={`py-2 px-2 border-b-2 border-red-500 ${
-                            index % 2 === 0 ? "bg-[#fed7aa]" : "bg-[#fcd9aa]"
-                        }`}
+                        className={`py-2 px-2 border-b-2 border-red-500 ${index % 2 === 0 ? "bg-[#fed7aa]" : "bg-[#fcd9aa]"
+                            }`}
                     >
                         <a
                             href={item.href}
