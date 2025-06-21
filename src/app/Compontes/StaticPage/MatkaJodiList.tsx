@@ -3,7 +3,7 @@
 export default function MatkajodiList() {
     // Dummy data with optional links (you can update the hrefs)
     const items = [
-        { label: "Dpboss Guessing Forum (Post)", href: "#" },
+        { label: "Dsboss Guessing Forum (Post)", href: "#" },
         { label: "All market free fix game", href: "#" },
         { label: "Ratan Khatri Fix Panel Chart", href: "#" },
         { label: "Matka Final Number Trick Chart", href: "#" },

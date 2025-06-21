@@ -9,7 +9,7 @@ export const QNA = () => {
                     </div>
                     <div className="bg-[#ffcaa6] border-b border-[#c20094] text-center font-semibold text-[12px] m-1 text-black">
                         <h4 className="text-[#0013a5] font-bold italic text-lg">WHO ISDSBOSS</h4>
-                        <p>DPBOSS is known for providing the best tips and guidance to players along with expert advice so that they can easily make informed decisions on placing bets on the numbers in their Matka Games.</p>
+                        <p>DSBOSS is known for providing the best tips and guidance to players along with expert advice so that they can easily make informed decisions on placing bets on the numbers in their Matka Games.</p>
                     </div>
                     <div className="bg-[#ffcaa6] border-b border-[#c20094] text-center font-semibold text-[12px] m-1 text-black">
                         <h4 className="text-[#0013a5] font-bold italic text-lg">HOW DOES MATKA WORK?</h4>

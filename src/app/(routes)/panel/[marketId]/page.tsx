@@ -394,7 +394,7 @@ export default async function Panel({
             (1998-2024)
           </h2>
           <h2 className="text-[25px] text-center text-[#ff0000]">
-            Contact <span className="text-[#007bff]">(Astrologer-Dpboss)</span>
+            Contact <span className="text-[#007bff]">(Astrologer-DsBoss)</span>
           </h2>
         </div>
       </div>

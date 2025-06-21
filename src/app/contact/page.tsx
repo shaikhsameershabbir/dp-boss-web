@@ -102,8 +102,8 @@ export default function constant() {
                                 <p className="mt-2 flex items-center gap-2">
                                     <FontAwesomeIcon icon={faEnvelope} height="15px" />
                                     <span className="font-bold">Email:</span>
-                                    <a href="mailto:support@dpboss.boston" className="text-blue-600 italic underline">
-                                        support@dpboss.boston
+                                    <a href="mailto:support@dsboss.boston" className="text-blue-600 italic underline">
+                                        support@dsboss.boston
                                     </a>
                                 </p>
                             </div>
