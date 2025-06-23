@@ -25,6 +25,7 @@ const apiClient = {
 };
 export const getTodayLuckyNumber = async () => {
   const response = await apiClient.get("/today-lucky-number");
+  
   return response.data;
 };
 
