@@ -37,6 +37,7 @@ export default function MainStarline({ data }: MainStarlineProps) {
 
   return (
     <>
+      {lastNumber && <Wheel lastNumber={lastNumber} />}
       <div className="text-xl font-bold border-2 border-[#000] rounded-[10px] bg-[#ffd902] m-2 p-1">
         <div className="flex">
           <div className="w-3/2">
@@ -95,7 +96,7 @@ export default function MainStarline({ data }: MainStarlineProps) {
         </table>
       </div>
       {/* pass the last existing number to the wheel */}
-      {lastNumber && <Wheel lastNumber={lastNumber} />}
+
     </>
   );
 }

@@ -12,8 +12,8 @@ export const Wheel = ({ lastNumber }: { lastNumber: string }) => {
             width={350}
           />
           <span
-            className="absolute text-[#ed143d] text-5xl font-bold top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 italic"
-            style={{ textShadow: "1px 0px 4px #03c800" }}
+            className="absolute text-[#0c0fb9] text-5xl font-bold top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 italic bg-white px-6 py-1 rounded-xl"
+            style={{ textShadow: "3px 3px 0px #fcc700" }}
           >
             {lastNumber}
           </span>

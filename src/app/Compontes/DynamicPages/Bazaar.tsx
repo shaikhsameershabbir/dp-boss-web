@@ -4,6 +4,23 @@ import { useState, useEffect } from "react";
 import { Bazzar } from "@/app/constant/constant";
 import Link from "next/link";
 
+const convertTo24HourFormat = (time12h: string): string => {
+  if (!time12h) return "00:00";
+  const [time, modifier] = time12h.split(" ");
+  const [initialHours, minutes] = time.split(":");
+  let hours = initialHours;
+
+  if (hours === "12") {
+    hours = "00";
+  }
+
+  if (modifier && modifier.toUpperCase() === "PM") {
+    hours = (parseInt(hours, 10) + 12).toString();
+  }
+
+  return `${hours.padStart(2, "0")}:${minutes}`;
+};
+
 interface ResultItem {
   marketId: string;
   marketName: string;
@@ -23,11 +40,17 @@ export default function Bazaar({ marketResults }: BazaarProps) {
 
   useEffect(() => {
     if (marketResults && marketResults.length > 0) {
-      const processedResults = marketResults.map((market) => ({
-        ...market,
-        marketId: String(market.marketId),
-        bgColor: market.yellowEnable === 1 ? "#ffff33" : "#fc9",
-      }));
+      const processedResults = marketResults
+        .map((market) => ({
+          ...market,
+          marketId: String(market.marketId),
+          bgColor: market.yellowEnable === 1 ? "#ffff33" : "#fc9",
+        }))
+        .sort((a, b) => {
+          const timeA = convertTo24HourFormat(a.openTime);
+          const timeB = convertTo24HourFormat(b.openTime);
+          return timeA.localeCompare(timeB);
+        });
       setResults(processedResults);
     }
   }, [marketResults]);
