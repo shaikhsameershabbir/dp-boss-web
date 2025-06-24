@@ -37,6 +37,7 @@ interface PanelResponse {
   marketName: string;
   results: PanelWeek[];
   isSunday: boolean;
+  isSaturday: boolean;
 }
 
 // Helper function to parse JSON string to PanelDay object
@@ -68,11 +69,13 @@ export default async function Panel({
   let marketName = "";
   let lastResult = "";
   let isSunday = false;
+  let isSaturday = false;
   try {
     const response: PanelResponse = await getJodiResult(marketId);
     if (response && response.marketName && response.results) {
       marketName = response.marketName;
       isSunday = response.isSunday;
+      isSaturday = response.isSaturday;
       panelData = response.results;
     }
   } catch (error) {
@@ -127,9 +130,20 @@ export default async function Panel({
   ];
   const allDayLabels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
-  // Filter days based on isSunday value
-  const days = isSunday ? allDays : allDays.filter(day => day !== "sunday");
-  const dayLabels = isSunday ? allDayLabels : allDayLabels.filter((_, index) => index < 6);
+  // Filter days based on isSunday and isSaturday values
+  let days = allDays;
+  let dayLabels = allDayLabels;
+
+  if (!isSunday) {
+    days = days.filter(day => day !== "sunday");
+    dayLabels = dayLabels.filter((_, index) => index < 6);
+  }
+
+  if (!isSaturday) {
+    days = days.filter(day => day !== "saturday");
+    // Remove Saturday from dayLabels (index 5)
+    dayLabels = dayLabels.filter((_, index) => index !== 5);
+  }
 
   return (
     <>
