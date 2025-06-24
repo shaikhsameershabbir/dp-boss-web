@@ -69,8 +69,6 @@ export default async function Panel({
   let isSunday = false;
   try {
     const response: PanelResponse = await getJodiResult(marketId);
-    console.log("----------------", response);
-
     if (response && response.marketName && response.results) {
       marketName = response.marketName;
       isSunday = response.isSunday;
@@ -223,8 +221,26 @@ export default async function Panel({
                             (!value.main || value.main === "**") &&
                             !value.close);
 
+                        // Check if this cell is for today
+                        const isToday = cellDate.getTime() === today.getTime();
+
                         if (isStarPattern) {
-                          // Star pattern cell
+                          // If it's today and has no result, show empty box instead of stars
+                          if (isToday) {
+                            return (
+                              <td
+                                key={day}
+                                className="border-2 border-[#414eb0] p-0 text-[8px] sm:text-[10px] md:text-xs lg:text-sm align-middle"
+                                style={{ width: "80px", height: "60px" }}
+                              >
+                                <div className="w-full h-full flex items-center justify-center">
+                                  {/* Empty box for today */}
+                                </div>
+                              </td>
+                            );
+                          }
+
+                          // Star pattern cell for past dates
                           return (
                             <td
                               key={day}
