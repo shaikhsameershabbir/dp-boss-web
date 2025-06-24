@@ -30,9 +30,9 @@ export const liveResult = {
 
 export const notice = {
   title: "☆ NOTICE ☆",
-  subtitle: "अपना बाजारDsBoss.boston वेबसाइट में डलवाने",
+  subtitle: "अपना बाजारDsBossnet.net वेबसाइट में डलवाने",
   info: "के लिए आज ही हमें ईमेल करे",
-  email: "Email : support@dsboss.net",
+  email: "Email : support@dsbossnet.net",
   rules: "शर्ते लागु",
 };
 
@@ -55,7 +55,7 @@ export const panel = {
 };
 
 export const copywrite = {
-  title: "DSBOSS.BOSTON",
+  title: "DsBossnet.net",
   message: "All Rights Reseved®",
   year: "(1998-2024)",
   contact: "Contact",
