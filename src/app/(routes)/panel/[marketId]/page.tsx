@@ -145,15 +145,15 @@ export default async function Panel({
         </div>
 
         <div className="text-lg font-bold border-1 border-black mt-1 p-1">
-          <p className="text-[22px] text-center text-[#00094d]">{marketName}</p>
-          <p className="text-[21px] text-center text-[#880e4f]">{lastResult}</p>
-          <button className="bg-[#522f92] px-4 py-1 mx-auto block text-[12px] text-white">
+          <p className="text-[18px] sm:text-[20px] md:text-[22px] lg:text-[24px] text-center text-[#00094d]">{marketName}</p>
+          <p className="text-[17px] sm:text-[19px] md:text-[21px] lg:text-[23px] text-center text-[#880e4f]">{lastResult}</p>
+          <button className="bg-[#522f92] px-3 sm:px-4 py-1 mx-auto block text-[10px] sm:text-[11px] md:text-[12px] text-white">
             Refresh Result
           </button>
         </div>
 
         <button
-          className="bg-[#a0d5ff] px-12 py-3 mx-auto block text-[14px] text-[#220c82] mt-2 font-bold"
+          className="bg-[#a0d5ff] px-8 sm:px-10 md:px-12 py-2 sm:py-3 mx-auto block text-[12px] sm:text-[13px] md:text-[14px] text-[#220c82] mt-2 font-bold"
           style={{
             textShadow: "1px 1px #00bcd4",
             boxShadow:
@@ -164,9 +164,9 @@ export default async function Panel({
         </button>
 
         {/* ⬇️ Matka Table Starts Here ⬇️ */}
-        <div className="w-full overflow-x-auto mt-2 px-2">
-          <div className="max-w-[95%] md:max-w-[70%] mx-auto">
-            <div className="text-center font-bold text-white bg-[#414eb0] text-[14px] sm:text-[16px] p-2">
+        <div className="w-full overflow-x-auto mt-2 px-1 sm:px-2">
+          <div className="max-w-[98%] sm:max-w-[95%] md:max-w-[85%] lg:max-w-[70%] mx-auto">
+            <div className="text-center font-bold text-white bg-[#414eb0] text-[12px] sm:text-[14px] md:text-[16px] lg:text-[18px] p-1 sm:p-2">
               {marketName} PANEL RECORD 2019 - 2025
             </div>
             <div className="overflow-x-auto">
@@ -177,7 +177,7 @@ export default async function Panel({
                 <thead>
                   <tr className="bg-[#ffc338] text-black">
                     <th
-                      className="border-2 border-[#414eb0] bg-[#ffc338] text-black text-sm"
+                      className="border-2 border-[#414eb0] bg-[#ffc338] text-black text-[10px] sm:text-[11px] md:text-sm lg:text-base px-0 sm:px-1"
                       style={{ padding: 0 }}
                     >
                       Date
@@ -185,7 +185,7 @@ export default async function Panel({
                     {dayLabels.map((day) => (
                       <th
                         key={day}
-                        className="border-2 border-[#414eb0] bg-[#ffc338] text-black text-sm"
+                        className="border-2 border-[#414eb0] bg-[#ffc338] text-black text-[10px] sm:text-[11px] md:text-sm lg:text-base px-0 sm:px-1"
                         style={{ padding: 0 }}
                       >
                         {day}
@@ -197,7 +197,7 @@ export default async function Panel({
                   {panelData.map((week, i) => (
                     <tr key={i}>
                       <td
-                        className="border-2 border-[#414eb0] text-xs sm:text-sm font-bold whitespace-pre-line align-middle p-0"
+                        className="border-2 border-[#414eb0] text-[8px] sm:text-[10px] md:text-xs lg:text-sm font-bold whitespace-pre-line align-middle p-0"
                         style={{ width: "80px", height: "60px" }}
                       >
                         <div className="w-full h-full flex items-center justify-center flex-col">
@@ -236,7 +236,7 @@ export default async function Panel({
                           return (
                             <td
                               key={day}
-                              className="border-2 border-[#414eb0] p-0 text-xs sm:text-sm align-middle"
+                              className="border-2 border-[#414eb0] p-0 text-[8px] sm:text-[10px] md:text-xs lg:text-sm align-middle"
                               style={{ width: "80px", height: "60px" }}
                             >
                               <div className="w-full h-full flex flex-col items-center justify-center">
@@ -323,7 +323,7 @@ export default async function Panel({
                         return (
                           <td
                             key={day}
-                            className="border-2 border-[#414eb0] p-0 text-xs sm:text-sm align-middle"
+                            className="border-2 border-[#414eb0] p-0 text-[8px] sm:text-[10px] md:text-xs lg:text-sm align-middle"
                             style={{ width: "80px", height: "60px" }}
                           >
                             <div
@@ -335,7 +335,7 @@ export default async function Panel({
                                 {(value?.open || "").split("").map((ch, idx) => (
                                   <span
                                     key={idx}
-                                    className="text-[11px] sm:text-[13px] font-extrabold leading-none"
+                                    className="text-[8px] sm:text-[10px] md:text-[11px] lg:text-[13px] font-extrabold leading-none"
                                     style={{ lineHeight: "1.1" }}
                                   >
                                     {ch}
@@ -345,7 +345,7 @@ export default async function Panel({
                               {/* Main */}
                               <div className="flex flex-col items-center justify-center flex-1">
                                 <span
-                                  className={`text-[18px] sm:text-[21px] font-bold`}
+                                  className={`text-[14px] sm:text-[16px] md:text-[18px] lg:text-[21px] font-bold`}
                                   style={{
                                     lineHeight: "1",
                                     textAlign: "center",
@@ -361,7 +361,7 @@ export default async function Panel({
                                   .map((ch, idx) => (
                                     <span
                                       key={idx}
-                                      className="text-[11px] sm:text-[13px] font-extrabold leading-none"
+                                      className="text-[8px] sm:text-[10px] md:text-[11px] lg:text-[13px] font-extrabold leading-none"
                                       style={{ lineHeight: "1.1" }}
                                     >
                                       {ch}
@@ -381,15 +381,15 @@ export default async function Panel({
         </div>
         {/* ⬆️ Matka Table Ends Here ⬆️ */}
         <div className="text-lg font-bold border-1 border-black mt-5 p-1">
-          <p className="text-[22px] text-center text-[#00094d]">{marketName}</p>
-          <p className="text-[21px] text-center text-[#880e4f]">{lastResult}</p>
-          <button className="bg-[#522f92] px-4 py-1 mx-auto block text-[12px] text-white">
+          <p className="text-[18px] sm:text-[20px] md:text-[22px] lg:text-[24px] text-center text-[#00094d]">{marketName}</p>
+          <p className="text-[17px] sm:text-[19px] md:text-[21px] lg:text-[23px] text-center text-[#880e4f]">{lastResult}</p>
+          <button className="bg-[#522f92] px-3 sm:px-4 py-1 mx-auto block text-[10px] sm:text-[11px] md:text-[12px] text-white">
             Refresh Result
           </button>
         </div>
 
         <button
-          className="bg-[#a0d5ff] px-12 py-3 mx-auto block text-[14px] text-[#220c82] mt-2 font-bold"
+          className="bg-[#a0d5ff] px-8 sm:px-10 md:px-12 py-2 sm:py-3 mx-auto block text-[12px] sm:text-[13px] md:text-[14px] text-[#220c82] mt-2 font-bold"
           style={{
             textShadow: "1px 1px #00bcd4",
             boxShadow:
@@ -398,19 +398,19 @@ export default async function Panel({
         >
           Go to top
         </button>
-        <p className="text-center font-bold mt-2 text-black">108</p>
+        <p className="text-center font-bold mt-2 text-black text-[12px] sm:text-[14px] md:text-[16px]">108</p>
 
         <div className="bg-[#fff] text-lg font-bold border-2 border-[#800080] mt-2 p-1">
-          <h1 className="text-[35px] text-center text-[#007bff]">
+          <h1 className="text-[25px] sm:text-[30px] md:text-[35px] text-center text-[#007bff]">
             www.dsboss.net
           </h1>
-          <h2 className="text-[25px] text-center text-[#ff0000]">
+          <h2 className="text-[18px] sm:text-[22px] md:text-[25px] text-center text-[#ff0000]">
             All Rights Reseved®
           </h2>
-          <h2 className="text-[25px] text-center text-[#ff0000]">
+          <h2 className="text-[18px] sm:text-[22px] md:text-[25px] text-center text-[#ff0000]">
             (1998-2024)
           </h2>
-          <h2 className="text-[25px] text-center text-[#ff0000]">
+          <h2 className="text-[18px] sm:text-[22px] md:text-[25px] text-center text-[#ff0000]">
             Contact <span className="text-[#007bff]">(Astrologer-DsBoss)</span>
           </h2>
         </div>
