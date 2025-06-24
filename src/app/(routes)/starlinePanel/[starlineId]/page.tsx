@@ -73,7 +73,7 @@ async function Page({ params }: { params: Promise<{ starlineId: string }> }) {
   let starlineName = "";
   try {
     const response = await getStarlineResultById(starlineId);
-    console.log(response);
+
 
     starlineResult = response;
     console.log("starlineResult", starlineResult);
@@ -94,52 +94,33 @@ async function Page({ params }: { params: Promise<{ starlineId: string }> }) {
   }
 
   return (
-    <div className="m-4">
-      <div
-        className="text-2xl font-bold italic text-center mb-2"
-        style={{ color: "#2196f3", textShadow: "1px 1px 2px #fff" }}
-      >
-        {starlineName}
+    <div className="min-h-screen  py-4 px-1 sm:px-4">
+      <div className="max-w-full w-full mx-auto mb-4">
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-center text-blue-600 mb-2" style={{ textShadow: '1px 1px 2px #fff' }}>{starlineName}</h1>
       </div>
-      <div className="w-full max-w-full box-border overflow-x-auto">
-        <table className="min-w-max w-full border-collapse text-xs sm:text-base font-bold italic text-center text-black table-fixed">
-          <thead className="text-black">
+      <div className="w-full overflow-x-auto">
+        <table className="w-full min-w-max bg-[#fc9] border border-gray-300 text-xs sm:text-sm md:text-base text-black">
+          <thead className="sticky top-0 z-10 bg-[#fc9]">
             <tr>
-              <th
-                className="border-2 border-[#414eb0] bg-[#ffc338] text-black text-xs sm:text-base px-1 py-1"
-                style={{ width: "80px" }}
-              >
-                DATE
-              </th>
+              <th className="border border-gray-300 px-2 py-2 font-semibold text-center  whitespace-nowrap">DATE</th>
               {times.map((time) => (
                 <th
                   key={time}
-                  className="border-2 border-[#414eb0] bg-[#ffc338] text-black text-xs sm:text-base px-1 py-1"
-                  style={{
-                    width: `${Math.floor(100 / (times.length + 1))}vw`,
-                  }}
+                  className="border border-gray-300 px-2 py-2 font-semibold text-center  whitespace-nowrap"
                 >
                   {time}
                 </th>
               ))}
             </tr>
           </thead>
-          <tbody className="text-black">
+          <tbody>
             {tableRows.map((row, idx) => (
-              <tr key={idx} className="bg-[#ffcc99] text-black">
-                <td
-                  className="border-2 border-[#414eb0] font-bold text-xs sm:text-base italic text-black px-1 py-1 whitespace-nowrap"
-                  style={{ width: "80px" }}
-                >
-                  {formatDate(row.date)}
-                </td>
+              <tr key={idx} className="even:bg-gray-50">
+                <td className="border border-gray-300 px-2 py-2 font-medium text-center whitespace-nowrap">{formatDate(row.date)}</td>
                 {row.results.map((result: string, i: number) => (
                   <td
                     key={i}
-                    className="border-2 border-[#414eb0] text-xs sm:text-base text-black px-1 py-1"
-                    style={{
-                      width: `${Math.floor(100 / (times.length + 1))}vw`,
-                    }}
+                    className="border border-gray-300 px-2 py-2 text-center whitespace-nowrap"
                   >
                     {result || ""}
                   </td>
