@@ -33,7 +33,7 @@ export default function LiveResult({
           <h3 className="text-2xl italic font-bold text-[#000066]" style={{ textShadow: "1px 1px 2px white" }}>
             {item.marketName.toUpperCase()}
           </h3>
-          <p className="text-[18px] italic font-bold text-[#cc0044]">
+          <p className="text-[25px] italic font-bold text-[#cc0044]">
             {item.result || (
               <span className="italic text-[#a00000]">{item.result}</span>
             )}

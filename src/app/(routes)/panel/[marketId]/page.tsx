@@ -1,3 +1,5 @@
+"use client";
+
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable jsx-a11y/alt-text */
 
@@ -68,7 +70,7 @@ export default async function Panel({
   let isSunday = false;
   try {
     const response: PanelResponse = await getJodiResult(marketId);
-
+    console.log("----------------", response);
 
     if (response && response.marketName && response.results) {
       marketName = response.marketName;
@@ -131,6 +133,21 @@ export default async function Panel({
   const days = isSunday ? allDays : allDays.filter(day => day !== "sunday");
   const dayLabels = isSunday ? allDayLabels : allDayLabels.filter((_, index) => index < 6);
 
+  // Scroll functions
+  const scrollToBottom = () => {
+    window.scrollTo({
+      top: document.documentElement.scrollHeight,
+      behavior: 'smooth'
+    });
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
   return (
     <>
       <div className="bg-[#fc9] min-h-screen py-1">
@@ -159,6 +176,7 @@ export default async function Panel({
             boxShadow:
               "0 8px 10px 0 rgba(0,0,0,.2), 0 6px 8px 0 rgba(0,0,0,.19)",
           }}
+          onClick={scrollToBottom}
         >
           Go to Bottom
         </button>
@@ -395,6 +413,7 @@ export default async function Panel({
             boxShadow:
               "0 8px 10px 0 rgba(0,0,0,.2), 0 6px 8px 0 rgba(0,0,0,.19)",
           }}
+          onClick={scrollToTop}
         >
           Go to top
         </button>
