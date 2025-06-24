@@ -92,7 +92,7 @@ export default function Bazaar({ marketResults }: BazaarProps) {
 
           {/* Center Content */}
           <div className="flex flex-col items-center justify-center text-center">
-            <h3 className="text-xl italic font-bold text-[#000066]">
+            <h3 className="text-2xl italic font-bold text-[#000066]" style={{ textShadow: "1px 1px 2px white" }}>
               {item.marketName}
             </h3>
             <p className="text-[25px] italic font-bold text-[#880e4f]">
