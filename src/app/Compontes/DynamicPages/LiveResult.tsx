@@ -30,7 +30,7 @@ export default function LiveResult({
 
       {resultLiveForDate.map((item, idx) => (
         <div key={idx} className="border-t-2 border-[#ff0016] text-center">
-          <h3 className="text-xl italic font-bold text-[#000066]">
+          <h3 className="text-2xl italic font-bold text-[#000066]" style={{ textShadow: "1px 1px 2px white" }}>
             {item.marketName.toUpperCase()}
           </h3>
           <p className="text-[18px] italic font-bold text-[#cc0044]">
