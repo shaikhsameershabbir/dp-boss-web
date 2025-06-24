@@ -1,5 +1,3 @@
-"use client";
-
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable jsx-a11y/alt-text */
 
@@ -7,7 +5,6 @@ import Link from "next/link";
 import { getJodiResult } from "@/app/api/api";
 // import { panel } from "@/app/constant/constant";
 import { gameConfigurtion } from "@/app/constant/constant";
-import { useEffect, useState } from "react";
 
 // Force dynamic rendering to prevent caching
 export const dynamic = "force-dynamic";
@@ -58,85 +55,53 @@ function parsePanelDay(dayValue: string | null): PanelDay | null {
   }
 }
 
-export default function Panel({
+export default async function Panel({
   params,
 }: {
   params: Promise<{ marketId: string }>;
 }) {
-  const [panelData, setPanelData] = useState<PanelWeek[]>([]);
-  const [marketName, setMarketName] = useState("");
-  const [lastResult, setLastResult] = useState("");
-  const [isSunday, setIsSunday] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const { marketId } = await params;
 
-  // Scroll functions
-  const scrollToBottom = () => {
-    window.scrollTo({
-      top: document.documentElement.scrollHeight,
-      behavior: 'smooth'
-    });
-  };
+  let panelData: PanelWeek[] = [];
+  let marketName = "";
+  let lastResult = "";
+  let isSunday = false;
+  try {
+    const response: PanelResponse = await getJodiResult(marketId);
 
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { marketId: id } = await params;
-
-        const response: PanelResponse = await getJodiResult(id);
-        console.log("----------------", response);
-
-        if (response && response.marketName && response.results) {
-          setMarketName(response.marketName);
-          setIsSunday(response.isSunday);
-          setPanelData(response.results);
-        }
-      } catch (error) {
-        console.error("Error fetching panel result:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [params]);
+    if (response && response.marketName && response.results) {
+      marketName = response.marketName;
+      isSunday = response.isSunday;
+      panelData = response.results;
+    }
+  } catch (error) {
+    console.error("Error fetching panel result:", error);
+  }
 
   // Calculate last result
-  useEffect(() => {
-    if (panelData.length > 0) {
-      // Flatten all days into a single array with their values
-      const allResults = panelData
-        .flatMap((week) => [
-          parsePanelDay(week.monday),
-          parsePanelDay(week.tuesday),
-          parsePanelDay(week.wednesday),
-          parsePanelDay(week.thursday),
-          parsePanelDay(week.friday),
-          parsePanelDay(week.saturday),
-          parsePanelDay(week.sunday),
-        ])
-        .filter((res) => res && res.main);
+  if (panelData.length > 0) {
+    // Flatten all days into a single array with their values
+    const allResults = panelData
+      .flatMap((week) => [
+        parsePanelDay(week.monday),
+        parsePanelDay(week.tuesday),
+        parsePanelDay(week.wednesday),
+        parsePanelDay(week.thursday),
+        parsePanelDay(week.friday),
+        parsePanelDay(week.saturday),
+        parsePanelDay(week.sunday),
+      ])
+      .filter((res) => res && res.main);
 
-      if (allResults.length > 0) {
-        const last = allResults[allResults.length - 1];
-        if (last) {
-          const result = [last.open, last.main, last.close]
-            .filter(Boolean)
-            .join("-");
-          setLastResult(result);
-        }
+    if (allResults.length > 0) {
+      const last = allResults[allResults.length - 1];
+      if (last) {
+        lastResult = [last.open, last.main, last.close]
+          .filter(Boolean)
+          .join("-");
       }
     }
-  }, [panelData]);
-
-  if (loading) {
-    return <div className="flex justify-center items-center min-h-screen">Loading...</div>;
   }
 
   const redHighlightedNumbers: string[] = [
@@ -188,7 +153,6 @@ export default function Panel({
         </div>
 
         <button
-          onClick={scrollToBottom}
           className="bg-[#a0d5ff] px-8 sm:px-10 md:px-12 py-2 sm:py-3 mx-auto block text-[12px] sm:text-[13px] md:text-[14px] text-[#220c82] mt-2 font-bold"
           style={{
             textShadow: "1px 1px #00bcd4",
@@ -425,7 +389,6 @@ export default function Panel({
         </div>
 
         <button
-          onClick={scrollToTop}
           className="bg-[#a0d5ff] px-8 sm:px-10 md:px-12 py-2 sm:py-3 mx-auto block text-[12px] sm:text-[13px] md:text-[14px] text-[#220c82] mt-2 font-bold"
           style={{
             textShadow: "1px 1px #00bcd4",
