@@ -70,14 +70,21 @@ async function Page({ params }: { params: Promise<{ starlineId: string }> }) {
   let starlineResult: StarlineResult | null = null;
   let times: string[] = [];
   let tableRows: TableRow[] = [];
-
+  let starlineName = "";
   try {
     const response = await getStarlineResultById(starlineId);
     console.log(response);
 
     starlineResult = response;
+    console.log("starlineResult", starlineResult);
 
     if (starlineResult) {
+      // Get the first date key to extract starline name
+      const firstDateKey = Object.keys(starlineResult)[0];
+      if (firstDateKey && starlineResult[firstDateKey]) {
+        starlineName = starlineResult[firstDateKey].starLineName || "";
+      }
+
       const processed = processStarlineData(starlineResult);
       times = processed.times;
       tableRows = processed.rows;
@@ -92,7 +99,7 @@ async function Page({ params }: { params: Promise<{ starlineId: string }> }) {
         className="text-2xl font-bold italic text-center mb-2"
         style={{ color: "#2196f3", textShadow: "1px 1px 2px #fff" }}
       >
-        MILAN STAR LINE CHART
+        {starlineName}
       </div>
       <div className="w-full max-w-full box-border overflow-x-auto">
         <table className="min-w-max w-full border-collapse text-xs sm:text-base font-bold italic text-center text-black table-fixed">
@@ -134,7 +141,7 @@ async function Page({ params }: { params: Promise<{ starlineId: string }> }) {
                       width: `${Math.floor(100 / (times.length + 1))}vw`,
                     }}
                   >
-                    {result}
+                    {result || ""}
                   </td>
                 ))}
               </tr>

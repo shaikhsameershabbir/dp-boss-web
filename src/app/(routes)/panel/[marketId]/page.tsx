@@ -34,10 +34,12 @@ interface PanelWeek {
 interface PanelResponse {
   marketName: string;
   results: PanelWeek[];
+  isSunday: boolean;
 }
 
 // Helper function to parse JSON string to PanelDay object
 function parsePanelDay(dayValue: string | null): PanelDay | null {
+
   if (!dayValue) return null;
 
   try {
@@ -63,11 +65,14 @@ export default async function Panel({
   let panelData: PanelWeek[] = [];
   let marketName = "";
   let lastResult = "";
-
+  let isSunday = false;
   try {
     const response: PanelResponse = await getJodiResult(marketId);
+
+
     if (response && response.marketName && response.results) {
       marketName = response.marketName;
+      isSunday = response.isSunday;
       panelData = response.results;
     }
   } catch (error) {
@@ -111,7 +116,7 @@ export default async function Panel({
     "88",
     "99",
   ];
-  const days: (keyof Omit<PanelWeek, "startDate" | "endDate">)[] = [
+  const allDays: (keyof Omit<PanelWeek, "startDate" | "endDate">)[] = [
     "monday",
     "tuesday",
     "wednesday",
@@ -120,7 +125,11 @@ export default async function Panel({
     "saturday",
     "sunday",
   ];
-  const dayLabels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+  const allDayLabels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+  // Filter days based on isSunday value
+  const days = isSunday ? allDays : allDays.filter(day => day !== "sunday");
+  const dayLabels = isSunday ? allDayLabels : allDayLabels.filter((_, index) => index < 6);
 
   return (
     <>
@@ -301,7 +310,7 @@ export default async function Panel({
 
                         // Normal open/main/close cell
                         const isRed = redHighlightedNumbers.includes(
-                          value.main
+                          value?.main || ""
                         );
                         return (
                           <td
@@ -315,7 +324,7 @@ export default async function Panel({
                             >
                               {/* Open vertical */}
                               <div className="flex flex-col items-center justify-center flex-1 leading-none">
-                                {(value.open || "").split("").map((ch, idx) => (
+                                {(value?.open || "").split("").map((ch, idx) => (
                                   <span
                                     key={idx}
                                     className="text-[11px] sm:text-[13px] font-extrabold leading-none"
@@ -334,12 +343,12 @@ export default async function Panel({
                                     textAlign: "center",
                                   }}
                                 >
-                                  {value.main}
+                                  {value?.main}
                                 </span>
                               </div>
                               {/* Close vertical */}
                               <div className="flex flex-col items-center justify-center flex-1 leading-none">
-                                {(value.close || "")
+                                {(value?.close || "")
                                   .split("")
                                   .map((ch, idx) => (
                                     <span
