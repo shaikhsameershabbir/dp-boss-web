@@ -94,60 +94,62 @@ async function Page({ params }: { params: Promise<{ starlineId: string }> }) {
   }
 
   return (
-    <div className="m-4">
+    <div className="m-2 sm:m-3 md:m-4 lg:m-6">
       <div
-        className="text-2xl font-bold italic text-center mb-2"
+        className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold italic text-center mb-2 sm:mb-3 md:mb-4"
         style={{ color: "#2196f3", textShadow: "1px 1px 2px #fff" }}
       >
         {starlineName}
       </div>
       <div className="w-full max-w-full box-border overflow-x-auto">
-        <table className="min-w-max w-full border-collapse text-xs sm:text-base font-bold italic text-center text-black table-fixed">
-          <thead className="text-black">
-            <tr>
-              <th
-                className="border-2 border-[#414eb0] bg-[#ffc338] text-black text-xs sm:text-base px-1 py-1"
-                style={{ width: "80px" }}
-              >
-                DATE
-              </th>
-              {times.map((time) => (
+        <div className="min-w-max max-w-[95vw] sm:max-w-[90vw] md:max-w-[85vw] lg:max-w-[80vw] mx-auto">
+          <table className="w-full border-collapse text-[10px] sm:text-xs md:text-sm lg:text-base font-bold italic text-center text-black table-fixed">
+            <thead className="text-black">
+              <tr>
                 <th
-                  key={time}
-                  className="border-2 border-[#414eb0] bg-[#ffc338] text-black text-xs sm:text-base px-1 py-1"
-                  style={{
-                    width: `${Math.floor(100 / (times.length + 1))}vw`,
-                  }}
-                >
-                  {time}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className="text-black">
-            {tableRows.map((row, idx) => (
-              <tr key={idx} className="bg-[#ffcc99] text-black">
-                <td
-                  className="border-2 border-[#414eb0] font-bold text-xs sm:text-base italic text-black px-1 py-1 whitespace-nowrap"
+                  className="border-2 border-[#414eb0] bg-[#ffc338] text-black text-[10px] sm:text-xs md:text-sm lg:text-base px-1 py-1 sm:px-2 sm:py-2"
                   style={{ width: "80px" }}
                 >
-                  {formatDate(row.date)}
-                </td>
-                {row.results.map((result: string, i: number) => (
-                  <td
-                    key={i}
-                    className="border-2 border-[#414eb0] text-xs sm:text-base text-black px-1 py-1"
+                  DATE
+                </th>
+                {times.map((time) => (
+                  <th
+                    key={time}
+                    className="border-2 border-[#414eb0] bg-[#ffc338] text-black text-[10px] sm:text-xs md:text-sm lg:text-base px-1 py-1 sm:px-2 sm:py-2"
                     style={{
                       width: `${Math.floor(100 / (times.length + 1))}vw`,
                     }}
                   >
-                    {result || ""}
-                  </td>
+                    {time}
+                  </th>
                 ))}
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="text-black">
+              {tableRows.map((row, idx) => (
+                <tr key={idx} className="bg-[#ffcc99] text-black">
+                  <td
+                    className="border-2 border-[#414eb0] font-bold text-[10px] sm:text-xs md:text-sm lg:text-base italic text-black px-1 py-1 sm:px-2 sm:py-2 whitespace-nowrap"
+                    style={{ width: "80px" }}
+                  >
+                    {formatDate(row.date)}
+                  </td>
+                  {row.results.map((result: string, i: number) => (
+                    <td
+                      key={i}
+                      className="border-2 border-[#414eb0] text-[10px] sm:text-xs md:text-sm lg:text-base text-black px-1 py-1 sm:px-2 sm:py-2"
+                      style={{
+                        width: `${Math.floor(100 / (times.length + 1))}vw`,
+                      }}
+                    >
+                      {result || ""}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
