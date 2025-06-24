@@ -3,6 +3,7 @@ import { copywrite, gameConfigurtion } from "@/app/constant/constant";
 import { getJodiResult } from "@/app/api/api";
 import Image from "next/image";
 import RefreshButton from "@/app/Compontes/StaticPage/RefreshButton";
+import { ScrollButtons } from "../../panel/[marketId]/ScrollButtons";
 
 // Force dynamic rendering to prevent caching
 export const dynamic = "force-dynamic";
@@ -284,15 +285,8 @@ export default async function Jodi({
         </div>
       </div>
 
-      <button
-        className="bg-[#a0d5ff] px-12 py-3 mx-auto block text-[14px] text-[#220c82] mt-2 font-bold"
-        style={{
-          textShadow: "1px 1px #00bcd4",
-          boxShadow: "0 8px 10px 0 rgba(0,0,0,.2), 0 6px 8px 0 rgba(0,0,0,.19)",
-        }}
-      >
-        Go to Bottom
-      </button>
+      <ScrollButtons position="top" />
+
 
       {/* ⬇️ Matka Table Starts Here ⬇️ */}
       <div className="w-full overflow-x-auto mt-2 px-2">
@@ -435,16 +429,8 @@ export default async function Jodi({
         </p>
       </div>
 
-      <button
-        className="bg-[#a0d5ff] px-12 py-3 mx-auto block text-[14px] text-[#220c82] mt-2 font-bold"
-        style={{
-          textShadow: "1px 1px #00bcd4",
-          boxShadow: "0 8px 10px 0 rgba(0,0,0,.2), 0 6px 8px 0 rgba(0,0,0,.19)",
-        }}
-      >
-        Go to top
-      </button>
-      <p className="text-center font-bold mt-2 text-black">108</p>
+      <ScrollButtons position="bottom" />
+      {/* <p className="text-center font-bold mt-2 text-black">108</p> */}
 
       <div className="bg-[#fff] text-lg font-bold border-2 border-[#800080] mt-2 p-1">
         <h1 className="text-[35px] text-center text-[#007bff]">
