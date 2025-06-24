@@ -28,6 +28,8 @@ interface JodiResult {
 interface JodiResponse {
   marketName: string;
   results: JodiResult[];
+  isSaturday: boolean;
+  isSunday: boolean;
 }
 
 // Helper function to parse JSON string to JodiDay object
@@ -78,12 +80,16 @@ export default async function Jodi({
     close?: string;
   } | null = null;
   let rawResults: JodiResult[] = [];
+  let isSaturday = false;
+  let isSunday = false;
 
   try {
     const response: JodiResponse = await getJodiResult(marketId);
     if (response && response.marketName && response.results) {
       marketName = response.marketName;
       rawResults = response.results;
+      isSaturday = response.isSaturday;
+      isSunday = response.isSunday;
 
       // Transform the API data into our display format
       const transformedData = response.results.map((week: JodiResult) => {
@@ -197,7 +203,7 @@ export default async function Jodi({
     console.error("Error fetching jodi result:", error);
   }
 
-  const days: Day[] = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+  const allDays: Day[] = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
   const HighlightedNumbers = [
     "44",
     "50",
@@ -209,6 +215,17 @@ export default async function Jodi({
     "00",
     "88",
   ];
+
+  // Filter days based on isSaturday and isSunday values
+  let days = allDays;
+
+  if (!isSunday) {
+    days = days.filter(day => day !== "Sun");
+  }
+
+  if (!isSaturday) {
+    days = days.filter(day => day !== "Sat");
+  }
 
   return (
     <div className="bg-[#fc9] min-h-screen py-1">
@@ -281,7 +298,7 @@ export default async function Jodi({
       <div className="w-full overflow-x-auto mt-2 px-2">
         <div className="max-w-[90%] sm:max-w-[80%] md:max-w-[70%] lg:max-w-[60%] xl:max-w-[50%] mx-auto">
           <div className="text-center font-bold text-white bg-[#414eb0] text-[16px]">
-            MILAN MORNING MATKA JODI RECORD 2019 - 2025
+            {marketName.toUpperCase()} MATKA JODI RECORD 2019 - 2025
           </div>
           <div className="overflow-auto">
             <table className="min-w-full border border-blue-800 text-center text-sm sm:text-base">
