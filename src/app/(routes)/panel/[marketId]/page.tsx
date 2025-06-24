@@ -1,5 +1,3 @@
-"use client";
-
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable jsx-a11y/alt-text */
 
@@ -7,6 +5,7 @@ import Link from "next/link";
 import { getJodiResult } from "@/app/api/api";
 // import { panel } from "@/app/constant/constant";
 import { gameConfigurtion } from "@/app/constant/constant";
+import { ScrollButtons } from "./ScrollButtons";
 
 // Force dynamic rendering to prevent caching
 export const dynamic = "force-dynamic";
@@ -133,21 +132,6 @@ export default async function Panel({
   const days = isSunday ? allDays : allDays.filter(day => day !== "sunday");
   const dayLabels = isSunday ? allDayLabels : allDayLabels.filter((_, index) => index < 6);
 
-  // Scroll functions
-  const scrollToBottom = () => {
-    window.scrollTo({
-      top: document.documentElement.scrollHeight,
-      behavior: 'smooth'
-    });
-  };
-
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  };
-
   return (
     <>
       <div className="bg-[#fc9] min-h-screen py-1">
@@ -169,17 +153,7 @@ export default async function Panel({
           </button>
         </div>
 
-        <button
-          className="bg-[#a0d5ff] px-8 sm:px-10 md:px-12 py-2 sm:py-3 mx-auto block text-[12px] sm:text-[13px] md:text-[14px] text-[#220c82] mt-2 font-bold"
-          style={{
-            textShadow: "1px 1px #00bcd4",
-            boxShadow:
-              "0 8px 10px 0 rgba(0,0,0,.2), 0 6px 8px 0 rgba(0,0,0,.19)",
-          }}
-          onClick={scrollToBottom}
-        >
-          Go to Bottom
-        </button>
+        <ScrollButtons position="top" />
 
         {/* ⬇️ Matka Table Starts Here ⬇️ */}
         <div className="w-full overflow-x-auto mt-2 px-1 sm:px-2">
@@ -406,17 +380,7 @@ export default async function Panel({
           </button>
         </div>
 
-        <button
-          className="bg-[#a0d5ff] px-8 sm:px-10 md:px-12 py-2 sm:py-3 mx-auto block text-[12px] sm:text-[13px] md:text-[14px] text-[#220c82] mt-2 font-bold"
-          style={{
-            textShadow: "1px 1px #00bcd4",
-            boxShadow:
-              "0 8px 10px 0 rgba(0,0,0,.2), 0 6px 8px 0 rgba(0,0,0,.19)",
-          }}
-          onClick={scrollToTop}
-        >
-          Go to top
-        </button>
+        <ScrollButtons position="bottom" />
         <p className="text-center font-bold mt-2 text-black text-[12px] sm:text-[14px] md:text-[16px]">108</p>
 
         <div className="bg-[#fff] text-lg font-bold border-2 border-[#800080] mt-2 p-1">
