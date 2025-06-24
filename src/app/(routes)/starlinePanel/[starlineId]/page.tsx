@@ -76,7 +76,7 @@ async function Page({ params }: { params: Promise<{ starlineId: string }> }) {
 
 
     starlineResult = response;
-    console.log("starlineResult", starlineResult);
+
 
     if (starlineResult) {
       // Get the first date key to extract starline name
@@ -99,14 +99,14 @@ async function Page({ params }: { params: Promise<{ starlineId: string }> }) {
         <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-center text-blue-600 mb-2" style={{ textShadow: '1px 1px 2px #fff' }}>{starlineName}</h1>
       </div>
       <div className="w-full overflow-x-auto">
-        <table className="w-full min-w-max bg-[#fc9] border border-gray-300 text-xs sm:text-sm md:text-base text-black">
+        <table className="w-full min-w-max bg-[#fc9] border border-black text-xs sm:text-sm md:text-base text-black">
           <thead className="sticky top-0 z-10 bg-[#fc9]">
             <tr>
-              <th className="border border-gray-300 px-2 py-2 font-semibold text-center  whitespace-nowrap">DATE</th>
+              <th className="border border-[#414eb0] px-2 py-2 font-semibold text-center  whitespace-nowrap">DATE</th>
               {times.map((time) => (
                 <th
                   key={time}
-                  className="border border-gray-300 px-2 py-2 font-semibold text-center  whitespace-nowrap"
+                  className="border border-[#414eb0] px-2 py-2 font-semibold text-center  whitespace-nowrap"
                 >
                   {time}
                 </th>
@@ -116,11 +116,11 @@ async function Page({ params }: { params: Promise<{ starlineId: string }> }) {
           <tbody>
             {tableRows.map((row, idx) => (
               <tr key={idx} className="even:bg-gray-50">
-                <td className="border border-gray-300 px-2 py-2 font-medium text-center whitespace-nowrap">{formatDate(row.date)}</td>
+                <td className="border border-[#414eb0] px-2 py-2 font-medium text-center whitespace-nowrap">{formatDate(row.date)}</td>
                 {row.results.map((result: string, i: number) => (
                   <td
                     key={i}
-                    className="border border-gray-300 px-2 py-2 text-center whitespace-nowrap"
+                    className="border border-[#414eb0] px-2 py-2 text-center whitespace-nowrap"
                   >
                     {result || ""}
                   </td>

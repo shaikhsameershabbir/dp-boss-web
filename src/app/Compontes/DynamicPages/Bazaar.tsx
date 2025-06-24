@@ -78,14 +78,14 @@ export default function Bazaar({ marketResults }: BazaarProps) {
         >
           {/* Left Button */}
           <Link href={`/jodi/${item.marketId}`}>
-            <button className="absolute left-1 top-1/2 -translate-y-1/2 bg-[#522f92] text-white text-[12px] font-bold px-3 py-[2px] rounded-[7px] italic cursor-pointer">
+            <button className="absolute left-1 top-1/2 -translate-y-1/2 bg-[#522f92] text-white text-[12px] font-bold px-3 py-[2px] rounded-[7px] italic cursor-pointer transition-all duration-100 active:scale-95 active:bg-white active:text-[#522f92]">
               Jodi
             </button>
           </Link>
 
           {/* Right Button */}
           <Link href={`/panel/${item.marketId}`}>
-            <button className="absolute right-1 top-1/2 -translate-y-1/2 bg-[#522f92] text-white text-[12px] font-bold px-3 py-[2px] rounded-[7px] italic cursor-pointer">
+            <button className="absolute right-1 top-1/2 -translate-y-1/2 bg-[#522f92] text-white text-[12px] font-bold px-3 py-[2px] rounded-[7px] italic cursor-pointer transition-all duration-100 active:scale-95 active:bg-white active:text-[#522f92]">
               Panel
             </button>
           </Link>

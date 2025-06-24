@@ -2,6 +2,7 @@ import Link from "next/link";
 import { copywrite, gameConfigurtion } from "@/app/constant/constant";
 import { getJodiResult } from "@/app/api/api";
 import Image from "next/image";
+import RefreshButton from "@/app/Compontes/StaticPage/RefreshButton";
 
 // Force dynamic rendering to prevent caching
 export const dynamic = "force-dynamic";
@@ -261,9 +262,9 @@ export default async function Jodi({
             </span>
           </div>
         )}
-        <button className="bg-[#522f92] px-4 py-1 mx-auto block text-[12px] text-white mt-2">
-          Refresh Result
-        </button>
+        <div className="flex justify-center items-center">
+          <RefreshButton title="Refresh Result" />
+        </div>
       </div>
 
       <button
@@ -362,9 +363,9 @@ export default async function Jodi({
             </span>
           </div>
         )}
-        <button className="bg-[#522f92] px-4 py-1 mx-auto block text-[12px] text-white">
-          Refresh Result
-        </button>
+        <div className="flex justify-center items-center">
+          <RefreshButton title="Refresh Result" />
+        </div>
       </div>
       <div className="bg-[#fff] text-lg font-bold border-2 border-[#800080] mt-2 p-1 text-black">
         <p className="text-[12px] text-center">

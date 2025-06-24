@@ -1,3 +1,4 @@
+import RefreshButton from "./RefreshButton";
 
 
 export default function Footer() {
@@ -14,9 +15,9 @@ export default function Footer() {
       </button>
 
       {/* Right Button */}
-      <button className="bg-[#039] text-white text-sm font-bold px-3 py-1 rounded-md shadow cursor-pointer">
-        REFRESH
-      </button>
+      <div className="flex justify-center items-center">
+          <RefreshButton title="Refresh" />
+        </div>
     </div>
   );
 }

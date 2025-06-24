@@ -1,6 +1,7 @@
 "use client";
 
 import { liveResult } from "@/app/constant/constant";
+import RefreshButton from "../StaticPage/RefreshButton";
 
 // Define the interface for the result item
 interface ResultItem {
@@ -38,9 +39,9 @@ export default function LiveResult({
               <span className="italic text-[#a00000]">{item.result}</span>
             )}
           </p>
-          <button className="m-1 text-white bg-[#522f92] text-[12px] font-bold px-3 rounded-[7px] p-1 cursor-pointer">
-            Refresh
-          </button>
+          <div className="flex justify-center items-center">
+          <RefreshButton title="Refresh" />
+        </div>
           {item.hindiLine && (
             <p className="text-[20px] text-black font-bold">{item.hindiLine}</p>
           )}

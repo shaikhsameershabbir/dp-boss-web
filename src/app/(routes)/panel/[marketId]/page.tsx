@@ -6,6 +6,7 @@ import { getJodiResult } from "@/app/api/api";
 // import { panel } from "@/app/constant/constant";
 import { gameConfigurtion } from "@/app/constant/constant";
 import { ScrollButtons } from "./ScrollButtons";
+import RefreshButton from "@/app/Compontes/StaticPage/RefreshButton";
 
 // Force dynamic rendering to prevent caching
 export const dynamic = "force-dynamic";
@@ -146,9 +147,9 @@ export default async function Panel({
         <div className="text-lg font-bold border-1 border-black mt-1 p-1">
           <p className="text-[18px] sm:text-[20px] md:text-[22px] lg:text-[24px] text-center text-[#00094d]">{marketName}</p>
           <p className="text-[17px] sm:text-[19px] md:text-[21px] lg:text-[23px] text-center text-[#880e4f]">{lastResult}</p>
-          <button className="bg-[#522f92] px-3 sm:px-4 py-1 mx-auto block text-[10px] sm:text-[11px] md:text-[12px] text-white">
-            Refresh Result
-          </button>
+          <div className="flex justify-center items-center">
+            <RefreshButton title="Refresh Result" />
+          </div>
         </div>
 
         <ScrollButtons position="top" />
@@ -391,9 +392,9 @@ export default async function Panel({
         <div className="text-lg font-bold border-1 border-black mt-5 p-1">
           <p className="text-[18px] sm:text-[20px] md:text-[22px] lg:text-[24px] text-center text-[#00094d]">{marketName}</p>
           <p className="text-[17px] sm:text-[19px] md:text-[21px] lg:text-[23px] text-center text-[#880e4f]">{lastResult}</p>
-          <button className="bg-[#522f92] px-3 sm:px-4 py-1 mx-auto block text-[10px] sm:text-[11px] md:text-[12px] text-white">
-            Refresh Result
-          </button>
+          <div className="flex justify-center items-center">
+            <RefreshButton title="Refresh Result" />
+          </div>
         </div>
 
         <ScrollButtons position="bottom" />
