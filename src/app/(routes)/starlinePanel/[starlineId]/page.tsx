@@ -115,12 +115,12 @@ async function Page({ params }: { params: Promise<{ starlineId: string }> }) {
           </thead>
           <tbody>
             {tableRows.map((row, idx) => (
-              <tr key={idx} className="even:bg-gray-50">
-                <td className="border border-[#414eb0] px-2 py-2 font-medium text-center whitespace-nowrap">{formatDate(row.date)}</td>
+              <tr key={idx} className="even:[#fc9]">
+                <td className="border border-[#414eb0] px-2 py-2 font-medium text-center whitespace-nowrap font-bold">{formatDate(row.date)}</td>
                 {row.results.map((result: string, i: number) => (
                   <td
                     key={i}
-                    className="border border-[#414eb0] px-2 py-2 text-center whitespace-nowrap"
+                    className="border border-[#414eb0] px-2 py-2 text-center whitespace-nowrap  font-bold"
                   >
                     {result || ""}
                   </td>

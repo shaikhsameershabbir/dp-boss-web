@@ -50,7 +50,7 @@ export default function MainStarline({ data }: MainStarlineProps) {
           </div>
           <div>
             <Link href={`/starlinePanel/${data.starLineId}`}>
-              <button className=" bg-black text-white text-[12px] font-bold px-3 py-[3px] rounded-[7px] italic cursor-pointer">
+              <button className=" bg-[#522f92] text-white text-[12px] font-bold px-3 py-[3px] rounded-[7px] italic cursor-pointer">
                 Chart
               </button>
             </Link>
