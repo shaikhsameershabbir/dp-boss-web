@@ -201,11 +201,19 @@ export default async function Panel({
                         style={{ width: "80px", height: "60px" }}
                       >
                         <div className="w-full h-full flex items-center justify-center flex-col">
-                          {new Date(week.startDate).toLocaleDateString()}
+                          {new Date(week.startDate).toLocaleDateString('en-GB', {
+                            day: '2-digit',
+                            month: '2-digit',
+                            year: '2-digit'
+                          })}
                           <br />
                           to
                           <br />
-                          {new Date(week.endDate).toLocaleDateString()}
+                          {new Date(week.endDate).toLocaleDateString('en-GB', {
+                            day: '2-digit',
+                            month: '2-digit',
+                            year: '2-digit'
+                          })}
                         </div>
                       </td>
                       {days.map((day, idx) => {
