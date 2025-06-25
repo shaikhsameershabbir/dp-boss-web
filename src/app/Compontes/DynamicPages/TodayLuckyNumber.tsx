@@ -29,95 +29,33 @@ export default function TodayLuckyNumber({
     goldenAnk: "",
     finalAnkMessages: [],
   });
-
+  const [marqueeDuration, setMarqueeDuration] = useState(0);
   const marqueeRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const processLuckyNumberData = () => {
-      try {
-        const data = initialData;
-        if (data && data.goldenNumbers && data.finalNumbers) {
-          const goldenAnk = `${data.goldenNumbers.first}-${data.goldenNumbers.second}-${data.goldenNumbers.third}-${data.goldenNumbers.fourth}`;
-          const finalAnkMessages = Object.entries(data.finalNumbers).map(
-            ([market, number]) => `${market} - ${number}`
-          );
-          setLuckyData({
-            goldenAnk,
-            finalAnkMessages,
-          });
-        } else {
-          console.warn(
-            "[TodayLuckyNumber] API data missing expected fields:",
-            initialData
-          );
-          // Set fallback data
-          setLuckyData({
-            goldenAnk: "1-6-3-8",
-            finalAnkMessages: [
-              "MILAN MORNING - 0",
-              "SRIDEVI - 0",
-              "KALYAN MORNING - 6",
-              "MADHURI - 4",
-              "SRIDEVI MORNING - 6",
-              "KARNATAKA DAY - 4",
-              "TIME BAZAR - 8",
-              "MILAN DAY - 6",
-              "KALYAN - 6",
-              "SRIDEVI NIGHT - 4",
-              "MADHURI NIGHT - 8",
-              "MILAN NIGHT - 8",
-              "RAJDHANI NIGHT - 6",
-              "MAIN BAZAR - 4",
-              "BOMBAY DAY - 6",
-              "MUMBAI MORNING - 6",
-              "KALYAN NIGHT - 4",
-              "NAMASTHE - 8",
-              "OLD MAIN MUMBAI - 0",
-              "MADHUR DAY - 0",
-              "MADHUR NIGHT - 8",
-            ],
-          });
-        }
-      } catch (error) {
-        console.error(
-          "[TodayLuckyNumber] Error processing lucky numbers:",
-          error
-        );
-        // Set fallback data on error
-        setLuckyData({
-          goldenAnk: "1-6-3-8",
-          finalAnkMessages: [
-            "MILAN MORNING - 0",
-            "SRIDEVI - 0",
-            "KALYAN MORNING - 6",
-            "MADHURI - 4",
-            "SRIDEVI MORNING - 6",
-            "KARNATAKA DAY - 4",
-            "TIME BAZAR - 8",
-            "MILAN DAY - 6",
-            "KALYAN - 6",
-            "SRIDEVI NIGHT - 4",
-            "MADHURI NIGHT - 8",
-            "MILAN NIGHT - 8",
-            "RAJDHANI NIGHT - 6",
-            "MAIN BAZAR - 4",
-            "BOMBAY DAY - 6",
-            "MUMBAI MORNING - 6",
-            "KALYAN NIGHT - 4",
-            "NAMASTHE - 8",
-            "OLD MAIN MUMBAI - 0",
-            "MADHUR DAY - 0",
-            "MADHUR NIGHT - 8",
-          ],
-        });
-      }
-    };
-
     // Process data when component mounts or initialData changes
-    if (initialData) {
-      processLuckyNumberData();
+    if (initialData && initialData.goldenNumbers && initialData.finalNumbers) {
+      const goldenAnk = `${initialData.goldenNumbers.first}-${initialData.goldenNumbers.second}-${initialData.goldenNumbers.third}-${initialData.goldenNumbers.fourth}`;
+      const finalAnkMessages = Object.entries(initialData.finalNumbers).map(
+        ([market, number]) => `${market} - ${number}`
+      );
+      setLuckyData({ goldenAnk, finalAnkMessages });
+    } else {
+      // Fallback data
+      setLuckyData({
+        goldenAnk: "1-6-3-8",
+        finalAnkMessages: [
+        
+        ],
+      });
     }
   }, [initialData]);
+
+  // Update marquee duration whenever the number of messages changes
+  useEffect(() => {
+    // 50ms per message for smoothness, adjust as needed
+    setMarqueeDuration(luckyData.finalAnkMessages.length * 0.5);
+  }, [luckyData.finalAnkMessages.length]);
 
   return (
     <div className="rounded-lg shadow-md mx-2 bg-[#fc9] border-4 border-[#ff0016] p-1 mt-2">
@@ -152,7 +90,10 @@ export default function TodayLuckyNumber({
             <div
               ref={marqueeRef}
               className="absolute w-full"
-              style={{ animation: "marqueeUpward 80s linear infinite" }}
+              style={{
+                animation: `marqueeUpward ${marqueeDuration}s linear infinite`,
+                willChange: "transform",
+              }}
             >
               {luckyData.finalAnkMessages.map((message, index) => (
                 <div
@@ -172,9 +113,7 @@ export default function TodayLuckyNumber({
                 transform: translateY(0%);
               }
               100% {
-                transform: translateY(
-                  -${luckyData.finalAnkMessages.length * 24}px
-                );
+                transform: translateY(-${luckyData.finalAnkMessages.length * 24}px);
               }
             }
           `}</style>
