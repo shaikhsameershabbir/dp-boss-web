@@ -6,7 +6,6 @@ interface MarketResult {
 }
 
 export const SattaMatkaJpdiChart = ({ marketResults }: { marketResults: MarketResult[] }) => {
-  console.log(marketResults);
   return (
     <div className="max-w-full mx-auto p-2">
       <div className="border-[2px] border-[#c20094] rounded-[14px] overflow-hidden">

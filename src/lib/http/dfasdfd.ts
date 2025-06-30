@@ -6,8 +6,6 @@ import axios, {
 } from "axios";
 
 // Log environment variables for debugging
-console.log("API URL:", process.env.NEXT_PUBLIC_SOCKET_URL);
-console.log("API Key exists:", !!process.env.NEXT_PUBLIC_API_KEY);
 
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 const BASE_URL =
@@ -60,8 +58,6 @@ apiClient.interceptors.request.use((config) => {
   }
 
   // Log request details for debugging
-  console.log("Request URL:", config.url);
-  console.log("Headers:", config.headers);
 
   return config;
 });
