@@ -20,6 +20,7 @@ interface BazaarProps {
 
 export default function Bazaar({ marketResults }: BazaarProps) {
   const [results, setResults] = useState<ResultItem[]>([]);
+  console.log('before', marketResults);
   useEffect(() => {
     if (marketResults && marketResults.length > 0) {
       const processedResults = marketResults
@@ -31,6 +32,7 @@ export default function Bazaar({ marketResults }: BazaarProps) {
       setResults(processedResults);
     }
   }, [marketResults]);
+  console.log('after', results);
   return (
     <>
       <div className="text-xl font-bold border-2 border-white rounded-[10px] bg-[#ff00a2] p-1 m-2">
