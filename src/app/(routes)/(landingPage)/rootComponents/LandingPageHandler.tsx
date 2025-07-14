@@ -1,8 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import Bazaar from "../../../Compontes/DynamicPages/Bazaar";
-// import { KalyanNight } from "../../../Compontes/DynamicPages/KalyanNight";
-// import { KalyanTable } from "../../../Compontes/DynamicPages/KalyanTable";
+
 import LiveResult from "../../../Compontes/DynamicPages/LiveResult";
 import MainStarline from "../../../Compontes/DynamicPages/MainStarline";
 import TodayLuckyNumber from "../../../Compontes/DynamicPages/TodayLuckyNumber";
