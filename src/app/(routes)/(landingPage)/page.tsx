@@ -19,7 +19,7 @@ export default async function Page() {
     getTodayLuckyNumber(),
   ]);
 
-console.log(initialData, starlineResult, luckyNumberData);
+// console.log(initialData, starlineResult, luckyNumberData);
 
   return (
     <>
