@@ -7,6 +7,7 @@ import { getJodiResult } from "@/app/api/api";
 import { gameConfigurtion } from "@/app/constant/constant";
 import { ScrollButtons } from "./ScrollButtons";
 import RefreshButton from "@/app/Compontes/StaticPage/RefreshButton";
+import { memo } from "react";
 
 // Force dynamic rendering to prevent caching
 export const dynamic = "force-dynamic";
@@ -40,23 +41,242 @@ interface PanelResponse {
   isSaturday: boolean;
 }
 
-// Helper function to parse JSON string to PanelDay object
-function parsePanelDay(dayValue: string | null): PanelDay | null {
+// Helper function to parse JSON string to PanelDay object - memoized
+const parsePanelDay = (() => {
+  const cache = new Map<string, PanelDay | null>();
 
-  if (!dayValue) return null;
+  return (dayValue: string | null): PanelDay | null => {
+    if (!dayValue) return null;
 
-  try {
-    const parsed = JSON.parse(dayValue);
-    return {
-      main: parsed.main || "",
-      open: parsed.open || "",
-      close: parsed.close || "",
-    };
-  } catch (error) {
-    console.error("Error parsing panel day:", error);
-    return null;
-  }
-}
+    if (cache.has(dayValue)) {
+      return cache.get(dayValue)!;
+    }
+
+    try {
+      const parsed = JSON.parse(dayValue);
+      const result = {
+        main: parsed.main || "",
+        open: parsed.open || "",
+        close: parsed.close || "",
+      };
+      cache.set(dayValue, result);
+      return result;
+    } catch (error) {
+      console.error("Error parsing panel day:", error);
+      cache.set(dayValue, null);
+      return null;
+    }
+  };
+})();
+
+// Memoized table row component for better performance
+const TableRow = memo(({ week, days, redHighlightedNumbers }: {
+  week: PanelWeek;
+  days: (keyof Omit<PanelWeek, "startDate" | "endDate">)[];
+  redHighlightedNumbers: string[];
+}) => {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  return (
+    <tr>
+      <td
+        className="border-2 border-[#414eb0] text-[8px] sm:text-[10px] md:text-xs lg:text-sm font-bold whitespace-pre-line align-middle p-0"
+        style={{ width: "80px", height: "60px" }}
+      >
+        <div className="w-full h-full flex items-center justify-center flex-col">
+          {new Date(week.startDate).toLocaleDateString('en-GB', {
+            day: '2-digit',
+            month: '2-digit',
+            year: '2-digit'
+          })}
+          <br />
+          to
+          <br />
+          {new Date(week.endDate).toLocaleDateString('en-GB', {
+            day: '2-digit',
+            month: '2-digit',
+            year: '2-digit'
+          })}
+        </div>
+      </td>
+      {days.map((day, idx) => {
+        // Calculate the date for this cell
+        const cellDate = new Date(week.startDate);
+        cellDate.setDate(cellDate.getDate() + idx);
+        if (cellDate > today) return null; // Do not render future cells
+
+        const value = parsePanelDay(week[day] as string | null);
+        const isStarPattern =
+          !value ||
+          (!value.open &&
+            (!value.main || value.main === "**") &&
+            !value.close);
+
+        // Check if this cell is for today
+        const isToday = cellDate.getTime() === today.getTime();
+
+        if (isStarPattern) {
+          // If it's today and has no result, show empty box instead of stars
+          if (isToday) {
+            return (
+              <td
+                key={day}
+                className="border-2 border-[#414eb0] p-0 text-[8px] sm:text-[10px] md:text-xs lg:text-sm align-middle"
+                style={{ width: "80px", height: "60px" }}
+              >
+                <div className="w-full h-full flex items-center justify-center">
+                  {/* Empty box for today */}
+                </div>
+              </td>
+            );
+          }
+
+          // Star pattern cell for past dates
+          return (
+            <td
+              key={day}
+              className="border-2 border-[#414eb0] p-0 text-[8px] sm:text-[10px] md:text-xs lg:text-sm align-middle"
+              style={{ width: "80px", height: "60px" }}
+            >
+              <div className="w-full h-full flex flex-col items-center justify-center">
+                <div className="flex flex-row justify-between w-full">
+                  <span
+                    className="text-red-600 font-extrabold"
+                    style={{
+                      width: "16px",
+                      textAlign: "center",
+                    }}
+                  >
+                    *
+                  </span>
+                  <span style={{ width: "28px" }}></span>
+                  <span
+                    className="text-red-600 font-extrabold"
+                    style={{
+                      width: "16px",
+                      textAlign: "center",
+                    }}
+                  >
+                    *
+                  </span>
+                </div>
+                <div className="flex flex-row justify-between w-full">
+                  <span
+                    className="text-red-600 font-extrabold"
+                    style={{
+                      width: "16px",
+                      textAlign: "center",
+                    }}
+                  >
+                    *
+                  </span>
+                  <span
+                    className="text-red-600 font-extrabold"
+                    style={{
+                      width: "28px",
+                      textAlign: "center",
+                    }}
+                  >
+                    **
+                  </span>
+                  <span
+                    className="text-red-600 font-extrabold"
+                    style={{
+                      width: "16px",
+                      textAlign: "center",
+                    }}
+                  >
+                    *
+                  </span>
+                </div>
+                <div className="flex flex-row justify-between w-full">
+                  <span
+                    className="text-red-600 font-extrabold"
+                    style={{
+                      width: "16px",
+                      textAlign: "center",
+                    }}
+                  >
+                    *
+                  </span>
+                  <span style={{ width: "28px" }}></span>
+                  <span
+                    className="text-red-600 font-extrabold"
+                    style={{
+                      width: "16px",
+                      textAlign: "center",
+                    }}
+                  >
+                    *
+                  </span>
+                </div>
+              </div>
+            </td>
+          );
+        }
+
+        // Normal open/main/close cell
+        const isRed = redHighlightedNumbers.includes(
+          value?.main || ""
+        );
+        return (
+          <td
+            key={day}
+            className="border-2 border-[#414eb0] p-0 text-[8px] sm:text-[10px] md:text-xs lg:text-sm align-middle"
+            style={{ width: "80px", height: "60px" }}
+          >
+            <div
+              className={`w-full h-full flex flex-row items-center justify-center ${isRed ? "text-red-600" : ""
+                }`}
+            >
+              {/* Open vertical */}
+              <div className="flex flex-col items-center justify-center flex-1 leading-none">
+                {(value?.open || "").split("").map((ch, idx) => (
+                  <span
+                    key={idx}
+                    className="text-[8px] sm:text-[10px] md:text-[11px] lg:text-[13px] font-extrabold leading-none"
+                    style={{ lineHeight: "1.1" }}
+                  >
+                    {ch}
+                  </span>
+                ))}
+              </div>
+              {/* Main */}
+              <div className="flex flex-col items-center justify-center flex-1">
+                <span
+                  className={`text-[14px] sm:text-[16px] md:text-[18px] lg:text-[21px] font-bold`}
+                  style={{
+                    lineHeight: "1",
+                    textAlign: "center",
+                  }}
+                >
+                  {value?.main}
+                </span>
+              </div>
+              {/* Close vertical */}
+              <div className="flex flex-col items-center justify-center flex-1 leading-none">
+                {(value?.close || "")
+                  .split("")
+                  .map((ch, idx) => (
+                    <span
+                      key={idx}
+                      className="text-[8px] sm:text-[10px] md:text-[11px] lg:text-[13px] font-extrabold leading-none"
+                      style={{ lineHeight: "1.1" }}
+                    >
+                      {ch}
+                    </span>
+                  ))}
+              </div>
+            </div>
+          </td>
+        );
+      })}
+    </tr>
+  );
+});
+
+TableRow.displayName = 'TableRow';
 
 export default async function Panel({
   params,
@@ -82,27 +302,19 @@ export default async function Panel({
     console.error("Error fetching panel result:", error);
   }
 
-  // Calculate last result
+  // Calculate last result - optimized
   if (panelData.length > 0) {
-    // Flatten all days into a single array with their values
-    const allResults = panelData
-      .flatMap((week) => [
-        parsePanelDay(week.monday),
-        parsePanelDay(week.tuesday),
-        parsePanelDay(week.wednesday),
-        parsePanelDay(week.thursday),
-        parsePanelDay(week.friday),
-        parsePanelDay(week.saturday),
-        parsePanelDay(week.sunday),
-      ])
-      .filter((res) => res && res.main);
+    // Get the most recent result (since data is now ordered by startDate desc)
+    const mostRecentWeek = panelData[0];
+    const allDays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'] as const;
 
-    if (allResults.length > 0) {
-      const last = allResults[allResults.length - 1];
-      if (last) {
-        lastResult = [last.open, last.main, last.close]
+    for (const day of allDays) {
+      const value = parsePanelDay(mostRecentWeek[day] as string | null);
+      if (value && value.main && value.main !== "**") {
+        lastResult = [value.open, value.main, value.close]
           .filter(Boolean)
           .join("-");
+        break;
       }
     }
   }
@@ -200,202 +412,12 @@ export default async function Panel({
                 </thead>
                 <tbody className="text-black">
                   {panelData.map((week, i) => (
-                    <tr key={i}>
-                      <td
-                        className="border-2 border-[#414eb0] text-[8px] sm:text-[10px] md:text-xs lg:text-sm font-bold whitespace-pre-line align-middle p-0"
-                        style={{ width: "80px", height: "60px" }}
-                      >
-                        <div className="w-full h-full flex items-center justify-center flex-col">
-                          {new Date(week.startDate).toLocaleDateString('en-GB', {
-                            day: '2-digit',
-                            month: '2-digit',
-                            year: '2-digit'
-                          })}
-                          <br />
-                          to
-                          <br />
-                          {new Date(week.endDate).toLocaleDateString('en-GB', {
-                            day: '2-digit',
-                            month: '2-digit',
-                            year: '2-digit'
-                          })}
-                        </div>
-                      </td>
-                      {days.map((day, idx) => {
-                        // Calculate the date for this cell
-                        const cellDate = new Date(week.startDate);
-                        cellDate.setDate(cellDate.getDate() + idx);
-                        const today = new Date();
-                        today.setHours(0, 0, 0, 0);
-                        if (cellDate > today) return null; // Do not render future cells
-
-                        const value = parsePanelDay(week[day] as string | null);
-                        const isStarPattern =
-                          !value ||
-                          (!value.open &&
-                            (!value.main || value.main === "**") &&
-                            !value.close);
-
-                        // Check if this cell is for today
-                        const isToday = cellDate.getTime() === today.getTime();
-
-                        if (isStarPattern) {
-                          // If it's today and has no result, show empty box instead of stars
-                          if (isToday) {
-                            return (
-                              <td
-                                key={day}
-                                className="border-2 border-[#414eb0] p-0 text-[8px] sm:text-[10px] md:text-xs lg:text-sm align-middle"
-                                style={{ width: "80px", height: "60px" }}
-                              >
-                                <div className="w-full h-full flex items-center justify-center">
-                                  {/* Empty box for today */}
-                                </div>
-                              </td>
-                            );
-                          }
-
-                          // Star pattern cell for past dates
-                          return (
-                            <td
-                              key={day}
-                              className="border-2 border-[#414eb0] p-0 text-[8px] sm:text-[10px] md:text-xs lg:text-sm align-middle"
-                              style={{ width: "80px", height: "60px" }}
-                            >
-                              <div className="w-full h-full flex flex-col items-center justify-center">
-                                <div className="flex flex-row justify-between w-full">
-                                  <span
-                                    className="text-red-600 font-extrabold"
-                                    style={{
-                                      width: "16px",
-                                      textAlign: "center",
-                                    }}
-                                  >
-                                    *
-                                  </span>
-                                  <span style={{ width: "28px" }}></span>
-                                  <span
-                                    className="text-red-600 font-extrabold"
-                                    style={{
-                                      width: "16px",
-                                      textAlign: "center",
-                                    }}
-                                  >
-                                    *
-                                  </span>
-                                </div>
-                                <div className="flex flex-row justify-between w-full">
-                                  <span
-                                    className="text-red-600 font-extrabold"
-                                    style={{
-                                      width: "16px",
-                                      textAlign: "center",
-                                    }}
-                                  >
-                                    *
-                                  </span>
-                                  <span
-                                    className="text-red-600 font-extrabold"
-                                    style={{
-                                      width: "28px",
-                                      textAlign: "center",
-                                    }}
-                                  >
-                                    **
-                                  </span>
-                                  <span
-                                    className="text-red-600 font-extrabold"
-                                    style={{
-                                      width: "16px",
-                                      textAlign: "center",
-                                    }}
-                                  >
-                                    *
-                                  </span>
-                                </div>
-                                <div className="flex flex-row justify-between w-full">
-                                  <span
-                                    className="text-red-600 font-extrabold"
-                                    style={{
-                                      width: "16px",
-                                      textAlign: "center",
-                                    }}
-                                  >
-                                    *
-                                  </span>
-                                  <span style={{ width: "28px" }}></span>
-                                  <span
-                                    className="text-red-600 font-extrabold"
-                                    style={{
-                                      width: "16px",
-                                      textAlign: "center",
-                                    }}
-                                  >
-                                    *
-                                  </span>
-                                </div>
-                              </div>
-                            </td>
-                          );
-                        }
-
-                        // Normal open/main/close cell
-                        const isRed = redHighlightedNumbers.includes(
-                          value?.main || ""
-                        );
-                        return (
-                          <td
-                            key={day}
-                            className="border-2 border-[#414eb0] p-0 text-[8px] sm:text-[10px] md:text-xs lg:text-sm align-middle"
-                            style={{ width: "80px", height: "60px" }}
-                          >
-                            <div
-                              className={`w-full h-full flex flex-row items-center justify-center ${isRed ? "text-red-600" : ""
-                                }`}
-                            >
-                              {/* Open vertical */}
-                              <div className="flex flex-col items-center justify-center flex-1 leading-none">
-                                {(value?.open || "").split("").map((ch, idx) => (
-                                  <span
-                                    key={idx}
-                                    className="text-[8px] sm:text-[10px] md:text-[11px] lg:text-[13px] font-extrabold leading-none"
-                                    style={{ lineHeight: "1.1" }}
-                                  >
-                                    {ch}
-                                  </span>
-                                ))}
-                              </div>
-                              {/* Main */}
-                              <div className="flex flex-col items-center justify-center flex-1">
-                                <span
-                                  className={`text-[14px] sm:text-[16px] md:text-[18px] lg:text-[21px] font-bold`}
-                                  style={{
-                                    lineHeight: "1",
-                                    textAlign: "center",
-                                  }}
-                                >
-                                  {value?.main}
-                                </span>
-                              </div>
-                              {/* Close vertical */}
-                              <div className="flex flex-col items-center justify-center flex-1 leading-none">
-                                {(value?.close || "")
-                                  .split("")
-                                  .map((ch, idx) => (
-                                    <span
-                                      key={idx}
-                                      className="text-[8px] sm:text-[10px] md:text-[11px] lg:text-[13px] font-extrabold leading-none"
-                                      style={{ lineHeight: "1.1" }}
-                                    >
-                                      {ch}
-                                    </span>
-                                  ))}
-                              </div>
-                            </div>
-                          </td>
-                        );
-                      })}
-                    </tr>
+                    <TableRow
+                      key={week.resultId || i}
+                      week={week}
+                      days={days}
+                      redHighlightedNumbers={redHighlightedNumbers}
+                    />
                   ))}
                 </tbody>
               </table>
