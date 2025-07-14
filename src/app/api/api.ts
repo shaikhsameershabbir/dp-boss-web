@@ -25,7 +25,7 @@ const apiClient = {
 };
 export const getTodayLuckyNumber = async () => {
   const response = await apiClient.get("/today-lucky-number");
-  
+
   return response.data;
 };
 
@@ -51,5 +51,17 @@ export const getStarlineResultById = async (starlineId: string) => {
 export const getJodiResult = async (marketId: string) => {
   const response = await apiClient.get(`/getJodiResult/${marketId}`);
 
+  return response.data;
+};
+
+// get jodi static result (old data, cached)
+export const getJodiResultStatic = async (marketId: string) => {
+  const response = await apiClient.get(`/getJodiResult/static/${marketId}`);
+  return response.data;
+};
+
+// get jodi latest result (last 2 weeks, always fresh)
+export const getJodiResultLatest = async (marketId: string) => {
+  const response = await apiClient.get(`/getJodiResult/latest/${marketId}`);
   return response.data;
 };

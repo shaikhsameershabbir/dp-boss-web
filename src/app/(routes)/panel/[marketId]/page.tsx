@@ -302,10 +302,10 @@ export default async function Panel({
     console.error("Error fetching panel result:", error);
   }
 
-  // Calculate last result - optimized
+  // Calculate last result - optimized for ASC order
   if (panelData.length > 0) {
-    // Get the most recent result (since data is now ordered by startDate desc)
-    const mostRecentWeek = panelData[0];
+    // Get the most recent result (since data is now ordered by startDate asc)
+    const mostRecentWeek = panelData[panelData.length - 1];
     const allDays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'] as const;
 
     for (const day of allDays) {

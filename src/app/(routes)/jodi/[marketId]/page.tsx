@@ -180,9 +180,9 @@ export default async function Jodi({
       });
       jodiData = transformedData;
 
-      // Find the last existing result - optimized
+      // Find the last existing result - optimized for ASC order
       if (response.results.length > 0) {
-        const mostRecentWeek = response.results[0]; // Since data is ordered by startDate desc
+        const mostRecentWeek = response.results[response.results.length - 1]; // Since data is now ordered by startDate asc
         const allDays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'] as const;
 
         for (const day of allDays) {
