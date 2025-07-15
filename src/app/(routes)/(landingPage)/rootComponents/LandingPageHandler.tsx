@@ -75,6 +75,7 @@ export default function LandingPageHandler({
       setStarlineResults(starlineResult);
     }
   }, [initialData, starlineResult]);
+  console.log(marketResults);
 
   return (
     <>
