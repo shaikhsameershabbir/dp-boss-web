@@ -216,6 +216,8 @@ export default async function Jodi({
     "66",
     "00",
     "88",
+    "05", "16", "27", "38", "49", "50", "61", "72", "83", "94"
+
   ];
 
   // Filter days based on isSaturday and isSunday values
