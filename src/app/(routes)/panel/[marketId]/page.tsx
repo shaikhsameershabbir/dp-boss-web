@@ -85,24 +85,18 @@ const TableRow = memo(({ week, days, redHighlightedNumbers }: {
         style={{ width: "80px", height: "60px" }}
       >
         <div className="w-full h-full flex items-center justify-center flex-col">
-          {new Date(week.startDate).toLocaleDateString('en-GB', {
-            day: '2-digit',
-            month: '2-digit',
-            year: '2-digit'
-          })}
+          {week.startDate}
           <br />
           to
           <br />
-          {new Date(week.endDate).toLocaleDateString('en-GB', {
-            day: '2-digit',
-            month: '2-digit',
-            year: '2-digit'
-          })}
+          {week.endDate}
         </div>
       </td>
       {days.map((day, idx) => {
         // Calculate the date for this cell
-        const cellDate = new Date(week.startDate);
+        // Parse date in DD/MM/YY format
+        const [dayStr, monthStr, yearStr] = week.startDate.split('/');
+        const cellDate = new Date(2000 + parseInt(yearStr), parseInt(monthStr) - 1, parseInt(dayStr));
         cellDate.setDate(cellDate.getDate() + idx);
         if (cellDate > today) return null; // Do not render future cells
 
@@ -353,8 +347,11 @@ export default async function Panel({
 
   if (!isSaturday) {
     days = days.filter(day => day !== "saturday");
-    // Remove Saturday from dayLabels (index 5)
-    dayLabels = dayLabels.filter((_, index) => index !== 5);
+    // Remove Saturday from dayLabels - find the correct index
+    const saturdayIndex = dayLabels.findIndex(label => label === "Sat");
+    if (saturdayIndex !== -1) {
+      dayLabels = dayLabels.filter((_, index) => index !== saturdayIndex);
+    }
   }
 
   return (
