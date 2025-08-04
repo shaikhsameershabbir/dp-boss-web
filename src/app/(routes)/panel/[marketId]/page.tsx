@@ -300,7 +300,7 @@ export default async function Panel({
   if (panelData.length > 0) {
     // Get the most recent result (since data is now ordered by startDate asc)
     const mostRecentWeek = panelData[panelData.length - 1];
-    const allDays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'] as const;
+    const allDays = ['sunday', 'saturday', 'friday', 'thursday', 'wednesday', 'tuesday', 'monday'] as const;
 
     for (const day of allDays) {
       const value = parsePanelDay(mostRecentWeek[day] as string | null);

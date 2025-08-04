@@ -23,8 +23,13 @@ function formatDate(dateString: string) {
 }
 
 function processStarlineData(starlineResult: StarlineResult) {
-  const dateKeys = Object.keys(starlineResult).sort(); // sort dates ascending
-
+  // sort in decending order by date
+  const dateKeys = Object.keys(starlineResult).sort((a, b) => {
+    const dateA = new Date(a);
+    const dateB = new Date(b);
+    return dateB.getTime() - dateA.getTime();
+  }); // sort dates ascending
+  // console.log(dateKeys)
   // Collect all unique times
   const timesSet = new Set<string>();
   dateKeys.forEach((date) => {
