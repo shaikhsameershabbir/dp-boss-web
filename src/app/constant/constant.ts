@@ -4,7 +4,7 @@ export const gameConfigurtion = {
   svgLogo: "favIcon.jpeg",
   godImg: "God.jpg",
   welcomeMsg: "Welcome todpboss international !! Satta Matka Fast Result",
-  resultMsg: "Satta Matkadpboss.net Kalyan Matka Result",
+  resultMsg: "Satta Matkadpboss.online Kalyan Matka Result",
   resultinfo:
     "dpboss.Service is the No. 1 Matka Sites welcomes you full-heartedly. Here below you can find the perfect guess by the top guesser along with the Fast Matka Result too. Aaj Ka Satta Kalyan Fix Single Jodi free update here you find top Matka Market of India Kalyan Main Milan Rajdhani* *kalyan Matka Tips *fast Matka Result *kalyan Main Rajdhani Matka Chart *Matka Guessing bydpboss By App Best Matka Site Bydpboss 108",
 };
@@ -30,9 +30,9 @@ export const liveResult = {
 
 export const notice = {
   title: "☆ NOTICE ☆",
-  subtitle: "अपना बाजारdpbossnet.net वेबसाइट में डलवाने",
+  subtitle: "अपना बाजारdpbossnet.online वेबसाइट में डलवाने",
   info: "के लिए आज ही हमें ईमेल करे",
-  email: "Email : support@dpbossnet.net",
+  email: "Email : support@dpbossnet.online",
   rules: "शर्ते लागु",
 };
 
@@ -55,7 +55,7 @@ export const panel = {
 };
 
 export const copywrite = {
-  title: "dpbossnet.net",
+  title: "dpbossnet.online",
   message: "All Rights Reseved®",
   year: "(1998-2024)",
   contact: "Contact",

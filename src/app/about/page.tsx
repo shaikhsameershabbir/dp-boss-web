@@ -52,15 +52,15 @@ export default function About() {
                         className="text-white italic font-bold text-center"
                         style={{ textShadow: "2px 2px 4px black" }}
                     >
-                        WHAT ISdpbossnet.net?
+                        WHAT ISdpbossnet.online?
                     </h3>
                 </div>
                 <div className="border-2 border-[#ff0016] m-2 p-3 rounded-[10px]">
                     <p className="text-[12px] text-center text-[#a50031] font-bold">
-                        dpbossnet.net is a website that provides user all satta matka games results online daily. Here you can also look for guessing numbers before playing the game. The guessing numbers may not be correct every time, still one can try their luck as it is displayed on the website based on extensive research.
+                        dpbossnet.online is a website that provides user all satta matka games results online daily. Here you can also look for guessing numbers before playing the game. The guessing numbers may not be correct every time, still one can try their luck as it is displayed on the website based on extensive research.
                     </p>
                     <p className="text-[12px] text-center text-[#a50031] font-bold">
-                        dpbossnet.net is currently one of th most popular site that provides results on a regular intervals. Some of the games of the matka online site includes, Single, Jody, Single Patty, Double Patty, Triple Patty, Half Sun Gum and Full Sun Gum Satta Matka Online.
+                        dpbossnet.online is currently one of th most popular site that provides results on a regular intervals. Some of the games of the matka online site includes, Single, Jody, Single Patty, Double Patty, Triple Patty, Half Sun Gum and Full Sun Gum Satta Matka Online.
                     </p>
                     <p className="text-[12px] text-center text-[#a50031] font-bold">
                         Kalyan Jodi Chart and Kalyan Panel Chart is available on the site so that users can analyze the old Satta results before playing.
@@ -89,7 +89,7 @@ export default function About() {
                 </div>
                 <div className="border-2 border-[#ff0016] m-2 p-3 rounded-[10px]">
                     <p className="text-[12px] text-center text-[#a50031] font-bold">
-                        dpboss Fix Jodi ordpboss Fix patti is the guessed pairs of number which has the high probability of getting in Satta Matka. You can get these fix jodi or fix patti by visiting thedpbossnet.net.
+                        dpboss Fix Jodi ordpboss Fix patti is the guessed pairs of number which has the high probability of getting in Satta Matka. You can get these fix jodi or fix patti by visiting thedpbossnet.online.
                     </p>
                 </div>
                 <div className="text-xl font-bold rounded-[15px] border-3 border-[#ffff] bg-[#ff00a2] m-2">
