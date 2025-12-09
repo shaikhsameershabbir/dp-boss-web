@@ -17,7 +17,7 @@ export default function Header() {
                         </div>
                         <div className="ml-6 text-left">
                             <p className="text-md mt-2 text-center font-[Helvetica,sans-serif] italic font-bold text-black">
-                                !! Welcome toDsBoss international !! Satta Matka Fast Result
+                                !! Welcome todpboss international !! Satta Matka Fast Result
                             </p>
                         </div>
 

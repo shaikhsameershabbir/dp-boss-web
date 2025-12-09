@@ -3,11 +3,11 @@
 export default function MatkajodiList() {
     // Dummy data with optional links (you can update the hrefs)
     const items = [
-        { label: "Dsboss Guessing Forum (Post)", href: "#" },
+        { label: "dpboss Guessing Forum (Post)", href: "#" },
         { label: "All market free fix game", href: "#" },
         { label: "Ratan Khatri Fix Panel Chart", href: "#" },
         { label: "Matka Final Number Trick Chart", href: "#" },
-        { label: "EverGreen Trick Zone And Matka Tricks ByDsBoss", href: "#" },
+        { label: "EverGreen Trick Zone And Matka Tricks Bydpboss", href: "#" },
     ];
 
 
@@ -58,7 +58,7 @@ export default function MatkajodiList() {
                         <a
                             href={item.href}
                             style={rgbAnimationStyle}
-                            className={`${item.label.includes("ByDsBoss") ||
+                            className={`${item.label.includes("Bydpboss") ||
                                     item.label.includes("Chart")
                                     ? "text-[#2c2c54]"
                                     : "text-[#ff1731]"

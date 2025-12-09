@@ -2,11 +2,11 @@
 export default function SpicalGameZone() {
     // Dummy data with optional links (you can update the hrefs)
     const items = [
-        { label: "DsBoss Guessing Forum (Post)", href: "#" },
+        { label: "dpboss Guessing Forum (Post)", href: "#" },
         { label: "All market free fix game", href: "#" },
         { label: "Ratan Khatri Fix Panel Chart", href: "#" },
         { label: "Matka Final Number Trick Chart", href: "#" },
-        { label: "EverGreen Trick Zone And Matka Tricks ByDsBoss", href: "#" },
+        { label: "EverGreen Trick Zone And Matka Tricks Bydpboss", href: "#" },
     ];
 
     // CSS for RGB animation
@@ -42,7 +42,7 @@ export default function SpicalGameZone() {
                         fontFamily: "Helvetica, sans-serif",
                     }}
                 >
-                    DsBoss Special Game Zone
+                    dpboss Special Game Zone
                 </h4>
             </div>
 

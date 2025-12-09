@@ -21,9 +21,9 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "DSBOSS | SATTA MATKA | KALYAN MATKA | MATKA RESULT | MATKA | SATTA ",
+  title: "dpboss | SATTA MATKA | KALYAN MATKA | MATKA RESULT | MATKA | SATTA ",
   description:
-    "DSBOSS | SATTA MATKA | KALYAN MATKA | MATKA RESULT | MATKA | SATTA ",
+    "dpboss | SATTA MATKA | KALYAN MATKA | MATKA RESULT | MATKA | SATTA ",
 };
 
 export default function RootLayout({

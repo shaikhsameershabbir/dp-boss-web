@@ -9,13 +9,13 @@ export const PowerdBy = () => {
                         className="text-white italic font-bold text-center"
                         style={{ textShadow: "2px 2px 4px black" }}
                     >
-                        POWERD BYDsBossnet.net
+                        POWERD BYdpbossnet.net
                     </h3>
                 </div>
                 <div className="border-[2px] border-[#a50031] rounded-[14px] overflow-hidden">
 
                     <div>
-                        <p className="m-1 text-[#a50031] text-[10px] text-center">© 2011 - 2025DsBossnet.net</p>
+                        <p className="m-1 text-[#a50031] text-[10px] text-center">© 2011 - 2025dpbossnet.net</p>
                         <p className="m-1 text-[#000b65] text-[10px] text-center font-semibold"><Link href="/about"><span>About us</span></Link> | <Link href='/contact'><span>Contact us</span></Link></p>
                         <p className="m-1 text-[#000b65] text-[11px] text-center font-semibold">Privacy & policy | Term And Conditions</p>
                     </div>

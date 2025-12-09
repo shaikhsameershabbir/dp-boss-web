@@ -8,15 +8,15 @@ export const Introduction = () => {
                             className="text-white italic font-bold text-center"
                             style={{ textShadow: "2px 2px 4px black" }}
                         >
-                            Introduction toDsBoss Service
+                            Introduction todpboss Service
                         </h3>
                     </div>
                     <div className="bg-[#ffcaa6] border-t border-[#c20094] text-center font-semibold text-[12px] m-1 text-black">
-                        <p>Welcome toDsBoss, where entertainment takes center stage, and a world of diverse activities awaits you. In our vibrant community, {"we've"} crafted an experience beyond conventional platforms, offering a rich tapestry of entertainment for users with varied interests.</p>
+                        <p>Welcome todpboss, where entertainment takes center stage, and a world of diverse activities awaits you. In our vibrant community, {"we've"} crafted an experience beyond conventional platforms, offering a rich tapestry of entertainment for users with varied interests.</p>
                         <br />
-                        <p>Discover the joy of connecting with like-minded individuals through our socializing features. Whether {"you're"} an extrovert seeking lively conversations or an introvert looking for a cozy virtual space,DsBoss is your go-to destination for meaningful connections.</p>
+                        <p>Discover the joy of connecting with like-minded individuals through our socializing features. Whether {"you're"} an extrovert seeking lively conversations or an introvert looking for a cozy virtual space,dpboss is your go-to destination for meaningful connections.</p>
                         <br />
-                        <p>DSBOSS.Service is your ultimate destination for everything related to the fascinating world of the Satta Matka. As theDSBOSS is a leading authority in the realm of Matka Games, this is your Go-To Platform for any reliable information along with accurate Matka Results and expert guidance obviously. Whether you are a pro or a newcomer player the comprehensive collection of resources such as Kalyan Matka, Matka Result, and Mumbai Matka, will provide you with the thrilling and immersive experience. Join us along and we will embark on this captivating adventure, where every matka number, matka chart, and matka games hold the potential to unlock fortunes.</p>
+                        <p>dpboss.Service is your ultimate destination for everything related to the fascinating world of the Satta Matka. As thedpboss is a leading authority in the realm of Matka Games, this is your Go-To Platform for any reliable information along with accurate Matka Results and expert guidance obviously. Whether you are a pro or a newcomer player the comprehensive collection of resources such as Kalyan Matka, Matka Result, and Mumbai Matka, will provide you with the thrilling and immersive experience. Join us along and we will embark on this captivating adventure, where every matka number, matka chart, and matka games hold the potential to unlock fortunes.</p>
                         <h4 className="text-[#0013a5] font-bold italic text-lg">HISTORY OF SATTA MATKA</h4>
                         <p>The history of Satta Matka dates to the 1960s when it originated as a form of gambling in Mumbai, India. Initially, it involved betting on the opening and closing rates of cotton in the Bombay cotton exchange. The practice of placing bets on the fluctuating cotton rates attracted a significant number of people looking to try their luck.</p>
                         <p>As the popularity of this form of gambling grew, it expanded beyond the cotton exchange. The game underwent several modifications and evolved into a numbers-based betting system. Players began betting on random numbers ranging from 0 to 9, which were drawn from a Matka (earthen pot).</p>

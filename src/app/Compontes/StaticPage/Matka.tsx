@@ -20,7 +20,7 @@ export const Matka = () => {
                 <div className="border-[2px] border-[#a50031] rounded-[14px] overflow-hidden mt-2">
                     <div>
                         <p className="m-1 text-[#bb2833] text-sm text-center font-semibold">
-                            dp boss net, dp satta,DsBossDsBoss, indian satta matka, kalyan matkà result today , matka boss, matka result live, matka satta result today, satamatka com, satta boss, satta matka king, sattamatkà, sattamatkà result, sattamatta com, sattmatka sattmatka, star matka, tara matka, tara satta matka, worli matka, indian matka, matka live, kalyan guessing, satta fix, kalyan final ank, dp matka,DsBoss net, sata mata com, सट्टा मटका, sattamatkà 143, golden matka, satta matta matka 143, satta fast, kalyan open, satta 143,DsBoss 143 guessing,DsBoss satta, golden satta matka, satta bajar
+                            dp boss net, dp satta,dpbossdpboss, indian satta matka, kalyan matkà result today , matka boss, matka result live, matka satta result today, satamatka com, satta boss, satta matka king, sattamatkà, sattamatkà result, sattamatta com, sattmatka sattmatka, star matka, tara matka, tara satta matka, worli matka, indian matka, matka live, kalyan guessing, satta fix, kalyan final ank, dp matka,dpboss net, sata mata com, सट्टा मटका, sattamatkà 143, golden matka, satta matta matka 143, satta fast, kalyan open, satta 143,dpboss 143 guessing,dpboss satta, golden satta matka, satta bajar
                         </p>
                     </div>
                 </div>

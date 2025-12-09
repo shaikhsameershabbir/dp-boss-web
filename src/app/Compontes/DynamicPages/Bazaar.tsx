@@ -93,7 +93,7 @@ export default function Bazaar({ marketResults }: BazaarProps) {
             }}
             className="text-black font-bold px-3 rounded-[14px] cursor-pointer"
           >
-            support@dsbossnet.net
+            support@dpbossnet.net
           </button>
         </h3>
       </div>

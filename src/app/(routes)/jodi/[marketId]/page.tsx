@@ -257,9 +257,9 @@ export default async function Jodi({
           {marketName.toUpperCase()} JODI RESULT CHART RECORDS
         </p>
         <p className="text-xs text-center text-[#00094d]">
-          DsBoss {marketName.toUpperCase()} jodi chart,{" "}
+          dpboss {marketName.toUpperCase()} jodi chart,{" "}
           {marketName.toUpperCase()} jodi chart, old {marketName.toUpperCase()}
-          jodi chart,DsBoss {marketName.toUpperCase()} chart...
+          jodi chart,dpboss {marketName.toUpperCase()} chart...
         </p>
       </div>
 
@@ -349,7 +349,7 @@ export default async function Jodi({
       </div>
       <div className="bg-[#fff] text-lg font-bold border-2 border-[#800080] mt-2 p-1 text-black">
         <p className="text-[12px] text-center">
-          When you chooseDsBoss Services to play your Milan Morning, you will
+          When you choosedpboss Services to play your Milan Morning, you will
           get the game support of professionally trained gamblers. They can help
           you understand the game rules as well as its payouts thoroughly. They
           are not only skilled mentors but also very friendly and prepared to
@@ -360,7 +360,7 @@ export default async function Jodi({
         <p className="text-[12px] text-center">
           On this Satta Matka website, you will be capable of finding and
           playing an enormous variety of online betting games. The wide range of
-          these games is another reason for the fame of theDsBoss Services
+          these games is another reason for the fame of thedpboss Services
           betting platform. Whether it is the excitement of Milan Morning or any
           other Satta Matka game, there is something to outfit the taste of
           every gambler.
@@ -369,18 +369,18 @@ export default async function Jodi({
           Get Milan Morning Jodi Chart Records Online
         </h5>
         <p className="text-[12px] text-center">
-          OnDsBoss Services, you will be capable of experiencing the strategic
+          Ondpboss Services, you will be capable of experiencing the strategic
           profundity of the unique attraction of every Satta Matka game. This
           Satta Matka website also features trending betting games, guaranteeing
           there is something for every novice as well as a veteran gambler.
-          Moreover, all types of Satta Matka games onDsBoss Services will take
+          Moreover, all types of Satta Matka games ondpboss Services will take
           you to an exciting new level.
         </p>
         <h5 className="text-[15px] text-center text-[#ff0000]">
           Frequently Asked Questions (FAQs):
         </h5>
         <p className="text-[12px] text-center">
-          Q1. How the Milan Morning onDsBoss Services is designed?
+          Q1. How the Milan Morning ondpboss Services is designed?
         </p>
         <p className="text-[12px] text-center">
           The Milan Morning on this Satta Matka betting platform has been
@@ -388,7 +388,7 @@ export default async function Jodi({
           whirlwind of entertainment and excitement.
         </p>
         <p className="text-[12px] text-center">
-          Q2. What is the attractive feature ofDsBoss Services&apos;s Milan
+          Q2. What is the attractive feature ofdpboss Services&apos;s Milan
           Morning?
         </p>
         <p className="text-[12px] text-center">

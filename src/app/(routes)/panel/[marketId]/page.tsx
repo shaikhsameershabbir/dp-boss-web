@@ -435,7 +435,7 @@ export default async function Panel({
 
         <div className="bg-[#fff] text-lg font-bold border-2 border-[#800080] mt-2 p-1">
           <h1 className="text-[25px] sm:text-[30px] md:text-[35px] text-center text-[#007bff]">
-            www.dsbossnet.net
+            www.dpbossnet.net
           </h1>
           <h2 className="text-[18px] sm:text-[22px] md:text-[25px] text-center text-[#ff0000]">
             All Rights Reseved®
@@ -444,7 +444,7 @@ export default async function Panel({
             (1998-2024)
           </h2>
           <h2 className="text-[18px] sm:text-[22px] md:text-[25px] text-center text-[#ff0000]">
-            Contact <span className="text-[#007bff]">(Astrologer-DsBoss)</span>
+            Contact <span className="text-[#007bff]">(Astrologer-dpboss)</span>
           </h2>
         </div>
       </div>
